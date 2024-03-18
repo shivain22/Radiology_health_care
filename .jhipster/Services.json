@@ -1,0 +1,21 @@
+{
+  "annotations": {
+    "changelogDate": "20240318084242"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "services",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Services",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

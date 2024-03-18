@@ -1,0 +1,21 @@
+{
+  "annotations": {
+    "changelogDate": "20240318090421"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "rooms",
+  "fields": [
+    {
+      "fieldName": "roomNo",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Rooms",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
