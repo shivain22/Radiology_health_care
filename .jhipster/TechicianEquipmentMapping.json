@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20240318092653"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "techician_equipment_mapping",
+  "fields": [
+    {
+      "fieldName": "dateTime",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "TechicianEquipmentMapping",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "techicianEquipmentMapping",
+      "relationshipName": "employee",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "equipments",
+      "otherEntityRelationshipName": "techicianEquipmentMapping",
+      "relationshipName": "equipments",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
