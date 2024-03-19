@@ -72,16 +72,12 @@ const EmployeeForm = ({
   const [filterUnits, setFilterUnits] = useState<Unit[]>([]);
 
   const handleRankandUnitFilter = (value: string) => {
-    console.log(value);
     const filteredRanks = ranks.filter((rank) => rank.serviceId === value);
     const filteredUnits = units.filter((unit) => unit.serviceId === value);
     setFilterRanks(filteredRanks);
     setFilterUnits(filteredUnits);
 
   }
-
-  console.log(filterRanks);
-  console.log(filterUnits);
 
   const onSuccess = (
     action: Action,
