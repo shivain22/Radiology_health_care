@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useValidatedForm } from "@/lib/hooks/useValidatedForm";
 
 import { type Action, cn } from "@/lib/utils";
-import { type TAddOptimistic } from "@/app/(app)/ranks/useOptimisticRanks";
+import { type TAddOptimistic } from "@/app/(app)/employees/useOptimisticEmployees";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -23,45 +23,69 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { type Rank, insertRankParams } from "@/lib/db/schema/ranks";
+import { type Employee, insertEmployeeParams } from "@/lib/db/schema/employees";
 import {
-  createRankAction,
-  deleteRankAction,
-  updateRankAction,
-} from "@/lib/actions/ranks";
+  createEmployeeAction,
+  deleteEmployeeAction,
+  updateEmployeeAction,
+} from "@/lib/actions/employees";
 import { type Service, type ServiceId } from "@/lib/db/schema/services";
+import { type Rank, type RankId } from "@/lib/db/schema/ranks";
+import { type Unit, type UnitId } from "@/lib/db/schema/units";
 
-const RankForm = ({
+const EmployeeForm = ({
   services,
   serviceId,
-  rank,
+  ranks,
+  rankId,
+  units,
+  unitId,
+  employee,
   openModal,
   closeModal,
   addOptimistic,
   postSuccess,
 }: {
-  rank?: Rank | null;
+  employee?: Employee | null;
   services: Service[];
   serviceId?: ServiceId
-  openModal?: (rank?: Rank) => void;
+  ranks: Rank[];
+  rankId?: RankId
+  units: Unit[];
+  unitId?: UnitId
+  openModal?: (employee?: Employee) => void;
   closeModal?: () => void;
   addOptimistic?: TAddOptimistic;
   postSuccess?: () => void;
 }) => {
   const { errors, hasErrors, setErrors, handleChange } =
-    useValidatedForm<Rank>(insertRankParams);
-  const editing = !!rank?.id;
+    useValidatedForm<Employee>(insertEmployeeParams);
+  const editing = !!employee?.id;
   
   const [isDeleting, setIsDeleting] = useState(false);
   const [pending, startMutation] = useTransition();
 
   const router = useRouter();
-  const backpath = useBackPath("ranks");
+  const backpath = useBackPath("employees");
 
+  const [filterRanks, setFilterRanks] = useState<Rank[]>([]);
+  const [filterUnits, setFilterUnits] = useState<Unit[]>([]);
+
+  const handleRankandUnitFilter = (value: string) => {
+    console.log(value);
+    const filteredRanks = ranks.filter((rank) => rank.serviceId === value);
+    const filteredUnits = units.filter((unit) => unit.serviceId === value);
+    setFilterRanks(filteredRanks);
+    setFilterUnits(filteredUnits);
+
+  }
+
+  console.log(filterRanks);
+  console.log(filterUnits);
 
   const onSuccess = (
     action: Action,
-    data?: { error: string; values: Rank },
+    data?: { error: string; values: Employee },
   ) => {
     const failed = Boolean(data?.error);
     if (failed) {
@@ -72,7 +96,7 @@ const RankForm = ({
     } else {
       router.refresh();
       postSuccess && postSuccess();
-      toast.success(`Rank ${action}d!`);
+      toast.success(`Employee ${action}d!`);
       if (action === "delete") router.push(backpath);
     }
   };
@@ -81,33 +105,37 @@ const RankForm = ({
     setErrors(null);
 
     const payload = Object.fromEntries(data.entries());
-    const rankParsed = await insertRankParams.safeParseAsync({ serviceId, ...payload });
-    if (!rankParsed.success) {
-      setErrors(rankParsed?.error.flatten().fieldErrors);
+    const employeeParsed = await insertEmployeeParams.safeParseAsync({ serviceId,
+  rankId,
+  unitId, ...payload });
+    if (!employeeParsed.success) {
+      setErrors(employeeParsed?.error.flatten().fieldErrors);
       return;
     }
 
     closeModal && closeModal();
-    const values = rankParsed.data;
-    const pendingRank: Rank = {
-      
-      id: rank?.id ?? "",
+    const values = employeeParsed.data;
+    const pendingEmployee: Employee = {
+      updatedAt: employee?.updatedAt ?? new Date(),
+      createdAt: employee?.createdAt ?? new Date(),
+      id: employee?.id ?? "",
+      userId: employee?.userId ?? "",
       ...values,
     };
     try {
       startMutation(async () => {
         addOptimistic && addOptimistic({
-          data: pendingRank,
+          data: pendingEmployee,
           action: editing ? "update" : "create",
         });
 
         const error = editing
-          ? await updateRankAction({ ...values, id: rank.id })
-          : await createRankAction(values);
+          ? await updateEmployeeAction({ ...values, id: employee.id })
+          : await createEmployeeAction(values);
 
         const errorFormatted = {
           error: error ?? "Error",
-          values: pendingRank 
+          values: pendingEmployee 
         };
         onSuccess(
           editing ? "update" : "create",
@@ -137,7 +165,7 @@ const RankForm = ({
           type="text"
           name="name"
           className={cn(errors?.name ? "ring ring-destructive" : "")}
-          defaultValue={rank?.name ?? ""}
+          defaultValue={employee?.name ?? ""}
         />
         {errors?.name ? (
           <p className="text-xs text-destructive mt-2">{errors.name[0]}</p>
@@ -155,7 +183,7 @@ const RankForm = ({
         >
           Service
         </Label>
-        <Select defaultValue={rank?.serviceId} name="serviceId">
+        <Select defaultValue={employee?.serviceId} onValueChange={handleRankandUnitFilter} name="serviceId">
           <SelectTrigger
             className={cn(errors?.serviceId ? "ring ring-destructive" : "")}
           >
@@ -175,6 +203,87 @@ const RankForm = ({
           <div className="h-6" />
         )}
       </div> }
+
+      {rankId ? null : <div>
+        <Label
+          className={cn(
+            "mb-2 inline-block",
+            errors?.rankId ? "text-destructive" : "",
+          )}
+        >
+          Rank
+        </Label>
+        <Select defaultValue={employee?.rankId} name="rankId">
+          <SelectTrigger
+            className={cn(errors?.rankId ? "ring ring-destructive" : "")}
+          >
+            <SelectValue placeholder="Select a rank" />
+          </SelectTrigger>
+          <SelectContent>
+          {filterRanks?.map((rank) => (
+            <SelectItem key={rank.id} value={rank.id.toString()}>
+              {rank.name}{/* TODO: Replace with a field from the rank model */}
+            </SelectItem>
+           ))}
+          </SelectContent>
+        </Select>
+        {errors?.rankId ? (
+          <p className="text-xs text-destructive mt-2">{errors.rankId[0]}</p>
+        ) : (
+          <div className="h-6" />
+        )}
+      </div> }
+
+      {unitId ? null : <div>
+        <Label
+          className={cn(
+            "mb-2 inline-block",
+            errors?.unitId ? "text-destructive" : "",
+          )}
+        >
+          Unit
+        </Label>
+        <Select defaultValue={employee?.unitId} name="unitId">
+          <SelectTrigger
+            className={cn(errors?.unitId ? "ring ring-destructive" : "")}
+          >
+            <SelectValue placeholder="Select a unit" />
+          </SelectTrigger>
+          <SelectContent>
+          {filterUnits?.map((unit) => (
+            <SelectItem key={unit.id} value={unit.id.toString()}>
+              {unit.name}{/* TODO: Replace with a field from the unit model */}
+            </SelectItem>
+           ))}
+          </SelectContent>
+        </Select>
+        {errors?.unitId ? (
+          <p className="text-xs text-destructive mt-2">{errors.unitId[0]}</p>
+        ) : (
+          <div className="h-6" />
+        )}
+      </div> }
+        <div>
+        <Label
+          className={cn(
+            "mb-2 inline-block",
+            errors?.his ? "text-destructive" : "",
+          )}
+        >
+          His
+        </Label>
+        <Input
+          type="text"
+          name="his"
+          className={cn(errors?.his ? "ring ring-destructive" : "")}
+          defaultValue={employee?.his ?? ""}
+        />
+        {errors?.his ? (
+          <p className="text-xs text-destructive mt-2">{errors.his[0]}</p>
+        ) : (
+          <div className="h-6" />
+        )}
+      </div>
       {/* Schema fields end */}
 
       {/* Save Button */}
@@ -190,12 +299,12 @@ const RankForm = ({
             setIsDeleting(true);
             closeModal && closeModal();
             startMutation(async () => {
-              addOptimistic && addOptimistic({ action: "delete", data: rank });
-              const error = await deleteRankAction(rank.id);
+              addOptimistic && addOptimistic({ action: "delete", data: employee });
+              const error = await deleteEmployeeAction(employee.id);
               setIsDeleting(false);
               const errorFormatted = {
                 error: error ?? "Error",
-                values: rank,
+                values: employee,
               };
 
               onSuccess("delete", error ? errorFormatted : undefined);
@@ -209,7 +318,7 @@ const RankForm = ({
   );
 };
 
-export default RankForm;
+export default EmployeeForm;
 
 const SaveButton = ({
   editing,

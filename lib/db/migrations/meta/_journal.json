@@ -15,6 +15,13 @@
       "when": 1710842743279,
       "tag": "0001_lowly_newton_destine",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1710843089751,
+      "tag": "0002_giant_next_avengers",
+      "breakpoints": true
     }
   ]
 }
