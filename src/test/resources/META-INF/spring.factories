@@ -1,0 +1,2 @@
+org.springframework.test.context.ContextCustomizerFactory = com.radiology.\
+    health.care.config.SqlTestContainersSpringContextCustomizerFactory
