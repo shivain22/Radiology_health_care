@@ -14,16 +14,4 @@ pipeline {
             }
         }
     }
-    
-    post {
-        always {
-            // Cleanup after the build
-            script {
-                dir('./src/main/docker') {
-                    // Stop and remove the containers after the build completes
-                    sh 'docker-compose down'
-                }
-            }
-        }
-    }
 }
