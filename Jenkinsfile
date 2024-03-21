@@ -4,8 +4,9 @@ pipeline {
         stage('Prepare') {
             steps {
                 script {
+                        sh 'sudo su -'
                         // Execute docker compose command
-                        sh 'sudo docker compose -f ./src/main/docker/app.yml up'
+                        sh 'docker compose -f ./src/main/docker/app.yml up'
                 }
             }
         }
