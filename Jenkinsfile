@@ -6,7 +6,7 @@ pipeline {
                 script {
                         // Execute docker compose command
                         sh '''
-                    echo 'Asd!@#123' | sudo -S docker-compose -f ./src/main/docker/app.yml up
+                    echo '' | sudo -S docker-compose -f ./src/main/docker/app.yml up
                     '''
                 }
             }
