@@ -1,14 +1,18 @@
 pipeline {
-    agent any
-    
+    agent {
+        docker {
+            image 'docker:stable'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
     stages {
-        stage('Build and Deploy Docker Containers') {
+        stage('Prepare') {
             steps {
-                // Change directory to the Docker folder
                 script {
+                    // Change directory to ./src/main/docker
                     dir('./src/main/docker') {
-                        // Run docker compose to bring up the containers defined in app.yml
-                        sh 'sudo docker compose -f app.yml up -d'
+                        // Execute docker compose command
+                        sh 'docker compose -f app.yml up'
                     }
                 }
             }
