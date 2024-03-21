@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "patient_test_timings")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class PatientTestTimings implements Serializable {
+public class PatientTestTimings extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,10 @@ public class PatientTestTimings implements Serializable {
     private PatientInfo patientInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "equipment", "parentTestCategory", "patientTestTimings", "testCategoryParents" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "equipment", "parentTestCategory", "user", "patientTestTimings", "testCategoryParents" },
+        allowSetters = true
+    )
     private TestCategories testCategories;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

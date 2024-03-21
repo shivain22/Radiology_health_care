@@ -23,6 +23,9 @@
             <column name="employee_id" type="bigint">
                 <constraints nullable="false" />
             </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="technician_equipment_mapping" columnName="date_time" columnDataType="${datetimeType}"/>
@@ -48,6 +51,7 @@
             <column name="date_time" type="date"/>
             <column name="equipment_id" type="numeric"/>
             <column name="employee_id" type="numeric"/>
+            <column name="user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

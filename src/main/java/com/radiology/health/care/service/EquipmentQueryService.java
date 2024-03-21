@@ -99,6 +99,12 @@ public class EquipmentQueryService extends QueryService<Equipment> {
                         buildSpecification(criteria.getRoomId(), root -> root.join(Equipment_.room, JoinType.LEFT).get(Room_.id))
                     );
             }
+            if (criteria.getUserId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getUserId(), root -> root.join(Equipment_.user, JoinType.LEFT).get(User_.id))
+                    );
+            }
             if (criteria.getTechnicianEquipmentMappingId() != null) {
                 specification =
                     specification.and(

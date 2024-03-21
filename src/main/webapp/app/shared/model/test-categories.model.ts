@@ -1,4 +1,5 @@
 import { IEquipment } from 'app/shared/model/equipment.model';
+import { IUser } from 'app/shared/model/user.model';
 import { IPatientTestTimings } from 'app/shared/model/patient-test-timings.model';
 
 export interface ITestCategories {
@@ -6,6 +7,7 @@ export interface ITestCategories {
   testName?: string;
   equipment?: IEquipment;
   parentTestCategory?: ITestCategories | null;
+  user?: IUser;
   patientTestTimings?: IPatientTestTimings[] | null;
   testCategoryParents?: ITestCategories[] | null;
 }

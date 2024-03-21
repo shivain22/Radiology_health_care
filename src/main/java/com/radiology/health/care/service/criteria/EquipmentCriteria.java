@@ -27,6 +27,8 @@ public class EquipmentCriteria implements Serializable, Criteria {
 
     private LongFilter roomId;
 
+    private LongFilter userId;
+
     private LongFilter technicianEquipmentMappingId;
 
     private LongFilter testCategoriesId;
@@ -39,6 +41,7 @@ public class EquipmentCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
         this.roomId = other.roomId == null ? null : other.roomId.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.technicianEquipmentMappingId = other.technicianEquipmentMappingId == null ? null : other.technicianEquipmentMappingId.copy();
         this.testCategoriesId = other.testCategoriesId == null ? null : other.testCategoriesId.copy();
         this.distinct = other.distinct;
@@ -94,6 +97,21 @@ public class EquipmentCriteria implements Serializable, Criteria {
         this.roomId = roomId;
     }
 
+    public LongFilter getUserId() {
+        return userId;
+    }
+
+    public LongFilter userId() {
+        if (userId == null) {
+            userId = new LongFilter();
+        }
+        return userId;
+    }
+
+    public void setUserId(LongFilter userId) {
+        this.userId = userId;
+    }
+
     public LongFilter getTechnicianEquipmentMappingId() {
         return technicianEquipmentMappingId;
     }
@@ -145,6 +163,7 @@ public class EquipmentCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(roomId, that.roomId) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(technicianEquipmentMappingId, that.technicianEquipmentMappingId) &&
             Objects.equals(testCategoriesId, that.testCategoriesId) &&
             Objects.equals(distinct, that.distinct)
@@ -153,7 +172,7 @@ public class EquipmentCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, roomId, technicianEquipmentMappingId, testCategoriesId, distinct);
+        return Objects.hash(id, name, roomId, userId, technicianEquipmentMappingId, testCategoriesId, distinct);
     }
 
     // prettier-ignore
@@ -163,6 +182,7 @@ public class EquipmentCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
             (roomId != null ? "roomId=" + roomId + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (technicianEquipmentMappingId != null ? "technicianEquipmentMappingId=" + technicianEquipmentMappingId + ", " : "") +
             (testCategoriesId != null ? "testCategoriesId=" + testCategoriesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

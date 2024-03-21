@@ -134,6 +134,9 @@ export const Rank = () => {
                   <th>
                     Emp Service <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th>
+                    User <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -147,6 +150,7 @@ export const Rank = () => {
                     </td>
                     <td>{rank.name}</td>
                     <td>{rank.empService ? <Link to={`/emp-service/${rank.empService.id}`}>{rank.empService.id}</Link> : ''}</td>
+                    <td>{rank.user ? rank.user.id : ''}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/rank/${rank.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -12,6 +12,7 @@ import com.radiology.health.care.domain.PatientInfo;
 import com.radiology.health.care.domain.Rank;
 import com.radiology.health.care.domain.TechnicianEquipmentMapping;
 import com.radiology.health.care.domain.Unit;
+import com.radiology.health.care.domain.User;
 import com.radiology.health.care.repository.EmployeeRepository;
 import com.radiology.health.care.service.dto.EmployeeDTO;
 import com.radiology.health.care.service.mapper.EmployeeMapper;
@@ -106,6 +107,11 @@ class EmployeeResourceIT {
             unit = TestUtil.findAll(em, Unit.class).get(0);
         }
         employee.setUnit(unit);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        employee.setUser(user);
         return employee;
     }
 
@@ -147,6 +153,11 @@ class EmployeeResourceIT {
             unit = TestUtil.findAll(em, Unit.class).get(0);
         }
         employee.setUnit(unit);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        employee.setUser(user);
         return employee;
     }
 
@@ -546,6 +557,28 @@ class EmployeeResourceIT {
 
         // Get all the employeeList where unit equals to (unitId + 1)
         defaultEmployeeShouldNotBeFound("unitId.equals=" + (unitId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllEmployeesByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            employeeRepository.saveAndFlush(employee);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        employee.setUser(user);
+        employeeRepository.saveAndFlush(employee);
+        Long userId = user.getId();
+        // Get all the employeeList where user equals to userId
+        defaultEmployeeShouldBeFound("userId.equals=" + userId);
+
+        // Get all the employeeList where user equals to (userId + 1)
+        defaultEmployeeShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     @Test

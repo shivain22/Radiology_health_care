@@ -93,6 +93,12 @@ public class EmpServiceQueryService extends QueryService<EmpService> {
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), EmpService_.name));
             }
+            if (criteria.getUserId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getUserId(), root -> root.join(EmpService_.user, JoinType.LEFT).get(User_.id))
+                    );
+            }
             if (criteria.getRankId() != null) {
                 specification =
                     specification.and(

@@ -12,7 +12,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "technician_equipment_mapping")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class TechnicianEquipmentMapping implements Serializable {
+public class TechnicianEquipmentMapping extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class TechnicianEquipmentMapping implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "room", "technicianEquipmentMappings", "testCategories" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "room", "user", "technicianEquipmentMappings", "testCategories" }, allowSetters = true)
     private Equipment equipment;
 
     @ManyToOne(optional = false)
@@ -37,6 +37,7 @@ public class TechnicianEquipmentMapping implements Serializable {
             "rank",
             "empService",
             "unit",
+            "user",
             "technicianEquipmentMappings",
             "patientInfoEmployeeIds",
             "patientInfoEmployeeHis",
@@ -45,6 +46,10 @@ public class TechnicianEquipmentMapping implements Serializable {
         allowSetters = true
     )
     private Employee employee;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -97,6 +102,19 @@ public class TechnicianEquipmentMapping implements Serializable {
 
     public TechnicianEquipmentMapping employee(Employee employee) {
         this.setEmployee(employee);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public TechnicianEquipmentMapping user(User user) {
+        this.setUser(user);
         return this;
     }
 

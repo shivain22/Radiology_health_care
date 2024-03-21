@@ -143,6 +143,9 @@ export const TechnicianEquipmentMapping = () => {
                   <th>
                     Employee <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th>
+                    User <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -173,6 +176,7 @@ export const TechnicianEquipmentMapping = () => {
                         ''
                       )}
                     </td>
+                    <td>{technicianEquipmentMapping.user ? technicianEquipmentMapping.user.id : ''}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button

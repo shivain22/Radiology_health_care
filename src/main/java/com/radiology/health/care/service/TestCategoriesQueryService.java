@@ -111,6 +111,12 @@ public class TestCategoriesQueryService extends QueryService<TestCategories> {
                         )
                     );
             }
+            if (criteria.getUserId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getUserId(), root -> root.join(TestCategories_.user, JoinType.LEFT).get(User_.id))
+                    );
+            }
             if (criteria.getPatientTestTimingsId() != null) {
                 specification =
                     specification.and(

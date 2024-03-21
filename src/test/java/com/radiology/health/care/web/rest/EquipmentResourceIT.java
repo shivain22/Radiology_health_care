@@ -10,6 +10,7 @@ import com.radiology.health.care.domain.Equipment;
 import com.radiology.health.care.domain.Room;
 import com.radiology.health.care.domain.TechnicianEquipmentMapping;
 import com.radiology.health.care.domain.TestCategories;
+import com.radiology.health.care.domain.User;
 import com.radiology.health.care.repository.EquipmentRepository;
 import com.radiology.health.care.service.dto.EquipmentDTO;
 import com.radiology.health.care.service.mapper.EquipmentMapper;
@@ -65,6 +66,11 @@ class EquipmentResourceIT {
      */
     public static Equipment createEntity(EntityManager em) {
         Equipment equipment = new Equipment().name(DEFAULT_NAME);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        equipment.setUser(user);
         return equipment;
     }
 
@@ -76,6 +82,11 @@ class EquipmentResourceIT {
      */
     public static Equipment createUpdatedEntity(EntityManager em) {
         Equipment equipment = new Equipment().name(UPDATED_NAME);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        equipment.setUser(user);
         return equipment;
     }
 
@@ -271,6 +282,28 @@ class EquipmentResourceIT {
 
         // Get all the equipmentList where room equals to (roomId + 1)
         defaultEquipmentShouldNotBeFound("roomId.equals=" + (roomId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllEquipmentByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            equipmentRepository.saveAndFlush(equipment);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        equipment.setUser(user);
+        equipmentRepository.saveAndFlush(equipment);
+        Long userId = user.getId();
+        // Get all the equipmentList where user equals to userId
+        defaultEquipmentShouldBeFound("userId.equals=" + userId);
+
+        // Get all the equipmentList where user equals to (userId + 1)
+        defaultEquipmentShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     @Test

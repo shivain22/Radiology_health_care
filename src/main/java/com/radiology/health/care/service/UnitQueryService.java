@@ -102,6 +102,10 @@ public class UnitQueryService extends QueryService<Unit> {
                         )
                     );
             }
+            if (criteria.getUserId() != null) {
+                specification =
+                    specification.and(buildSpecification(criteria.getUserId(), root -> root.join(Unit_.user, JoinType.LEFT).get(User_.id)));
+            }
             if (criteria.getEmployeeId() != null) {
                 specification =
                     specification.and(

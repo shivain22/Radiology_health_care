@@ -114,6 +114,15 @@ public class TechnicianEquipmentMappingQueryService extends QueryService<Technic
                         )
                     );
             }
+            if (criteria.getUserId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getUserId(),
+                            root -> root.join(TechnicianEquipmentMapping_.user, JoinType.LEFT).get(User_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

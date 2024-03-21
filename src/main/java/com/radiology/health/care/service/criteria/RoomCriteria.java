@@ -25,6 +25,8 @@ public class RoomCriteria implements Serializable, Criteria {
 
     private IntegerFilter roomNo;
 
+    private LongFilter userId;
+
     private LongFilter equipmentId;
 
     private Boolean distinct;
@@ -34,6 +36,7 @@ public class RoomCriteria implements Serializable, Criteria {
     public RoomCriteria(RoomCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.roomNo = other.roomNo == null ? null : other.roomNo.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.equipmentId = other.equipmentId == null ? null : other.equipmentId.copy();
         this.distinct = other.distinct;
     }
@@ -73,6 +76,21 @@ public class RoomCriteria implements Serializable, Criteria {
         this.roomNo = roomNo;
     }
 
+    public LongFilter getUserId() {
+        return userId;
+    }
+
+    public LongFilter userId() {
+        if (userId == null) {
+            userId = new LongFilter();
+        }
+        return userId;
+    }
+
+    public void setUserId(LongFilter userId) {
+        this.userId = userId;
+    }
+
     public LongFilter getEquipmentId() {
         return equipmentId;
     }
@@ -108,6 +126,7 @@ public class RoomCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(roomNo, that.roomNo) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(equipmentId, that.equipmentId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -115,7 +134,7 @@ public class RoomCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, roomNo, equipmentId, distinct);
+        return Objects.hash(id, roomNo, userId, equipmentId, distinct);
     }
 
     // prettier-ignore
@@ -124,6 +143,7 @@ public class RoomCriteria implements Serializable, Criteria {
         return "RoomCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (roomNo != null ? "roomNo=" + roomNo + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (equipmentId != null ? "equipmentId=" + equipmentId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

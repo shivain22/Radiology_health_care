@@ -29,6 +29,8 @@ public class TechnicianEquipmentMappingCriteria implements Serializable, Criteri
 
     private LongFilter employeeId;
 
+    private LongFilter userId;
+
     private Boolean distinct;
 
     public TechnicianEquipmentMappingCriteria() {}
@@ -38,6 +40,7 @@ public class TechnicianEquipmentMappingCriteria implements Serializable, Criteri
         this.dateTime = other.dateTime == null ? null : other.dateTime.copy();
         this.equipmentId = other.equipmentId == null ? null : other.equipmentId.copy();
         this.employeeId = other.employeeId == null ? null : other.employeeId.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.distinct = other.distinct;
     }
 
@@ -106,6 +109,21 @@ public class TechnicianEquipmentMappingCriteria implements Serializable, Criteri
         this.employeeId = employeeId;
     }
 
+    public LongFilter getUserId() {
+        return userId;
+    }
+
+    public LongFilter userId() {
+        if (userId == null) {
+            userId = new LongFilter();
+        }
+        return userId;
+    }
+
+    public void setUserId(LongFilter userId) {
+        this.userId = userId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -128,13 +146,14 @@ public class TechnicianEquipmentMappingCriteria implements Serializable, Criteri
             Objects.equals(dateTime, that.dateTime) &&
             Objects.equals(equipmentId, that.equipmentId) &&
             Objects.equals(employeeId, that.employeeId) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateTime, equipmentId, employeeId, distinct);
+        return Objects.hash(id, dateTime, equipmentId, employeeId, userId, distinct);
     }
 
     // prettier-ignore
@@ -145,6 +164,7 @@ public class TechnicianEquipmentMappingCriteria implements Serializable, Criteri
             (dateTime != null ? "dateTime=" + dateTime + ", " : "") +
             (equipmentId != null ? "equipmentId=" + equipmentId + ", " : "") +
             (employeeId != null ? "employeeId=" + employeeId + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

@@ -33,6 +33,8 @@ export const EquipmentDetail = () => {
           <dd>{equipmentEntity.name}</dd>
           <dt>Room</dt>
           <dd>{equipmentEntity.room ? equipmentEntity.room.id : ''}</dd>
+          <dt>User</dt>
+          <dd>{equipmentEntity.user ? equipmentEntity.user.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/equipment" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

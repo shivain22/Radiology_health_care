@@ -149,6 +149,9 @@ export const Employee = () => {
                   <th>
                     Unit <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th>
+                    User <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -169,6 +172,7 @@ export const Employee = () => {
                       {employee.empService ? <Link to={`/emp-service/${employee.empService.id}`}>{employee.empService.id}</Link> : ''}
                     </td>
                     <td>{employee.unit ? <Link to={`/unit/${employee.unit.id}`}>{employee.unit.id}</Link> : ''}</td>
+                    <td>{employee.user ? employee.user.id : ''}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/employee/${employee.id}`} color="info" size="sm" data-cy="entityDetailsButton">

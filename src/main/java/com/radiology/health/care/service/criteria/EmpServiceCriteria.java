@@ -25,6 +25,8 @@ public class EmpServiceCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
+    private LongFilter userId;
+
     private LongFilter rankId;
 
     private LongFilter unitId;
@@ -38,6 +40,7 @@ public class EmpServiceCriteria implements Serializable, Criteria {
     public EmpServiceCriteria(EmpServiceCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.rankId = other.rankId == null ? null : other.rankId.copy();
         this.unitId = other.unitId == null ? null : other.unitId.copy();
         this.employeeId = other.employeeId == null ? null : other.employeeId.copy();
@@ -77,6 +80,21 @@ public class EmpServiceCriteria implements Serializable, Criteria {
 
     public void setName(StringFilter name) {
         this.name = name;
+    }
+
+    public LongFilter getUserId() {
+        return userId;
+    }
+
+    public LongFilter userId() {
+        if (userId == null) {
+            userId = new LongFilter();
+        }
+        return userId;
+    }
+
+    public void setUserId(LongFilter userId) {
+        this.userId = userId;
     }
 
     public LongFilter getRankId() {
@@ -144,6 +162,7 @@ public class EmpServiceCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(rankId, that.rankId) &&
             Objects.equals(unitId, that.unitId) &&
             Objects.equals(employeeId, that.employeeId) &&
@@ -153,7 +172,7 @@ public class EmpServiceCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, rankId, unitId, employeeId, distinct);
+        return Objects.hash(id, name, userId, rankId, unitId, employeeId, distinct);
     }
 
     // prettier-ignore
@@ -162,6 +181,7 @@ public class EmpServiceCriteria implements Serializable, Criteria {
         return "EmpServiceCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (rankId != null ? "rankId=" + rankId + ", " : "") +
             (unitId != null ? "unitId=" + unitId + ", " : "") +
             (employeeId != null ? "employeeId=" + employeeId + ", " : "") +

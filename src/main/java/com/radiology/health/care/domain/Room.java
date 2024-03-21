@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "room")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Room implements Serializable {
+public class Room extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,8 +26,12 @@ public class Room implements Serializable {
     @Column(name = "room_no", nullable = false)
     private Integer roomNo;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-    @JsonIgnoreProperties(value = { "room", "technicianEquipmentMappings", "testCategories" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "room", "user", "technicianEquipmentMappings", "testCategories" }, allowSetters = true)
     private Set<Equipment> equipment = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -56,6 +60,19 @@ public class Room implements Serializable {
 
     public void setRoomNo(Integer roomNo) {
         this.roomNo = roomNo;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Room user(User user) {
+        this.setUser(user);
+        return this;
     }
 
     public Set<Equipment> getEquipment() {

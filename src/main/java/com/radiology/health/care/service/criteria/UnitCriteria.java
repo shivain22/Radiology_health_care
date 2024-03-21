@@ -27,6 +27,8 @@ public class UnitCriteria implements Serializable, Criteria {
 
     private LongFilter empServiceId;
 
+    private LongFilter userId;
+
     private LongFilter employeeId;
 
     private Boolean distinct;
@@ -37,6 +39,7 @@ public class UnitCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
         this.empServiceId = other.empServiceId == null ? null : other.empServiceId.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.employeeId = other.employeeId == null ? null : other.employeeId.copy();
         this.distinct = other.distinct;
     }
@@ -91,6 +94,21 @@ public class UnitCriteria implements Serializable, Criteria {
         this.empServiceId = empServiceId;
     }
 
+    public LongFilter getUserId() {
+        return userId;
+    }
+
+    public LongFilter userId() {
+        if (userId == null) {
+            userId = new LongFilter();
+        }
+        return userId;
+    }
+
+    public void setUserId(LongFilter userId) {
+        this.userId = userId;
+    }
+
     public LongFilter getEmployeeId() {
         return employeeId;
     }
@@ -127,6 +145,7 @@ public class UnitCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(empServiceId, that.empServiceId) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(employeeId, that.employeeId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -134,7 +153,7 @@ public class UnitCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, empServiceId, employeeId, distinct);
+        return Objects.hash(id, name, empServiceId, userId, employeeId, distinct);
     }
 
     // prettier-ignore
@@ -144,6 +163,7 @@ public class UnitCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
             (empServiceId != null ? "empServiceId=" + empServiceId + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (employeeId != null ? "employeeId=" + employeeId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

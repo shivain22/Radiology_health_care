@@ -14,5 +14,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="emp_service"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="jhi_rank"
+                                 constraintName="fk_jhi_rank__user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"
+                                 />
     </changeSet>
 </databaseChangeLog>

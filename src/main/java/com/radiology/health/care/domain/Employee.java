@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "employee")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Employee implements Serializable {
+public class Employee extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,21 +36,25 @@ public class Employee implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "empService", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "empService", "user", "employees" }, allowSetters = true)
     private Rank rank;
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "ranks", "units", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "ranks", "units", "employees" }, allowSetters = true)
     private EmpService empService;
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "empService", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "empService", "user", "employees" }, allowSetters = true)
     private Unit unit;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
-    @JsonIgnoreProperties(value = { "equipment", "employee" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "equipment", "employee", "user" }, allowSetters = true)
     private Set<TechnicianEquipmentMapping> technicianEquipmentMappings = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeId")
@@ -168,6 +172,19 @@ public class Employee implements Serializable {
 
     public Employee unit(Unit unit) {
         this.setUnit(unit);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Employee user(User user) {
+        this.setUser(user);
         return this;
     }
 

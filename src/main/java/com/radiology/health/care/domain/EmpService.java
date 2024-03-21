@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "emp_service")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class EmpService implements Serializable {
+public class EmpService extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,12 +26,16 @@ public class EmpService implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "empService")
-    @JsonIgnoreProperties(value = { "empService", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "empService", "user", "employees" }, allowSetters = true)
     private Set<Rank> ranks = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "empService")
-    @JsonIgnoreProperties(value = { "empService", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "empService", "user", "employees" }, allowSetters = true)
     private Set<Unit> units = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "empService")
@@ -40,6 +44,7 @@ public class EmpService implements Serializable {
             "rank",
             "empService",
             "unit",
+            "user",
             "technicianEquipmentMappings",
             "patientInfoEmployeeIds",
             "patientInfoEmployeeHis",
@@ -75,6 +80,19 @@ public class EmpService implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public EmpService user(User user) {
+        this.setUser(user);
+        return this;
     }
 
     public Set<Rank> getRanks() {

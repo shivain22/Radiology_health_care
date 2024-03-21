@@ -2,6 +2,7 @@ package com.radiology.health.care.service.dto;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -18,6 +19,57 @@ public class TestCategoriesDTO implements Serializable {
     private EquipmentDTO equipment;
 
     private TestCategoriesDTO parentTestCategory;
+
+    private UserDTO user;
+
+    private String login;
+    private String createdBy;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    private Instant createdDate;
+
+    private String lastModifiedBy;
+
+    private Instant lastModifiedDate;
 
     public Long getId() {
         return id;
@@ -51,6 +103,14 @@ public class TestCategoriesDTO implements Serializable {
         this.parentTestCategory = parentTestCategory;
     }
 
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -80,6 +140,7 @@ public class TestCategoriesDTO implements Serializable {
             ", testName='" + getTestName() + "'" +
             ", equipment=" + getEquipment() +
             ", parentTestCategory=" + getParentTestCategory() +
+            ", user=" + getUser() +
             "}";
     }
 }

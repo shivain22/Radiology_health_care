@@ -93,6 +93,10 @@ public class RoomQueryService extends QueryService<Room> {
             if (criteria.getRoomNo() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getRoomNo(), Room_.roomNo));
             }
+            if (criteria.getUserId() != null) {
+                specification =
+                    specification.and(buildSpecification(criteria.getUserId(), root -> root.join(Room_.user, JoinType.LEFT).get(User_.id)));
+            }
             if (criteria.getEquipmentId() != null) {
                 specification =
                     specification.and(

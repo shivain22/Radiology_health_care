@@ -10,6 +10,7 @@ import com.radiology.health.care.domain.Equipment;
 import com.radiology.health.care.domain.PatientTestTimings;
 import com.radiology.health.care.domain.TestCategories;
 import com.radiology.health.care.domain.TestCategories;
+import com.radiology.health.care.domain.User;
 import com.radiology.health.care.repository.TestCategoriesRepository;
 import com.radiology.health.care.service.dto.TestCategoriesDTO;
 import com.radiology.health.care.service.mapper.TestCategoriesMapper;
@@ -75,6 +76,11 @@ class TestCategoriesResourceIT {
             equipment = TestUtil.findAll(em, Equipment.class).get(0);
         }
         testCategories.setEquipment(equipment);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        testCategories.setUser(user);
         return testCategories;
     }
 
@@ -96,6 +102,11 @@ class TestCategoriesResourceIT {
             equipment = TestUtil.findAll(em, Equipment.class).get(0);
         }
         testCategories.setEquipment(equipment);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        testCategories.setUser(user);
         return testCategories;
     }
 
@@ -319,6 +330,28 @@ class TestCategoriesResourceIT {
 
         // Get all the testCategoriesList where parentTestCategory equals to (parentTestCategoryId + 1)
         defaultTestCategoriesShouldNotBeFound("parentTestCategoryId.equals=" + (parentTestCategoryId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            testCategoriesRepository.saveAndFlush(testCategories);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        testCategories.setUser(user);
+        testCategoriesRepository.saveAndFlush(testCategories);
+        Long userId = user.getId();
+        // Get all the testCategoriesList where user equals to userId
+        defaultTestCategoriesShouldBeFound("userId.equals=" + userId);
+
+        // Get all the testCategoriesList where user equals to (userId + 1)
+        defaultTestCategoriesShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     @Test

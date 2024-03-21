@@ -33,6 +33,8 @@ export const RankDetail = () => {
           <dd>{rankEntity.name}</dd>
           <dt>Emp Service</dt>
           <dd>{rankEntity.empService ? rankEntity.empService.id : ''}</dd>
+          <dt>User</dt>
+          <dd>{rankEntity.user ? rankEntity.user.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/rank" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

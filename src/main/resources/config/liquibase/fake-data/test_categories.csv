@@ -1,11 +1,11 @@
-id;test_name;equipment_id
-1;fragment pfft;1
-2;pitiful;2
-3;black;3
-4;out vicious;4
-5;ill-informed object;5
-6;round wholly search;6
-7;aw unnecessarily real;7
-8;if;8
-9;colorfully singer;9
-10;brr readily;10
+id;test_name;equipment_id;user_id
+1;fragment pfft;1;1
+2;pitiful;2;2
+3;black;3;2
+4;out vicious;4;2
+5;ill-informed object;5;1
+6;round wholly search;6;2
+7;aw unnecessarily real;7;1
+8;if;8;2
+9;colorfully singer;9;1
+10;brr readily;10;2

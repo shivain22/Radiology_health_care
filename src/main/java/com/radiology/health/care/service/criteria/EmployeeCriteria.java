@@ -37,6 +37,8 @@ public class EmployeeCriteria implements Serializable, Criteria {
 
     private LongFilter unitId;
 
+    private LongFilter userId;
+
     private LongFilter technicianEquipmentMappingId;
 
     private LongFilter patientInfoEmployeeIdId;
@@ -58,6 +60,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
         this.rankId = other.rankId == null ? null : other.rankId.copy();
         this.empServiceId = other.empServiceId == null ? null : other.empServiceId.copy();
         this.unitId = other.unitId == null ? null : other.unitId.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.technicianEquipmentMappingId = other.technicianEquipmentMappingId == null ? null : other.technicianEquipmentMappingId.copy();
         this.patientInfoEmployeeIdId = other.patientInfoEmployeeIdId == null ? null : other.patientInfoEmployeeIdId.copy();
         this.patientInfoEmployeeHisId = other.patientInfoEmployeeHisId == null ? null : other.patientInfoEmployeeHisId.copy();
@@ -191,6 +194,21 @@ public class EmployeeCriteria implements Serializable, Criteria {
         this.unitId = unitId;
     }
 
+    public LongFilter getUserId() {
+        return userId;
+    }
+
+    public LongFilter userId() {
+        if (userId == null) {
+            userId = new LongFilter();
+        }
+        return userId;
+    }
+
+    public void setUserId(LongFilter userId) {
+        this.userId = userId;
+    }
+
     public LongFilter getTechnicianEquipmentMappingId() {
         return technicianEquipmentMappingId;
     }
@@ -277,6 +295,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
             Objects.equals(rankId, that.rankId) &&
             Objects.equals(empServiceId, that.empServiceId) &&
             Objects.equals(unitId, that.unitId) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(technicianEquipmentMappingId, that.technicianEquipmentMappingId) &&
             Objects.equals(patientInfoEmployeeIdId, that.patientInfoEmployeeIdId) &&
             Objects.equals(patientInfoEmployeeHisId, that.patientInfoEmployeeHisId) &&
@@ -296,6 +315,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
             rankId,
             empServiceId,
             unitId,
+            userId,
             technicianEquipmentMappingId,
             patientInfoEmployeeIdId,
             patientInfoEmployeeHisId,
@@ -316,6 +336,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
             (rankId != null ? "rankId=" + rankId + ", " : "") +
             (empServiceId != null ? "empServiceId=" + empServiceId + ", " : "") +
             (unitId != null ? "unitId=" + unitId + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (technicianEquipmentMappingId != null ? "technicianEquipmentMappingId=" + technicianEquipmentMappingId + ", " : "") +
             (patientInfoEmployeeIdId != null ? "patientInfoEmployeeIdId=" + patientInfoEmployeeIdId + ", " : "") +
             (patientInfoEmployeeHisId != null ? "patientInfoEmployeeHisId=" + patientInfoEmployeeHisId + ", " : "") +

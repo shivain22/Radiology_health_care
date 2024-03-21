@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "jhi_rank")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Rank implements Serializable {
+public class Rank extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,8 +28,12 @@ public class Rank implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "ranks", "units", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "ranks", "units", "employees" }, allowSetters = true)
     private EmpService empService;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "rank")
     @JsonIgnoreProperties(
@@ -37,6 +41,7 @@ public class Rank implements Serializable {
             "rank",
             "empService",
             "unit",
+            "user",
             "technicianEquipmentMappings",
             "patientInfoEmployeeIds",
             "patientInfoEmployeeHis",
@@ -84,6 +89,19 @@ public class Rank implements Serializable {
 
     public Rank empService(EmpService empService) {
         this.setEmpService(empService);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Rank user(User user) {
+        this.setUser(user);
         return this;
     }
 

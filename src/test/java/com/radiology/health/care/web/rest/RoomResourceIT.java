@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.radiology.health.care.IntegrationTest;
 import com.radiology.health.care.domain.Equipment;
 import com.radiology.health.care.domain.Room;
+import com.radiology.health.care.domain.User;
 import com.radiology.health.care.repository.RoomRepository;
 import com.radiology.health.care.service.dto.RoomDTO;
 import com.radiology.health.care.service.mapper.RoomMapper;
@@ -64,6 +65,11 @@ class RoomResourceIT {
      */
     public static Room createEntity(EntityManager em) {
         Room room = new Room().roomNo(DEFAULT_ROOM_NO);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        room.setUser(user);
         return room;
     }
 
@@ -75,6 +81,11 @@ class RoomResourceIT {
      */
     public static Room createUpdatedEntity(EntityManager em) {
         Room room = new Room().roomNo(UPDATED_ROOM_NO);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        room.setUser(user);
         return room;
     }
 
@@ -274,6 +285,28 @@ class RoomResourceIT {
 
         // Get all the roomList where roomNo is greater than SMALLER_ROOM_NO
         defaultRoomShouldBeFound("roomNo.greaterThan=" + SMALLER_ROOM_NO);
+    }
+
+    @Test
+    @Transactional
+    void getAllRoomsByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            roomRepository.saveAndFlush(room);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        room.setUser(user);
+        roomRepository.saveAndFlush(room);
+        Long userId = user.getId();
+        // Get all the roomList where user equals to userId
+        defaultRoomShouldBeFound("userId.equals=" + userId);
+
+        // Get all the roomList where user equals to (userId + 1)
+        defaultRoomShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     @Test

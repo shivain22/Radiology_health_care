@@ -9,6 +9,7 @@ import com.radiology.health.care.IntegrationTest;
 import com.radiology.health.care.domain.EmpService;
 import com.radiology.health.care.domain.Employee;
 import com.radiology.health.care.domain.Unit;
+import com.radiology.health.care.domain.User;
 import com.radiology.health.care.repository.UnitRepository;
 import com.radiology.health.care.service.dto.UnitDTO;
 import com.radiology.health.care.service.mapper.UnitMapper;
@@ -74,6 +75,11 @@ class UnitResourceIT {
             empService = TestUtil.findAll(em, EmpService.class).get(0);
         }
         unit.setEmpService(empService);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        unit.setUser(user);
         return unit;
     }
 
@@ -95,6 +101,11 @@ class UnitResourceIT {
             empService = TestUtil.findAll(em, EmpService.class).get(0);
         }
         unit.setEmpService(empService);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        unit.setUser(user);
         return unit;
     }
 
@@ -290,6 +301,28 @@ class UnitResourceIT {
 
         // Get all the unitList where empService equals to (empServiceId + 1)
         defaultUnitShouldNotBeFound("empServiceId.equals=" + (empServiceId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllUnitsByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            unitRepository.saveAndFlush(unit);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        unit.setUser(user);
+        unitRepository.saveAndFlush(unit);
+        Long userId = user.getId();
+        // Get all the unitList where user equals to userId
+        defaultUnitShouldBeFound("userId.equals=" + userId);
+
+        // Get all the unitList where user equals to (userId + 1)
+        defaultUnitShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     @Test

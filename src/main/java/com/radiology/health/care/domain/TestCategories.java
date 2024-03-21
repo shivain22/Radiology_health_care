@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "test_categories")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class TestCategories implements Serializable {
+public class TestCategories extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,19 +28,29 @@ public class TestCategories implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "room", "technicianEquipmentMappings", "testCategories" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "room", "user", "technicianEquipmentMappings", "testCategories" }, allowSetters = true)
     private Equipment equipment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "equipment", "parentTestCategory", "patientTestTimings", "testCategoryParents" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "equipment", "parentTestCategory", "user", "patientTestTimings", "testCategoryParents" },
+        allowSetters = true
+    )
     private TestCategories parentTestCategory;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "testCategories")
     @JsonIgnoreProperties(value = { "patientInfo", "testCategories" }, allowSetters = true)
     private Set<PatientTestTimings> patientTestTimings = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentTestCategory")
-    @JsonIgnoreProperties(value = { "equipment", "parentTestCategory", "patientTestTimings", "testCategoryParents" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "equipment", "parentTestCategory", "user", "patientTestTimings", "testCategoryParents" },
+        allowSetters = true
+    )
     private Set<TestCategories> testCategoryParents = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -94,6 +104,19 @@ public class TestCategories implements Serializable {
 
     public TestCategories parentTestCategory(TestCategories testCategories) {
         this.setParentTestCategory(testCategories);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public TestCategories user(User user) {
+        this.setUser(user);
         return this;
     }
 

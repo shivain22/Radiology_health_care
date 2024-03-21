@@ -9,6 +9,7 @@ import com.radiology.health.care.IntegrationTest;
 import com.radiology.health.care.domain.Employee;
 import com.radiology.health.care.domain.Equipment;
 import com.radiology.health.care.domain.TechnicianEquipmentMapping;
+import com.radiology.health.care.domain.User;
 import com.radiology.health.care.repository.TechnicianEquipmentMappingRepository;
 import com.radiology.health.care.service.dto.TechnicianEquipmentMappingDTO;
 import com.radiology.health.care.service.mapper.TechnicianEquipmentMappingMapper;
@@ -86,6 +87,11 @@ class TechnicianEquipmentMappingResourceIT {
             employee = TestUtil.findAll(em, Employee.class).get(0);
         }
         technicianEquipmentMapping.setEmployee(employee);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        technicianEquipmentMapping.setUser(user);
         return technicianEquipmentMapping;
     }
 
@@ -117,6 +123,11 @@ class TechnicianEquipmentMappingResourceIT {
             employee = TestUtil.findAll(em, Employee.class).get(0);
         }
         technicianEquipmentMapping.setEmployee(employee);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        technicianEquipmentMapping.setUser(user);
         return technicianEquipmentMapping;
     }
 
@@ -322,6 +333,28 @@ class TechnicianEquipmentMappingResourceIT {
 
         // Get all the technicianEquipmentMappingList where employee equals to (employeeId + 1)
         defaultTechnicianEquipmentMappingShouldNotBeFound("employeeId.equals=" + (employeeId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllTechnicianEquipmentMappingsByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            technicianEquipmentMappingRepository.saveAndFlush(technicianEquipmentMapping);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        technicianEquipmentMapping.setUser(user);
+        technicianEquipmentMappingRepository.saveAndFlush(technicianEquipmentMapping);
+        Long userId = user.getId();
+        // Get all the technicianEquipmentMappingList where user equals to userId
+        defaultTechnicianEquipmentMappingShouldBeFound("userId.equals=" + userId);
+
+        // Get all the technicianEquipmentMappingList where user equals to (userId + 1)
+        defaultTechnicianEquipmentMappingShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     /**

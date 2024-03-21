@@ -123,6 +123,12 @@ public class EmployeeQueryService extends QueryService<Employee> {
                         buildSpecification(criteria.getUnitId(), root -> root.join(Employee_.unit, JoinType.LEFT).get(Unit_.id))
                     );
             }
+            if (criteria.getUserId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getUserId(), root -> root.join(Employee_.user, JoinType.LEFT).get(User_.id))
+                    );
+            }
             if (criteria.getTechnicianEquipmentMappingId() != null) {
                 specification =
                     specification.and(

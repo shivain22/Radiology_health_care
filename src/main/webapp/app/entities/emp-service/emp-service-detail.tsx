@@ -31,6 +31,8 @@ export const EmpServiceDetail = () => {
             <span id="name">Name</span>
           </dt>
           <dd>{empServiceEntity.name}</dd>
+          <dt>User</dt>
+          <dd>{empServiceEntity.user ? empServiceEntity.user.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/emp-service" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

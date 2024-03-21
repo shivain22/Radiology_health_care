@@ -35,6 +35,9 @@
             <column name="unit_id" type="bigint">
                 <constraints nullable="false" />
             </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -63,6 +66,7 @@
             <column name="rank_id" type="numeric"/>
             <column name="emp_service_id" type="numeric"/>
             <column name="unit_id" type="numeric"/>
+            <column name="user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

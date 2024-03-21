@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "equipment")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Equipment implements Serializable {
+public class Equipment extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,15 +27,22 @@ public class Equipment implements Serializable {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "equipment" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "equipment" }, allowSetters = true)
     private Room room;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipment")
-    @JsonIgnoreProperties(value = { "equipment", "employee" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "equipment", "employee", "user" }, allowSetters = true)
     private Set<TechnicianEquipmentMapping> technicianEquipmentMappings = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipment")
-    @JsonIgnoreProperties(value = { "equipment", "parentTestCategory", "patientTestTimings", "testCategoryParents" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "equipment", "parentTestCategory", "user", "patientTestTimings", "testCategoryParents" },
+        allowSetters = true
+    )
     private Set<TestCategories> testCategories = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -76,6 +83,19 @@ public class Equipment implements Serializable {
 
     public Equipment room(Room room) {
         this.setRoom(room);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Equipment user(User user) {
+        this.setUser(user);
         return this;
     }
 

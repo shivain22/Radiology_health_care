@@ -9,6 +9,7 @@ import com.radiology.health.care.IntegrationTest;
 import com.radiology.health.care.domain.EmpService;
 import com.radiology.health.care.domain.Employee;
 import com.radiology.health.care.domain.Rank;
+import com.radiology.health.care.domain.User;
 import com.radiology.health.care.repository.RankRepository;
 import com.radiology.health.care.service.dto.RankDTO;
 import com.radiology.health.care.service.mapper.RankMapper;
@@ -74,6 +75,11 @@ class RankResourceIT {
             empService = TestUtil.findAll(em, EmpService.class).get(0);
         }
         rank.setEmpService(empService);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        rank.setUser(user);
         return rank;
     }
 
@@ -95,6 +101,11 @@ class RankResourceIT {
             empService = TestUtil.findAll(em, EmpService.class).get(0);
         }
         rank.setEmpService(empService);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        rank.setUser(user);
         return rank;
     }
 
@@ -290,6 +301,28 @@ class RankResourceIT {
 
         // Get all the rankList where empService equals to (empServiceId + 1)
         defaultRankShouldNotBeFound("empServiceId.equals=" + (empServiceId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllRanksByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            rankRepository.saveAndFlush(rank);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        rank.setUser(user);
+        rankRepository.saveAndFlush(rank);
+        Long userId = user.getId();
+        // Get all the rankList where user equals to userId
+        defaultRankShouldBeFound("userId.equals=" + userId);
+
+        // Get all the rankList where user equals to (userId + 1)
+        defaultRankShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     @Test

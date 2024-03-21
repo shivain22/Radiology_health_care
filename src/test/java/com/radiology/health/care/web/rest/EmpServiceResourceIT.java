@@ -10,6 +10,7 @@ import com.radiology.health.care.domain.EmpService;
 import com.radiology.health.care.domain.Employee;
 import com.radiology.health.care.domain.Rank;
 import com.radiology.health.care.domain.Unit;
+import com.radiology.health.care.domain.User;
 import com.radiology.health.care.repository.EmpServiceRepository;
 import com.radiology.health.care.service.dto.EmpServiceDTO;
 import com.radiology.health.care.service.mapper.EmpServiceMapper;
@@ -65,6 +66,11 @@ class EmpServiceResourceIT {
      */
     public static EmpService createEntity(EntityManager em) {
         EmpService empService = new EmpService().name(DEFAULT_NAME);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        empService.setUser(user);
         return empService;
     }
 
@@ -76,6 +82,11 @@ class EmpServiceResourceIT {
      */
     public static EmpService createUpdatedEntity(EntityManager em) {
         EmpService empService = new EmpService().name(UPDATED_NAME);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        empService.setUser(user);
         return empService;
     }
 
@@ -249,6 +260,28 @@ class EmpServiceResourceIT {
 
         // Get all the empServiceList where name does not contain UPDATED_NAME
         defaultEmpServiceShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllEmpServicesByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            empServiceRepository.saveAndFlush(empService);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        empService.setUser(user);
+        empServiceRepository.saveAndFlush(empService);
+        Long userId = user.getId();
+        // Get all the empServiceList where user equals to userId
+        defaultEmpServiceShouldBeFound("userId.equals=" + userId);
+
+        // Get all the empServiceList where user equals to (userId + 1)
+        defaultEmpServiceShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     @Test
