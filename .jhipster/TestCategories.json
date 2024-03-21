@@ -1,0 +1,39 @@
+{
+  "annotations": {
+    "changelogDate": "20240320083027"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "test_categories",
+  "fields": [
+    {
+      "fieldName": "testName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "TestCategories",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "equipment",
+      "otherEntityRelationshipName": "testCategories",
+      "relationshipName": "equipment",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "testCategories",
+      "otherEntityRelationshipName": "testCategoryParent",
+      "relationshipName": "parentTestCategory",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

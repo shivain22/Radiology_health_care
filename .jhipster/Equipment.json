@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20240320063523"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "equipment",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Equipment",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "room",
+      "otherEntityRelationshipName": "equipment",
+      "relationshipName": "room",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

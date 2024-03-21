@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity TestCategories.
+    -->
+    <changeSet id="20240320083027-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="equipment_id"
+                                 baseTableName="test_categories"
+                                 constraintName="fk_test_categories__equipment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="equipment"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="parent_test_category_id"
+                                 baseTableName="test_categories"
+                                 constraintName="fk_test_categories__parent_test_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="test_categories"
+                                 />
+    </changeSet>
+</databaseChangeLog>

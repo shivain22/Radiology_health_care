@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity PatientTestTimings.
+    -->
+    <changeSet id="20240320065748-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="patient_info_id"
+                                 baseTableName="patient_test_timings"
+                                 constraintName="fk_patient_test_timings__patient_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="patient_info"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="test_categories_id"
+                                 baseTableName="patient_test_timings"
+                                 constraintName="fk_patient_test_timings__test_categories_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="test_categories"
+                                 />
+    </changeSet>
+</databaseChangeLog>

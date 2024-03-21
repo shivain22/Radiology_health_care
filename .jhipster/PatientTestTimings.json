@@ -1,0 +1,50 @@
+{
+  "annotations": {
+    "changelogDate": "20240320065748"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "patient_test_timings",
+  "fields": [
+    {
+      "fieldName": "testTimings",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "priority",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "clinicalNote",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "spclInstruction",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "PatientTestTimings",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "patientInfo",
+      "otherEntityRelationshipName": "patientTestTimings",
+      "relationshipName": "patientInfo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "testCategories",
+      "otherEntityRelationshipName": "patientTestTimings",
+      "relationshipName": "testCategories",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

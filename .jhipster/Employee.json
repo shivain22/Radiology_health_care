@@ -1,0 +1,62 @@
+{
+  "annotations": {
+    "changelogDate": "20240320064606"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "employee",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "technician",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "his",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "serviceNo",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Employee",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "rank",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "rank",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "empService",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "empService",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "unit",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "unit",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
