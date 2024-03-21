@@ -5,9 +5,7 @@ pipeline {
             steps {
                 script {
                         // Execute docker compose command
-                        sh '''
-                    echo '' | sudo -S docker-compose -f ./src/main/docker/app.yml up
-                    '''
+                        sh 'sudo docker compose -f ./src/main/docker/app.yml up'
                 }
             }
         }
