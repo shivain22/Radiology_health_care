@@ -7,7 +7,11 @@ pipeline {
                     // Change directory to ./src/main/docker
                     dir('./src/main/docker') {
                         // Execute docker compose command
-                        sh 'docker compose -f app.yml up'
+                        sh '''
+                    sudo -s <<EOF
+                    docker compose -f /path/to/your/app.yml up
+                    EOF
+                    '''
                     }
                 }
             }
