@@ -388,7 +388,7 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>radiologyhealthcare:latest</image>
+                            <image>shivain22/radiology_health_care:latest</image>
                         </to>
                         <container>
                             <entrypoint>
