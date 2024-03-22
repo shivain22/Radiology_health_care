@@ -9,6 +9,8 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("authToken")?.value || "";
 
   if (isPublicPath && token) {
+    //add the ranks path to show up after isPublic path and token is present
+
     return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
   }
 
@@ -18,5 +20,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/auth", "/dashboard/:path*"],
+  matcher: ["/", "/signin", "/dashboard/:path*" , "/ranks/:path*"],
 };
