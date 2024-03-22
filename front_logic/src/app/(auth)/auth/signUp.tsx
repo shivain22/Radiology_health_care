@@ -15,9 +15,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpForm } from "@/inferedTypes";
 import { signUpSchema } from "@/formSchemas";
 import { SignupUser } from "@/server_actions/(auth)/signup";
+import { useFormStatus } from "react-dom";
 
-
-const SignUp= () => {
+const SignUp = () => {
   const form = useForm<signUpForm>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -29,20 +29,20 @@ const SignUp= () => {
       confirmPassword: "",
     },
   });
-  const handleSubmit=async(values:signUpForm)=>
-  {
-    try{
+  const handleSubmit = async (values: signUpForm) => {
+    try {
       await SignupUser(values);
-    }
-    catch(error)
-    {
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
   return (
     <div className="flex flex-col  justify-between pt-5">
       <Form {...form}>
-        <form className="max-w-md w-full flex flex-col gap-4" onSubmit={form.handleSubmit(handleSubmit)}>
+        <form
+          className="max-w-md w-full flex flex-col gap-4"
+          onSubmit={form.handleSubmit(handleSubmit)}
+        >
           <FormField
             control={form.control}
             name="username"
@@ -51,7 +51,7 @@ const SignUp= () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="username" {...field} />
+                    <Input placeholder="Username" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -67,7 +67,7 @@ const SignUp= () => {
                 <FormItem>
                   <FormLabel>First Name:</FormLabel>
                   <FormControl>
-                    <Input placeholder="first name" {...field} />
+                    <Input placeholder="First Name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -83,7 +83,7 @@ const SignUp= () => {
                 <FormItem>
                   <FormLabel>Last Name:</FormLabel>
                   <FormControl>
-                    <Input placeholder="last name" {...field} />
+                    <Input placeholder="Last Name" {...field} />
                   </FormControl>
                 </FormItem>
               );
@@ -98,7 +98,7 @@ const SignUp= () => {
                 <FormItem>
                   <FormLabel>Email:</FormLabel>
                   <FormControl>
-                    <Input placeholder="email" type="email" {...field} />
+                    <Input placeholder="Email" type="email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -113,7 +113,7 @@ const SignUp= () => {
                 <FormItem>
                   <FormLabel>Password:</FormLabel>
                   <FormControl>
-                    <Input placeholder="password" type="password" {...field} />
+                    <Input placeholder="Password" type="password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -128,17 +128,30 @@ const SignUp= () => {
                 <FormItem>
                   <FormLabel>Confirm Password:</FormLabel>
                   <FormControl>
-                    <Input placeholder="confirm password" type="password"{...field} />
+                    <Input
+                      placeholder="Confirm Password"
+                      type="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               );
             }}
           />
-          <Button className="w-full">Submit</Button>
+          <Btn />
         </form>
       </Form>
     </div>
   );
 };
 export default SignUp;
+
+const Btn = () => {
+  const { pending } = useFormStatus();
+  return (
+    <Button className="w-full" disabled={pending} type="submit">
+      {pending ? "Submitting" : "Submit"}
+    </Button>
+  );
+};

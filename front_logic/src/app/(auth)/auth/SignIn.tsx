@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { SignedInUser } from "@/server_actions/(auth)/signIn";
 import { signInForm } from "@/inferedTypes";
 import { signInSchema } from "@/formSchemas";
+import { useFormStatus } from "react-dom";
 
 
 
@@ -55,7 +56,7 @@ const SignIn = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="username" type="text" {...field} />
+                    <Input placeholder="Username" type="text" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,7 +94,7 @@ const SignIn = () => {
               );
             }}
           /> */}
-          <Button className="w-full">Submit</Button>
+          <Btn/>
         </form>
       </Form>
     </main>
@@ -101,3 +102,11 @@ const SignIn = () => {
 };
 
 export default SignIn;
+const Btn = () => {
+  const { pending } = useFormStatus();
+  return (
+    <Button className="w-full" disabled={pending} type="submit">
+      {pending ? "Signing In" : "Sign In"}
+    </Button>
+  );
+};
