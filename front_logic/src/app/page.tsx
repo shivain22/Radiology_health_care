@@ -1,12 +1,14 @@
 import React from 'react'
+import Dashboard from './(app)/dashboard/page'
 
 const Home= () => {
   return (
     <div>
-      Navigation _ Bar
-      <h1>Home</h1>
+      {/* Navigation bar */}
       
       <p>Home page content</p>
+      <Dashboard />
+
     </div>
   )
 }
