@@ -1,11 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('Prepare') {
+        stage {
             steps {
                 script {
-                    
-                        // Execute docker compose command
                         sh 'docker-compose -f ./src/main/docker/app.yml up'
                 }
             }
