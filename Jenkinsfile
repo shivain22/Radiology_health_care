@@ -1,10 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage {
+        stage('Build and Deploy') { // Added stage name
             steps {
                 script {
-                        sh 'docker-compose -f ./src/main/docker/app.yml up'
+                    sh 'docker-compose -f ./src/main/docker/app.yml up'
                 }
             }
         }
