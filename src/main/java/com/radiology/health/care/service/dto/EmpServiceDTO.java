@@ -16,7 +16,7 @@ public class EmpServiceDTO implements Serializable {
     @NotNull
     private String name;
 
-    private UserDTO user;
+    private Long userId;
 
     private String login;
     private String createdBy;
@@ -63,6 +63,14 @@ public class EmpServiceDTO implements Serializable {
 
     private Instant createdDate;
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     private String lastModifiedBy;
 
     private Instant lastModifiedDate;
@@ -81,14 +89,6 @@ public class EmpServiceDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
     }
 
     @Override
@@ -118,7 +118,7 @@ public class EmpServiceDTO implements Serializable {
         return "EmpServiceDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", user=" + getUser() +
+            ", userId=" + getUserId() +
             "}";
     }
 }

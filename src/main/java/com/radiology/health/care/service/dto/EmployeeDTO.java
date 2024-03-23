@@ -21,13 +21,45 @@ public class EmployeeDTO implements Serializable {
 
     private String serviceNo;
 
-    private RankDTO rank;
+    private Long rankId;
 
-    private EmpServiceDTO empService;
+    private Long empServiceId;
 
-    private UnitDTO unit;
+    private Long unitId;
 
-    private UserDTO user;
+    public Long getRankId() {
+        return rankId;
+    }
+
+    public void setRankId(Long rankId) {
+        this.rankId = rankId;
+    }
+
+    public Long getEmpServiceId() {
+        return empServiceId;
+    }
+
+    public void setEmpServiceId(Long empServiceId) {
+        this.empServiceId = empServiceId;
+    }
+
+    public Long getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Long unitId) {
+        this.unitId = unitId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    private Long userId;
 
     private String login;
     private String createdBy;
@@ -118,38 +150,6 @@ public class EmployeeDTO implements Serializable {
         this.serviceNo = serviceNo;
     }
 
-    public RankDTO getRank() {
-        return rank;
-    }
-
-    public void setRank(RankDTO rank) {
-        this.rank = rank;
-    }
-
-    public EmpServiceDTO getEmpService() {
-        return empService;
-    }
-
-    public void setEmpService(EmpServiceDTO empService) {
-        this.empService = empService;
-    }
-
-    public UnitDTO getUnit() {
-        return unit;
-    }
-
-    public void setUnit(UnitDTO unit) {
-        this.unit = unit;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -180,10 +180,10 @@ public class EmployeeDTO implements Serializable {
             ", technician='" + getTechnician() + "'" +
             ", his='" + getHis() + "'" +
             ", serviceNo='" + getServiceNo() + "'" +
-            ", rank=" + getRank() +
-            ", empService=" + getEmpService() +
-            ", unit=" + getUnit() +
-            ", user=" + getUser() +
+            ", rankId=" + getRankId() +
+            ", empServiceId=" + getEmpServiceId() +
+            ", unitId=" + getUnitId() +
+            ", userId=" + getUserId() +
             "}";
     }
 }

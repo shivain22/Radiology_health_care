@@ -16,7 +16,7 @@ public class RoomDTO implements Serializable {
     @NotNull
     private Integer roomNo;
 
-    private UserDTO user;
+    private Long userId;
 
     private String login;
     private String createdBy;
@@ -83,12 +83,12 @@ public class RoomDTO implements Serializable {
         this.roomNo = roomNo;
     }
 
-    public UserDTO getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(UserDTO user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -118,7 +118,7 @@ public class RoomDTO implements Serializable {
         return "RoomDTO{" +
             "id=" + getId() +
             ", roomNo=" + getRoomNo() +
-            ", user=" + getUser() +
+            ", userId=" + getUserId() +
             "}";
     }
 }

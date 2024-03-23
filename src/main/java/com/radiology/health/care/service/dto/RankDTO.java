@@ -16,9 +16,9 @@ public class RankDTO implements Serializable {
     @NotNull
     private String name;
 
-    private EmpServiceDTO empService;
+    private Long empServiceId;
 
-    private UserDTO user;
+    private Long userId;
 
     private String login;
     private String createdBy;
@@ -55,6 +55,22 @@ public class RankDTO implements Serializable {
         this.lastModifiedBy = lastModifiedBy;
     }
 
+    public Long getEmpServiceId() {
+        return empServiceId;
+    }
+
+    public void setEmpServiceId(Long empServiceId) {
+        this.empServiceId = empServiceId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public Instant getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -85,22 +101,6 @@ public class RankDTO implements Serializable {
         this.name = name;
     }
 
-    public EmpServiceDTO getEmpService() {
-        return empService;
-    }
-
-    public void setEmpService(EmpServiceDTO empService) {
-        this.empService = empService;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -128,8 +128,8 @@ public class RankDTO implements Serializable {
         return "RankDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", empService=" + getEmpService() +
-            ", user=" + getUser() +
+            ", empServiceId=" + getEmpServiceId() +
+            ", userId=" + getUserId() +
             "}";
     }
 }

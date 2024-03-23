@@ -5,12 +5,14 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import org.hibernate.envers.Audited;
 
 /**
  * A PatientTestTimings.
  */
 @Entity
 @Table(name = "patient_test_timings")
+@Audited
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class PatientTestTimings extends AbstractAuditingEntity<Long> implements Serializable {
 
@@ -37,6 +39,16 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
     @NotNull
     @JsonIgnoreProperties(value = { "employeeId", "employeeHis", "employeeServiceNo", "patientTestTimings" }, allowSetters = true)
     private PatientInfo patientInfo;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    private String login;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(

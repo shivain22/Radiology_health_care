@@ -14,12 +14,14 @@ import java.util.Locale;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.envers.Audited;
 
 /**
  * A user.
  */
 @Entity
 @Table(name = "jhi_user")
+@Audited
 public class User extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;

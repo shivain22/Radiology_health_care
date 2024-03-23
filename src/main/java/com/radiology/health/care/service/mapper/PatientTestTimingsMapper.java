@@ -13,9 +13,40 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface PatientTestTimingsMapper extends EntityMapper<PatientTestTimingsDTO, PatientTestTimings> {
-    @Mapping(target = "patientInfo", source = "patientInfo", qualifiedByName = "patientInfoId")
-    @Mapping(target = "testCategories", source = "testCategories", qualifiedByName = "testCategoriesId")
+    @Mapping(target = "patientInfoId", source = "patientInfo.id")
+    @Mapping(target = "testCategoriesId", source = "testCategories.id")
     PatientTestTimingsDTO toDto(PatientTestTimings s);
+
+    @Mapping(target = "patientInfo.id", source = "patientInfo.id")
+    @Mapping(target = "testCategories.id", source = "testCategoriesId")
+    default PatientTestTimings toEntity(PatientTestTimingsDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        PatientTestTimings patientTestTimings = new PatientTestTimings();
+
+        PatientInfo patientInfo = new PatientInfo();
+        TestCategories testCategories = new TestCategories();
+
+        patientInfo.setId(dto.getPatientInfoId());
+        testCategories.setId(dto.getTestCategoriesId());
+
+        patientTestTimings.setId(dto.getId());
+        patientTestTimings.setTestTimings(dto.getTestTimings());
+        patientTestTimings.setPriority(dto.getPriority());
+        patientTestTimings.setClinicalNote(dto.getClinicalNote());
+        patientTestTimings.setSpclInstruction(dto.getSpclInstruction());
+        patientTestTimings.patientInfo(patientInfo);
+        patientTestTimings.testCategories(testCategories);
+        patientTestTimings.setLogin(dto.getLogin());
+        patientTestTimings.setCreatedBy(dto.getCreatedBy());
+        patientTestTimings.setCreatedDate(dto.getCreatedDate());
+        patientTestTimings.setLastModifiedBy(dto.getLastModifiedBy());
+        patientTestTimings.setLastModifiedDate(dto.getLastModifiedDate());
+
+        return patientTestTimings;
+    }
 
     @Named("patientInfoId")
     @BeanMapping(ignoreByDefault = true)

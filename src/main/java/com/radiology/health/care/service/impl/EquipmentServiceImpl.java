@@ -2,7 +2,10 @@ package com.radiology.health.care.service.impl;
 
 import com.radiology.health.care.domain.Equipment;
 import com.radiology.health.care.repository.EquipmentRepository;
+import com.radiology.health.care.repository.UserRepository;
+import com.radiology.health.care.security.SecurityUtils;
 import com.radiology.health.care.service.EquipmentService;
+import com.radiology.health.care.service.dto.AdminUserDTO;
 import com.radiology.health.care.service.dto.EquipmentDTO;
 import com.radiology.health.care.service.mapper.EquipmentMapper;
 import java.util.Optional;
@@ -26,14 +29,24 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     private final EquipmentMapper equipmentMapper;
 
-    public EquipmentServiceImpl(EquipmentRepository equipmentRepository, EquipmentMapper equipmentMapper) {
+    private final UserRepository userRepository;
+
+    public EquipmentServiceImpl(EquipmentRepository equipmentRepository, EquipmentMapper equipmentMapper, UserRepository userRepository) {
         this.equipmentRepository = equipmentRepository;
         this.equipmentMapper = equipmentMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
     public EquipmentDTO save(EquipmentDTO equipmentDTO) {
         log.debug("Request to save Equipment : {}", equipmentDTO);
+        AdminUserDTO adminUser = SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new RuntimeException("User could not be found"));
+        equipmentDTO.setUserId(adminUser.getId());
+        equipmentDTO.setLogin(adminUser.getLogin());
         Equipment equipment = equipmentMapper.toEntity(equipmentDTO);
         equipment = equipmentRepository.save(equipment);
         return equipmentMapper.toDto(equipment);
@@ -42,6 +55,13 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public EquipmentDTO update(EquipmentDTO equipmentDTO) {
         log.debug("Request to update Equipment : {}", equipmentDTO);
+        AdminUserDTO adminUser = SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new RuntimeException("User could not be found"));
+        equipmentDTO.setUserId(adminUser.getId());
+        equipmentDTO.setLogin(adminUser.getLogin());
         Equipment equipment = equipmentMapper.toEntity(equipmentDTO);
         equipment = equipmentRepository.save(equipment);
         return equipmentMapper.toDto(equipment);
@@ -50,6 +70,13 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public Optional<EquipmentDTO> partialUpdate(EquipmentDTO equipmentDTO) {
         log.debug("Request to partially update Equipment : {}", equipmentDTO);
+        AdminUserDTO adminUser = SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new RuntimeException("User could not be found"));
+        equipmentDTO.setUserId(adminUser.getId());
+        equipmentDTO.setLogin(adminUser.getLogin());
 
         return equipmentRepository
             .findById(equipmentDTO.getId())

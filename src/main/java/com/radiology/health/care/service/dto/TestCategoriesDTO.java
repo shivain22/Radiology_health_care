@@ -16,11 +16,11 @@ public class TestCategoriesDTO implements Serializable {
     @NotNull
     private String testName;
 
-    private EquipmentDTO equipment;
+    private Long equipmentId;
 
-    private TestCategoriesDTO parentTestCategory;
+    private Long parentTestCategoryId;
 
-    private UserDTO user;
+    private Long userId;
 
     private String login;
     private String createdBy;
@@ -83,32 +83,32 @@ public class TestCategoriesDTO implements Serializable {
         return testName;
     }
 
+    public Long getEquipmentId() {
+        return equipmentId;
+    }
+
+    public void setEquipmentId(Long equipmentId) {
+        this.equipmentId = equipmentId;
+    }
+
+    public Long getParentTestCategoryId() {
+        return parentTestCategoryId;
+    }
+
+    public void setParentTestCategoryId(Long parentTestCategoryId) {
+        this.parentTestCategoryId = parentTestCategoryId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public void setTestName(String testName) {
         this.testName = testName;
-    }
-
-    public EquipmentDTO getEquipment() {
-        return equipment;
-    }
-
-    public void setEquipment(EquipmentDTO equipment) {
-        this.equipment = equipment;
-    }
-
-    public TestCategoriesDTO getParentTestCategory() {
-        return parentTestCategory;
-    }
-
-    public void setParentTestCategory(TestCategoriesDTO parentTestCategory) {
-        this.parentTestCategory = parentTestCategory;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
     }
 
     @Override
@@ -138,9 +138,9 @@ public class TestCategoriesDTO implements Serializable {
         return "TestCategoriesDTO{" +
             "id=" + getId() +
             ", testName='" + getTestName() + "'" +
-            ", equipment=" + getEquipment() +
-            ", parentTestCategory=" + getParentTestCategory() +
-            ", user=" + getUser() +
+            ", equipmentId=" + getEquipmentId() +
+            ", parentTestCategoryId=" + getParentTestCategoryId() +
+            ", userId=" + getUserId() +
             "}";
     }
 }

@@ -11,10 +11,43 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface PatientInfoMapper extends EntityMapper<PatientInfoDTO, PatientInfo> {
-    @Mapping(target = "employeeId", source = "employeeId", qualifiedByName = "employeeId")
-    @Mapping(target = "employeeHis", source = "employeeHis", qualifiedByName = "employeeHis")
-    @Mapping(target = "employeeServiceNo", source = "employeeServiceNo", qualifiedByName = "employeeServiceNo")
+    @Mapping(target = "employeeIdId", source = "employeeId.id")
+    @Mapping(target = "employeeHisNoId", source = "employeeHis.his")
+    @Mapping(target = "employeeServiceNoId", source = "employeeServiceNo.serviceNo")
     PatientInfoDTO toDto(PatientInfo s);
+
+    @Mapping(target = "employeeId.id", source = "employeeIdId")
+    @Mapping(target = "employeeHis.his", source = "employeeHisNoId")
+    @Mapping(target = "employeeServiceNo.serviceNo", source = "employeeServiceNoId")
+    default PatientInfo toEntity(PatientInfoDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        PatientInfo patientInfo = new PatientInfo();
+        Employee employeeId = new Employee();
+        Employee employeeHis = new Employee();
+        Employee employeeServiceNo = new Employee();
+
+        employeeId.setId(dto.getEmployeeIdId());
+        employeeHis.setId(dto.getEmployeeIdId());
+        employeeHis.setHis(dto.getEmployeeHisNoId());
+        employeeServiceNo.setId(dto.getEmployeeIdId());
+        employeeServiceNo.serviceNo(dto.getEmployeeServiceNoId());
+
+        patientInfo.setId(dto.getId());
+        patientInfo.setName(dto.getName());
+        patientInfo.setAge(dto.getAge());
+        patientInfo.setGender(dto.getGender());
+        patientInfo.setDateOfBirth(dto.getDateOfBirth());
+        patientInfo.setMobile(dto.getMobile());
+        patientInfo.setRelation(dto.getRelation());
+        patientInfo.employeeId(employeeId);
+        patientInfo.employeeHis(employeeHis);
+        patientInfo.employeeServiceNo(employeeServiceNo);
+
+        return patientInfo;
+    }
 
     @Named("employeeId")
     @BeanMapping(ignoreByDefault = true)

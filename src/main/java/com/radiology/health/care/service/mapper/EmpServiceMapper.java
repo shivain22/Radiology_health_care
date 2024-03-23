@@ -11,8 +11,31 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface EmpServiceMapper extends EntityMapper<EmpServiceDTO, EmpService> {
-    @Mapping(target = "user", source = "user", qualifiedByName = "userId")
+    @Mapping(target = "userId", source = "user.id")
     EmpServiceDTO toDto(EmpService s);
+
+    @Mapping(target = "user.id", source = "userId")
+    default EmpService toEntity(EmpServiceDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        EmpService empService = new EmpService();
+        User user = new User();
+
+        user.setId(dto.getUserId());
+
+        empService.setCreatedBy(dto.getCreatedBy());
+        empService.setCreatedDate(dto.getCreatedDate());
+        empService.setLastModifiedBy(dto.getLastModifiedBy());
+        empService.setLastModifiedDate(dto.getLastModifiedDate());
+        empService.setId(dto.getId());
+        empService.setName(dto.getName());
+        empService.user(user);
+        empService.setLogin(dto.getLogin());
+
+        return empService;
+    }
 
     @Named("userId")
     @BeanMapping(ignoreByDefault = true)

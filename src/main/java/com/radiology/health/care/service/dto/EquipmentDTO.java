@@ -16,9 +16,9 @@ public class EquipmentDTO implements Serializable {
     @NotNull
     private String name;
 
-    private RoomDTO room;
+    private Long roomId;
 
-    private UserDTO user;
+    private Long userId;
 
     private String login;
     private String createdBy;
@@ -85,20 +85,20 @@ public class EquipmentDTO implements Serializable {
         this.name = name;
     }
 
-    public RoomDTO getRoom() {
-        return room;
+    public Long getRoomId() {
+        return roomId;
     }
 
-    public void setRoom(RoomDTO room) {
-        this.room = room;
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
     }
 
-    public UserDTO getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(UserDTO user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -128,8 +128,8 @@ public class EquipmentDTO implements Serializable {
         return "EquipmentDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", room=" + getRoom() +
-            ", user=" + getUser() +
+            ", roomId=" + getRoomId() +
+            ", userId=" + getUserId() +
             "}";
     }
 }

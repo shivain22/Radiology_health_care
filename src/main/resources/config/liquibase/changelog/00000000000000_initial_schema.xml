@@ -113,4 +113,679 @@
             <column name="local_date" type="date"/>
         </createTable>
     </changeSet>
+
+
+
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-1">
+        <createTable tableName="emp_service">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="login" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-2">
+        <createTable tableName="emp_service_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="login" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-3">
+        <createTable tableName="employee">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="technician" type="BIT(1)"/>
+            <column name="his" type="VARCHAR(255)">
+                <constraints unique="true"/>
+            </column>
+            <column name="service_no" type="VARCHAR(255)">
+                <constraints unique="true"/>
+            </column>
+            <column name="rank_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="emp_service_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="login" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-4">
+        <createTable tableName="employee_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="his" type="VARCHAR(255)"/>
+            <column name="login" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="service_no" type="VARCHAR(255)"/>
+            <column name="technician" type="BIT(1)"/>
+            <column name="emp_service_id" type="BIGINT"/>
+            <column name="rank_id" type="BIGINT"/>
+            <column name="unit_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-5">
+        <createTable tableName="equipment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="login" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-6">
+        <createTable tableName="equipment_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="login" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="room_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-8">
+        <createTable tableName="jhi_authority_aud">
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-10">
+        <createTable tableName="jhi_rank">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="emp_service_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="login" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-11">
+        <createTable tableName="jhi_rank_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="login" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="emp_service_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-13">
+        <createTable tableName="jhi_user_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="activated" type="BIT(1)"/>
+            <column name="activation_key" type="VARCHAR(20)"/>
+            <column name="email" type="VARCHAR(254)"/>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="image_url" type="VARCHAR(256)"/>
+            <column name="lang_key" type="VARCHAR(10)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="login" type="VARCHAR(50)"/>
+            <column name="password_hash" type="VARCHAR(60)"/>
+            <column name="reset_date" type="datetime"/>
+            <column name="reset_key" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-15">
+        <createTable tableName="jhi_user_authority_aud">
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="authority_name" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-16">
+        <createTable tableName="patient_info">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="age" type="INT"/>
+            <column name="gender" type="VARCHAR(255)"/>
+            <column name="date_of_birth" type="VARCHAR(255)"/>
+            <column name="mobile" type="INT"/>
+            <column name="relation" type="VARCHAR(255)"/>
+            <column name="employee_id_id" type="BIGINT"/>
+            <column name="employee_his_id" type="BIGINT"/>
+            <column name="employee_service_no_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-17">
+        <createTable tableName="patient_info_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="age" type="INT"/>
+            <column name="date_of_birth" type="VARCHAR(255)"/>
+            <column name="gender" type="VARCHAR(255)"/>
+            <column name="mobile" type="INT"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="relation" type="VARCHAR(255)"/>
+            <column name="employee_his_id" type="BIGINT"/>
+            <column name="employee_id_id" type="BIGINT"/>
+            <column name="employee_service_no_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-18">
+        <createTable tableName="patient_test_timings">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="test_timings" type="date"/>
+            <column name="priority" type="VARCHAR(255)"/>
+            <column name="clinical_note" type="VARCHAR(255)"/>
+            <column name="spcl_instruction" type="VARCHAR(255)"/>
+            <column name="patient_info_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="test_categories_id" type="BIGINT"/>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="login" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-19">
+        <createTable tableName="patient_test_timings_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="clinical_note" type="VARCHAR(255)"/>
+            <column name="login" type="VARCHAR(255)"/>
+            <column name="priority" type="VARCHAR(255)"/>
+            <column name="spcl_instruction" type="VARCHAR(255)"/>
+            <column name="test_timings" type="date"/>
+            <column name="patient_info_id" type="BIGINT"/>
+            <column name="test_categories_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-20">
+        <createTable tableName="revinfo">
+            <column autoIncrement="true" name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtstmp" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-21">
+        <createTable tableName="room">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="room_no" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="login" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-22">
+        <createTable tableName="room_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="login" type="VARCHAR(255)"/>
+            <column name="room_no" type="INT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-23">
+        <createTable tableName="technician_equipment_mapping">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="date_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="equipment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employee_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="login" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-24">
+        <createTable tableName="technician_equipment_mapping_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="date_time" type="datetime"/>
+            <column name="login" type="VARCHAR(255)"/>
+            <column name="employee_id" type="BIGINT"/>
+            <column name="equipment_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-25">
+        <createTable tableName="test_categories">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="test_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="equipment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_test_category_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="login" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-26">
+        <createTable tableName="test_categories_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="login" type="VARCHAR(255)"/>
+            <column name="test_name" type="VARCHAR(255)"/>
+            <column name="equipment_id" type="BIGINT"/>
+            <column name="parent_test_category_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-27">
+        <createTable tableName="unit">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="emp_service_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="login" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-28">
+        <createTable tableName="unit_aud">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="revtype" type="TINYINT(3)"/>
+            <column name="login" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="emp_service_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-30">
+        <createIndex associatedWith="" indexName="fk_emp_service__user_id" tableName="emp_service">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-31">
+        <createIndex associatedWith="" indexName="fk_employee__emp_service_id" tableName="employee">
+            <column name="emp_service_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-32">
+        <createIndex associatedWith="" indexName="fk_employee__rank_id" tableName="employee">
+            <column name="rank_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-33">
+        <createIndex associatedWith="" indexName="fk_employee__unit_id" tableName="employee">
+            <column name="unit_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-34">
+        <createIndex associatedWith="" indexName="fk_employee__user_id" tableName="employee">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-35">
+        <createIndex associatedWith="" indexName="fk_equipment__room_id" tableName="equipment">
+            <column name="room_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-36">
+        <createIndex associatedWith="" indexName="fk_equipment__user_id" tableName="equipment">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-37">
+        <createIndex associatedWith="" indexName="fk_jhi_rank__emp_service_id" tableName="jhi_rank">
+            <column name="emp_service_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-38">
+        <createIndex associatedWith="" indexName="fk_jhi_rank__user_id" tableName="jhi_rank">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-39">
+        <createIndex associatedWith="" indexName="fk_patient_info__employee_his_id" tableName="patient_info">
+            <column name="employee_his_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-40">
+        <createIndex associatedWith="" indexName="fk_patient_info__employee_id_id" tableName="patient_info">
+            <column name="employee_id_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-41">
+        <createIndex associatedWith="" indexName="fk_patient_info__employee_service_no_id" tableName="patient_info">
+            <column name="employee_service_no_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-42">
+        <createIndex associatedWith="" indexName="fk_patient_test_timings__patient_info_id" tableName="patient_test_timings">
+            <column name="patient_info_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-43">
+        <createIndex associatedWith="" indexName="fk_patient_test_timings__test_categories_id" tableName="patient_test_timings">
+            <column name="test_categories_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-44">
+        <createIndex associatedWith="" indexName="fk_room__user_id" tableName="room">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-45">
+        <createIndex associatedWith="" indexName="fk_technician_equipment_mapping__employee_id" tableName="technician_equipment_mapping">
+            <column name="employee_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-46">
+        <createIndex associatedWith="" indexName="fk_technician_equipment_mapping__equipment_id" tableName="technician_equipment_mapping">
+            <column name="equipment_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-47">
+        <createIndex associatedWith="" indexName="fk_technician_equipment_mapping__user_id" tableName="technician_equipment_mapping">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-48">
+        <createIndex associatedWith="" indexName="fk_test_categories__equipment_id" tableName="test_categories">
+            <column name="equipment_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-49">
+        <createIndex associatedWith="" indexName="fk_test_categories__parent_test_category_id" tableName="test_categories">
+            <column name="parent_test_category_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-50">
+        <createIndex associatedWith="" indexName="fk_test_categories__user_id" tableName="test_categories">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-51">
+        <createIndex associatedWith="" indexName="fk_unit__emp_service_id" tableName="unit">
+            <column name="emp_service_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-52">
+        <createIndex associatedWith="" indexName="fk_unit__user_id" tableName="unit">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-53">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="employee_aud" constraintName="FK118cwnbfk1ny0ttu4bfqmeh8q" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-54">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="equipment_aud" constraintName="FK122t31k6i770ouvof6h94u8fs" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-55">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="jhi_user_aud" constraintName="FK360rxmxk73qds15xb0d1vyuon" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-56">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="room_aud" constraintName="FK3imob23ymcieeauoffmyfyghl" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-57">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="jhi_authority_aud" constraintName="FK5jaydkxg53oo5udsui0jgm8d3" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-58">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="patient_info_aud" constraintName="FK6vmivyvqymrsoedylvxibtioq" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-59">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="test_categories_aud" constraintName="FKh807pkllp5cni2w7c9ribm65o" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-60">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="patient_test_timings_aud" constraintName="FKjrufdjaq976p2dsigb8kw6dqw" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-61">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="technician_equipment_mapping_aud" constraintName="FKkpg4mxlw5ux6ay5ao3cqj10cd" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-62">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="jhi_rank_aud" constraintName="FKnkt9h1dvmk9kcqqldy7yf0bgo" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-63">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="jhi_user_authority_aud" constraintName="FKqassfc1hps15yxs58td60f8hw" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-64">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="unit_aud" constraintName="FKqbpud4oopppq6ie41xd8qusto" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-65">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="emp_service_aud" constraintName="FKrjiinmbar9p6hkjeotl96236e" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-67">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="emp_service" constraintName="fk_emp_service__user_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-68">
+        <addForeignKeyConstraint baseColumnNames="emp_service_id" baseTableName="employee" constraintName="fk_employee__emp_service_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="emp_service" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-69">
+        <addForeignKeyConstraint baseColumnNames="rank_id" baseTableName="employee" constraintName="fk_employee__rank_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jhi_rank" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-70">
+        <addForeignKeyConstraint baseColumnNames="unit_id" baseTableName="employee" constraintName="fk_employee__unit_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="unit" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-71">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="employee" constraintName="fk_employee__user_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-72">
+        <addForeignKeyConstraint baseColumnNames="room_id" baseTableName="equipment" constraintName="fk_equipment__room_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="room" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-73">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="equipment" constraintName="fk_equipment__user_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-74">
+        <addForeignKeyConstraint baseColumnNames="emp_service_id" baseTableName="jhi_rank" constraintName="fk_jhi_rank__emp_service_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="emp_service" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-75">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_rank" constraintName="fk_jhi_rank__user_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-76">
+        <addForeignKeyConstraint baseColumnNames="employee_his_id" baseTableName="patient_info" constraintName="fk_patient_info__employee_his_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-77">
+        <addForeignKeyConstraint baseColumnNames="employee_id_id" baseTableName="patient_info" constraintName="fk_patient_info__employee_id_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-78">
+        <addForeignKeyConstraint baseColumnNames="employee_service_no_id" baseTableName="patient_info" constraintName="fk_patient_info__employee_service_no_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-79">
+        <addForeignKeyConstraint baseColumnNames="patient_info_id" baseTableName="patient_test_timings" constraintName="fk_patient_test_timings__patient_info_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="patient_info" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-80">
+        <addForeignKeyConstraint baseColumnNames="test_categories_id" baseTableName="patient_test_timings" constraintName="fk_patient_test_timings__test_categories_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="test_categories" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-81">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="room" constraintName="fk_room__user_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-82">
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="technician_equipment_mapping" constraintName="fk_technician_equipment_mapping__employee_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-83">
+        <addForeignKeyConstraint baseColumnNames="equipment_id" baseTableName="technician_equipment_mapping" constraintName="fk_technician_equipment_mapping__equipment_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="equipment" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-84">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="technician_equipment_mapping" constraintName="fk_technician_equipment_mapping__user_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-85">
+        <addForeignKeyConstraint baseColumnNames="equipment_id" baseTableName="test_categories" constraintName="fk_test_categories__equipment_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="equipment" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-86">
+        <addForeignKeyConstraint baseColumnNames="parent_test_category_id" baseTableName="test_categories" constraintName="fk_test_categories__parent_test_category_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="test_categories" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-87">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="test_categories" constraintName="fk_test_categories__user_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-88">
+        <addForeignKeyConstraint baseColumnNames="emp_service_id" baseTableName="unit" constraintName="fk_unit__emp_service_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="emp_service" validate="true"/>
+    </changeSet>
+    <changeSet author="Sai Mahesh (generated)" id="1711172282246-89">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="unit" constraintName="fk_unit__user_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+
 </databaseChangeLog>
