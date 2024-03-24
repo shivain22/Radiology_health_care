@@ -32,7 +32,9 @@ public interface TestCategoriesMapper extends EntityMapper<TestCategoriesDTO, Te
         User user = new User();
 
         equipment.setId(dto.getEquipmentId());
-        parentTestCategory.setId(dto.getParentTestCategoryId());
+        if (dto.getParentTestCategoryId() != null) {
+            parentTestCategory.setId(dto.getParentTestCategoryId());
+        }
         user.setId(dto.getUserId());
 
         testCategories.setCreatedBy(dto.getCreatedBy());
