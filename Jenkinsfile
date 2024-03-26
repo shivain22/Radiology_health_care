@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('SonarQube Analysis') {
             steps {
-                bat 'mvn clean verify sonar:sonar'
+                bat './mvnw -Pprod clean verify sonar:sonar'
             }
         }
     }
