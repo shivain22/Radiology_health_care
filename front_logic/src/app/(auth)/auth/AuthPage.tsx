@@ -11,7 +11,7 @@ const AuthPage = () => {
   return (
     <>
       <div className="flex flex-col items-center pt-20">
-        <FcPlus className="text-6xl pb-2" />
+        <FcPlus className="text-6xl m-5" />
         <Tabs defaultValue="signin" className="w-[500px]">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signin">Sign in</TabsTrigger>

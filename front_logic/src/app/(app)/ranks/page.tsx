@@ -1,5 +1,6 @@
 import Loading from '@/app/loading';
-import RanksList from '@/modules/ranks/RanksList';
+import RankList from '@/modules/ranks/RankList';
+
 import { getRanks } from '@/server_actions/(get-requests)/getRanks';
 import { getServices } from '@/server_actions/(get-requests)/getServices';
 import React from 'react'
@@ -26,7 +27,7 @@ const Ranks = async () => {
   //getting the data for the ranks and 
   const ranks = await getRanks();
   const services = await getServices();
-  console.log(ranks)
+  // console.log(services)
   // const { services } = await getServices();
   return (
     <Suspense fallback={<Loading />}>
@@ -34,7 +35,7 @@ const Ranks = async () => {
       {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
       {/* <RankList ranks={ranks} services={services} /> */}
       <h1>Services and Ranks</h1>
-      <RanksList ranks={ranks} services={services} />
+      <RankList ranks={ranks} services={services} />
      
     </Suspense>
   );
