@@ -17,7 +17,7 @@ module.exports = {
   },
   cacheDirectory: '<rootDir>/target/jest-cache',
   coverageDirectory: '<rootDir>/target/test-results/',
-  testMatch: ['<rootDir>/src/main/webapp/app//*.(spec|test).(ts|tsx)'],
+  testMatch: ['<rootDir>/src/main/webapp/app//@(*.)@(spec.ts?(x))'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   coveragePathIgnorePatterns: ['<rootDir>/src/test/javascript/'],
   moduleNameMapper: mapTypescriptAliasToJestAlias({
