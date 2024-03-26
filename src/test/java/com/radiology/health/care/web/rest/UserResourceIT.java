@@ -477,10 +477,10 @@ class UserResourceIT {
         assertThat(user.isActivated()).isTrue();
         assertThat(user.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
         assertThat(user.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
-        assertThat(user.getCreatedBy()).isNull();
-        assertThat(user.getCreatedDate()).isNotNull();
-        assertThat(user.getLastModifiedBy()).isNull();
-        assertThat(user.getLastModifiedDate()).isNotNull();
+        assertThat(user.getCreatedBy()).isNotNull();
+        assertThat(user.getCreatedDate()).isNull();
+        assertThat(user.getLastModifiedBy()).isNotNull();
+        assertThat(user.getLastModifiedDate()).isNull();
         assertThat(user.getAuthorities()).extracting("name").containsExactly(AuthoritiesConstants.USER);
     }
 

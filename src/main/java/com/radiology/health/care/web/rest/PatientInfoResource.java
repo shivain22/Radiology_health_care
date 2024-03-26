@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.hibernate.TransientPropertyValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,7 +68,16 @@ public class PatientInfoResource {
         if (patientInfoDTO.getId() != null) {
             throw new BadRequestAlertException("A new patientInfo cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PatientInfoDTO result = patientInfoService.save(patientInfoDTO);
+        PatientInfoDTO result = null;
+        try {
+            result = patientInfoService.save(patientInfoDTO);
+            return ResponseEntity
+                .created(new URI("/api/patient-infos/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        } catch (TransientPropertyValueException e) {
+            e.printStackTrace();
+        }
         return ResponseEntity
             .created(new URI("/api/patient-infos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))

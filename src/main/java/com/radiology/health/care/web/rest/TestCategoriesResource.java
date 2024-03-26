@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.hibernate.TransientPropertyValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,7 +71,16 @@ public class TestCategoriesResource {
         if (testCategoriesDTO.getId() != null) {
             throw new BadRequestAlertException("A new testCategories cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        TestCategoriesDTO result = testCategoriesService.save(testCategoriesDTO);
+        TestCategoriesDTO result = null;
+        try {
+            result = testCategoriesService.save(testCategoriesDTO);
+            return ResponseEntity
+                .created(new URI("/api/test-categories/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        } catch (TransientPropertyValueException e) {
+            e.printStackTrace();
+        }
         return ResponseEntity
             .created(new URI("/api/test-categories/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))

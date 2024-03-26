@@ -25,17 +25,20 @@ public interface PatientInfoMapper extends EntityMapper<PatientInfoDTO, PatientI
         }
 
         PatientInfo patientInfo = new PatientInfo();
-        Employee employeeId = new Employee();
-        Employee employeeHis = new Employee();
-        Employee employeeServiceNo = new Employee();
+        Employee employeeId = null;
+        Employee employeeHis = null;
+        Employee employeeServiceNo = null;
 
-        if (dto.getEmployeeIdId() != null) {
+        if (dto.getEmployeeIdId() != 0 && dto.getEmployeeIdId() != null) {
+            employeeId = new Employee();
+            employeeHis = new Employee();
+            employeeServiceNo = new Employee();
             employeeId.setId(dto.getEmployeeIdId());
             employeeHis.setId(dto.getEmployeeIdId());
             employeeServiceNo.setId(dto.getEmployeeIdId());
+            employeeHis.setHis(dto.getEmployeeHisNoId());
+            employeeServiceNo.serviceNo(dto.getEmployeeServiceNoId());
         }
-        employeeHis.setHis(dto.getEmployeeHisNoId());
-        employeeServiceNo.serviceNo(dto.getEmployeeServiceNoId());
 
         patientInfo.setId(dto.getId());
         patientInfo.setName(dto.getName());

@@ -12,7 +12,9 @@ import com.radiology.health.care.domain.TechnicianEquipmentMapping;
 import com.radiology.health.care.domain.TestCategories;
 import com.radiology.health.care.domain.User;
 import com.radiology.health.care.repository.EquipmentRepository;
+import com.radiology.health.care.repository.RoomRepository;
 import com.radiology.health.care.service.dto.EquipmentDTO;
+import com.radiology.health.care.service.dto.RoomDTO;
 import com.radiology.health.care.service.mapper.EquipmentMapper;
 import jakarta.persistence.EntityManager;
 import java.util.List;
@@ -37,6 +39,7 @@ class EquipmentResourceIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final Integer DEFAULT_ROOM = 1;
 
     private static final String ENTITY_API_URL = "/api/equipment";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -58,6 +61,11 @@ class EquipmentResourceIT {
 
     private Equipment equipment;
 
+    @Autowired
+    private RoomRepository roomRepository;
+
+    private RoomResourceIT roomResourceIT;
+
     /**
      * Create an entity for this test.
      *
@@ -66,11 +74,15 @@ class EquipmentResourceIT {
      */
     public static Equipment createEntity(EntityManager em) {
         Equipment equipment = new Equipment().name(DEFAULT_NAME);
+        Room room = RoomResourceIT.createEntity(em);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
         em.flush();
+        em.persist(room);
+        em.flush();
         equipment.setUser(user);
+        equipment.setRoom(room);
         return equipment;
     }
 
@@ -82,11 +94,15 @@ class EquipmentResourceIT {
      */
     public static Equipment createUpdatedEntity(EntityManager em) {
         Equipment equipment = new Equipment().name(UPDATED_NAME);
+        Room room = RoomResourceIT.createEntity(em);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
         em.flush();
+        em.persist(room);
+        em.flush();
         equipment.setUser(user);
+        equipment.setRoom(room);
         return equipment;
     }
 
@@ -98,14 +114,31 @@ class EquipmentResourceIT {
     @Test
     @Transactional
     void createEquipment() throws Exception {
+        // Create a Room entity and save it
+        //        Room room = new Room();
+        //        room.setRoomNo(1);
+        //
+        Room room = RoomResourceIT.createEntity(em);
+        room = roomRepository.save(room);
         int databaseSizeBeforeCreate = equipmentRepository.findAll().size();
-        // Create the Equipment
+
+        // Create the Equipment entity and set its attributes
+        Equipment equipment = new Equipment();
+        equipment.setName(DEFAULT_NAME);
+        equipment.setRoom(room); // Set the Room entity
+        // Set other attributes as needed
+
+        // Convert Equipment entity to DTO
         EquipmentDTO equipmentDTO = equipmentMapper.toDto(equipment);
+        equipmentDTO.setRoomId(room.getId());
+        System.out.println("RoomId" + room.getId());
+
+        // Perform POST request to create Equipment
         restEquipmentMockMvc
             .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(equipmentDTO)))
             .andExpect(status().isCreated());
 
-        // Validate the Equipment in the database
+        // Validate Equipment creation in the database
         List<Equipment> equipmentList = equipmentRepository.findAll();
         assertThat(equipmentList).hasSize(databaseSizeBeforeCreate + 1);
         Equipment testEquipment = equipmentList.get(equipmentList.size() - 1);

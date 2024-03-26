@@ -1,5 +1,6 @@
 package com.radiology.health.care.service.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -18,7 +19,8 @@ public class TestCategoriesDTO implements Serializable {
 
     private Long equipmentId;
 
-    private Long parentTestCategoryId;
+    @Column(nullable = true)
+    private Long parentTestCategoryId = 0L;
 
     private Long userId;
 

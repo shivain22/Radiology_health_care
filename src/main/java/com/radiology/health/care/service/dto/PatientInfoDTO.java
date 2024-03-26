@@ -1,5 +1,6 @@
 package com.radiology.health.care.service.dto;
 
+import jakarta.persistence.Column;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -23,10 +24,13 @@ public class PatientInfoDTO implements Serializable {
 
     private String relation;
 
-    private Long employeeIdId;
+    @Column(nullable = true)
+    private Long employeeIdId = 0L;
 
+    @Column(nullable = true)
     private String employeeHisNoId;
 
+    @Column(nullable = true)
     private String employeeServiceNoId;
 
     public Long getId() {
