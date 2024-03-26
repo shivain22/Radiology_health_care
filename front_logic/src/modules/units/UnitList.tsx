@@ -1,5 +1,5 @@
 "use client";
-import { empService } from "@/schema/services";
+import { ServiceData } from "@/schema/services";
 import { UnitData } from "@/schema/units";
 import { useState } from "react";
 import Modal from "../shared/Modal";
@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { PlusIcon } from "lucide-react";
+import { deleteUnitsAction } from "@/server_actions/actions/units";
 
 type NOpenModal = (unit?: UnitData) => void;
 
@@ -18,7 +19,7 @@ export default function UnitList({
   serviceId,
 }: {
   units: UnitData[];
-  services: empService[];
+  services: ServiceData[];
   serviceId?: number;
 }) {
   const [open, setOpen] = useState(false);
@@ -83,9 +84,13 @@ const Unit = ({
       <div className="w-full">
         <div>{unit.name}</div>
       </div>
+      <div className="flex gap-2 mr-5">
+
       <Button variant={"link"} asChild>
         <Link href={basePath + "/" + unit.id}>Edit</Link>
       </Button>
+      <Button onClick={()=> deleteUnitsAction(unit.id)} variant={"destructive"}>Delete</Button>
+      </div>
     </li>
   );
 };

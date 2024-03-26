@@ -42,3 +42,22 @@ export const createUnitsActions = async (values: InsertUnitParams) => {
     return handleErrors(e);
   }
 };
+
+export const deleteUnitsAction = async (id: number) => {
+  try {
+    const response = await axios.delete(
+      unitsUrl + "/" + id,
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
+    if (response.status === 204) {
+      revalidateUnits();
+      return console.log("Units deleted successfully");
+    }
+  } catch (e) {
+    return handleErrors(e);
+  }
+}
