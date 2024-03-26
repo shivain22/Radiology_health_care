@@ -1,0 +1,65 @@
+{
+  "annotations": {
+    "changelogDate": "20240320065354"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "patient_info",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateOfBirth",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mobile",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "relation",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "PatientInfo",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "patientInfoEmployeeId",
+      "relationshipName": "employeeId",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "his",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "patientInfoEmployeeHis",
+      "relationshipName": "employeeHis",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "serviceNo",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "patientInfoEmployeeServiceNo",
+      "relationshipName": "employeeServiceNo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -1,0 +1,31 @@
+{
+  "annotations": {
+    "changelogDate": "20240320063120"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "room",
+  "fields": [
+    {
+      "fieldName": "roomNo",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Room",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "room",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

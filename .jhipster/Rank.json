@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20240320063706"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "jhi_rank",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Rank",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "empService",
+      "otherEntityRelationshipName": "rank",
+      "relationshipName": "empService",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "rank",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

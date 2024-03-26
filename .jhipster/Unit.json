@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20240320063915"
+  },
+  "dto": "mapstruct",
+  "entityTableName": "unit",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Unit",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "empService",
+      "otherEntityRelationshipName": "unit",
+      "relationshipName": "empService",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "unit",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
