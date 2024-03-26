@@ -22,7 +22,7 @@ import {
   RankData,
   RankedForm,
 } from "@/schema/ranks";
-import { empService } from "@/schema/services";
+import { ServiceData } from "@/schema/services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { useState, useTransition } from "react";
@@ -39,7 +39,7 @@ const RankForm = ({
   openModal,
   closeModal,
 }: {
-  services: empService[];
+  services: ServiceData[];
   serviceId?: number;
   rank?: RankData | null;
   openModal: (rank?: RankData) => void;
@@ -54,7 +54,7 @@ const RankForm = ({
     resolver: zodResolver(formData),
     defaultValues: {
       name: rank?.name || "",
-      empServiceId: "none",
+      empServiceId: ""
     },
   });
   const editing = !form.formState.isValid;
@@ -110,7 +110,7 @@ const RankForm = ({
                       {services?.map((service) => (
                         <SelectItem
                           key={service.id}
-                          value={service.id}
+                          value={service.id.toString()}
                         >
                           {service.name}
                         </SelectItem>
