@@ -50,7 +50,6 @@
     "start": "npm run webapp:dev --",
     "start-tls": "npm run webapp:dev -- --env.tls",
     "pretest": "npm run lint",
-    "test": "npm run jest --",
     "test-ci": "npm run lint && npm run jest:update --",
     "test:watch": "npm run jest -- --watch",
     "watch": "concurrently 'npm run start' npm:backend:start",
