@@ -42,3 +42,23 @@ export const createRankAction = async (values: InsertRankParams) => {
     return handleErrors(e);
   }
 };
+
+
+export const deleteRankAction = async (id: number) => {
+  try {
+    const response = await axios.delete(
+      ranksUrl + "/" + id,
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
+    if (response.status === 204) {
+        revalidateRanks();
+      return console.log("Rank deleted successfully");
+    }
+  } catch (e) {
+    return handleErrors(e);
+  }
+}
