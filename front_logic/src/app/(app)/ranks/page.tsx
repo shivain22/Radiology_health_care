@@ -34,7 +34,7 @@ const Ranks = async () => {
 
       {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
       {/* <RankList ranks={ranks} services={services} /> */}
-      <h1>Services and Ranks</h1>
+      <h1>Ranks</h1>
       <RankList ranks={ranks} services={services} />
      
     </Suspense>
