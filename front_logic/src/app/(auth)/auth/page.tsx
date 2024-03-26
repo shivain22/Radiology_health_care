@@ -1,13 +1,10 @@
 import React from "react";
-import SignIn from "./SignIn";
-import SignUp from "../signup/signUp";
-
+import AuthPage from "./AuthPage";
 
 const SignInPage = () => {
   return (
     <div>
-      <SignIn />
-      <SignUp />
+      <AuthPage />
     </div>
   );
 };

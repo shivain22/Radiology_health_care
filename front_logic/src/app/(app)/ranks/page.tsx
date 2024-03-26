@@ -1,9 +1,42 @@
-import React from 'react'
+import Loading from '@/app/loading';
+import RankList from '@/modules/ranks/RankList';
 
-const RanksPage = () => {
+import { getRanks } from '@/server_actions/(get-requests)/getRanks';
+import { getServices } from '@/server_actions/(get-requests)/getServices';
+import React from 'react'
+import { Suspense } from "react";
+
+
+export default async function RanksPage() {
   return (
-    <div>RanksPage</div>
-  )
+    <main>
+      <div className="relative">
+        <div className="flex justify-between">
+          <h1 className="font-semibold text-2xl my-2">Ranks</h1>
+        </div>
+        <Ranks />
+      </div>
+    </main>
+  );
 }
 
-export default RanksPage
+
+const Ranks = async () => {
+  
+
+  //getting the data for the ranks and 
+  const ranks = await getRanks();
+  const services = await getServices();
+  // console.log(services)
+  // const { services } = await getServices();
+  return (
+    <Suspense fallback={<Loading />}>
+
+      {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
+      {/* <RankList ranks={ranks} services={services} /> */}
+      <h1>Services and Ranks</h1>
+      <RankList ranks={ranks} services={services} />
+     
+    </Suspense>
+  );
+};
