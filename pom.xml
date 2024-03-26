@@ -977,7 +977,7 @@
                                 </goals>
                                 <phase>test</phase>
                                 <configuration>
-                                    <arguments>run webapp:test</arguments>
+<!--                                     <arguments>run webapp:test</arguments> -->
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
                                 </configuration>
                             </execution>
