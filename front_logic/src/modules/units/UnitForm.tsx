@@ -17,7 +17,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useValidatedForm } from "@/hooks/useValidatedForm";
-import { empService } from "@/schema/services";
+import { ServiceData } from "@/schema/services";
+
 import { formData, UnitData, Unitform } from "@/schema/units";
 import { createUnitsActions } from "@/server_actions/actions/units";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,7 +32,7 @@ export const UnitForm = ({
   openModal,
   serviceId,
 }: {
-  services: empService[];
+  services: ServiceData[];
   serviceId?: number;
   unit?: UnitData | null;
   openModal: (unit?: UnitData) => void;

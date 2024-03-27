@@ -1,5 +1,5 @@
 "use client";
-import { empService } from "@/schema/services";
+import { ServiceData } from "@/schema/services";
 import { UnitData } from "@/schema/units";
 import { useState } from "react";
 import Modal from "../shared/Modal";
@@ -18,7 +18,7 @@ export default function UnitList({
   serviceId,
 }: {
   units: UnitData[];
-  services: empService[];
+  services: ServiceData[];
   serviceId?: number;
 }) {
   const [open, setOpen] = useState(false);
