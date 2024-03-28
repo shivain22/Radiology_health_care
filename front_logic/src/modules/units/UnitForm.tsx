@@ -17,7 +17,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useValidatedForm } from "@/hooks/useValidatedForm";
-import { empService } from "@/schema/services";
+import { ServiceData } from "@/schema/services";
+
 import { formData, UnitData, Unitform } from "@/schema/units";
 import { createUnitsActions } from "@/server_actions/actions/units";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,7 +32,7 @@ export const UnitForm = ({
   openModal,
   serviceId,
 }: {
-  services: empService[];
+  services: ServiceData[];
   serviceId?: number;
   unit?: UnitData | null;
   openModal: (unit?: UnitData) => void;
@@ -45,7 +46,7 @@ export const UnitForm = ({
     resolver: zodResolver(formData),
     defaultValues: {
       name: unit?.name || "",
-      empserviceId: "none",
+      empServiceId: "none",
     },
   });
   const editing = !form.formState.isValid;
@@ -54,7 +55,7 @@ export const UnitForm = ({
     try {
       const payload = {
         name: data.name,
-        empserviceId:parseInt(data.empserviceId,10),
+        empServiceId:Number(data.empServiceId),
       };
       console.log(payload);
       await createUnitsActions(payload);
@@ -83,7 +84,7 @@ export const UnitForm = ({
           />
           <FormField
             control={form.control}
-            name="empserviceId"
+            name="empServiceId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Service</FormLabel>

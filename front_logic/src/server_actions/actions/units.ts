@@ -20,20 +20,13 @@ const handleErrors = (e: unknown) => {
 
 const revalidateUnits = () => revalidatePath("/units");
 
-export const createUnitsActions = async (values: InsertUnitParams) => {
+export const createUnitsActions = async (unit: InsertUnitParams) => {
   try {
-    const response = await axios.post(
-      unitsUrl,
-      {
-        name: values.name,
-        empServiceId: values.empserviceId,
+    const response = await axios.post(unitsUrl, unit, {
+      headers: {
+        Authorization: bearerToken,
       },
-      {
-        headers: {
-          Authorization: bearerToken,
-        },
-      }
-    );
+    });
     if (response.status === 201) {
       revalidateUnits();
       return console.log("Units added successfully");
@@ -43,16 +36,13 @@ export const createUnitsActions = async (values: InsertUnitParams) => {
   }
 };
 
-export const deleteUnitsAction = async (id: number) => {
+export const deleteUnitAction = async (id: number) => {
   try {
-    const response = await axios.delete(
-      unitsUrl + "/" + id,
-      {
-        headers: {
-          Authorization: bearerToken,
-        },
-      }
-    );
+    const response = await axios.delete(unitsUrl + "/" + id, {
+      headers: {
+        Authorization: bearerToken,
+      },
+    });
     if (response.status === 204) {
       revalidateUnits();
       return console.log("Units deleted successfully");
@@ -60,4 +50,4 @@ export const deleteUnitsAction = async (id: number) => {
   } catch (e) {
     return handleErrors(e);
   }
-}
+};

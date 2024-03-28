@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { PlusIcon } from "lucide-react";
-import { deleteUnitsAction } from "@/server_actions/actions/units";
+import { deleteUnitAction } from "@/server_actions/actions/units";
 
 type NOpenModal = (unit?: UnitData) => void;
 
@@ -81,15 +81,21 @@ const Unit = ({
 
   return (
     <li className={cn("flex justify-between my-2")}>
-      <div className="w-full">
+      <div className="w-full flex gap-2">
         <div>{unit.name}</div>
+        -
+        <h1>Unit Id :</h1>
+        <div>{unit.id}</div>
+        -
+        Employee service ID
+        <div>{unit.empServiceId}</div>
       </div>
       <div className="flex gap-2 mr-5">
 
       <Button variant={"link"} asChild>
         <Link href={basePath + "/" + unit.id}>Edit</Link>
       </Button>
-      <Button onClick={()=> deleteUnitsAction(unit.id)} variant={"destructive"}>Delete</Button>
+      <Button onClick={()=> deleteUnitAction(unit.id)} variant={"destructive"}>Delete</Button>
       </div>
     </li>
   );
