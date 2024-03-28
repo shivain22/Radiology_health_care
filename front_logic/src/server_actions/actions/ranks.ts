@@ -20,14 +20,11 @@ const handleErrors = (e: unknown) => {
 
 const revalidateRanks = () => revalidatePath("/ranks");
 
-export const createRankAction = async (values: InsertRankParams) => {
+export const createRankAction = async (rank: InsertRankParams) => {
   try {
     const response = await axios.post(
       ranksUrl,
-      {
-        name: values.name,
-        empServiceId: values.empServiceId,
-      },
+      rank,
       {
         headers: {
           Authorization: bearerToken,

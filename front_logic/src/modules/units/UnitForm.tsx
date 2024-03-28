@@ -46,7 +46,7 @@ export const UnitForm = ({
     resolver: zodResolver(formData),
     defaultValues: {
       name: unit?.name || "",
-      empserviceId: "none",
+      empServiceId: "none",
     },
   });
   const editing = !form.formState.isValid;
@@ -55,7 +55,7 @@ export const UnitForm = ({
     try {
       const payload = {
         name: data.name,
-        empserviceId:parseInt(data.empserviceId,10),
+        empServiceId:Number(data.empServiceId),
       };
       console.log(payload);
       await createUnitsActions(payload);
@@ -84,7 +84,7 @@ export const UnitForm = ({
           />
           <FormField
             control={form.control}
-            name="empserviceId"
+            name="empServiceId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Service</FormLabel>

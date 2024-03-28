@@ -84,8 +84,15 @@ const Rank = ({
 
   return (
     <li className={cn("flex justify-between my-2")}>
-      <div className="w-full">
+      <div className="w-full flex gap-2">
         <div>{rank.name}</div>
+        -
+        <h1>Rank Id :</h1>
+        <div>{rank.id}</div>
+        -
+        <h1>Employee service Id :</h1>
+
+        <div>{rank.empServiceId}</div>
       </div>
       <div className="flex gap-2 mr-5">
         <Button variant={"link"} asChild>
@@ -96,7 +103,6 @@ const Rank = ({
     </li>
   );
 };
-
 const EmptyState = ({ openModal }: { openModal: TOpenModal }) => {
   return (
     <div className="text-center">

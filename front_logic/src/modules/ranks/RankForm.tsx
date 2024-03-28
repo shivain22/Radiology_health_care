@@ -58,8 +58,8 @@ const RankForm = ({
     },
   });
   const editing = !form.formState.isValid;
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [pending, startMutation] = useTransition();
+  // const [isDeleting, setIsDeleting] = useState(false);
+  // const [pending, startMutation] = useTransition();
 
   const router = useRouter();
   const backpath = useBackPath("ranks");

@@ -3,12 +3,12 @@ import { z } from "zod";
 export const unitData = z.object({
   id: z.number(),
   name: z.string(),
-  empserviceId: z.number(),
+  empServiceId: z.number(),
 });
 
 export const formData = z.object({
   name: z.string(),
-  empserviceId: z.string(),
+  empServiceId: z.string(),
 });
 
 const insertUnitParams = unitData.omit({ id: true });

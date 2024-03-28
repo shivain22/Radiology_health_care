@@ -1,10 +1,10 @@
 "use server";
-import { InsertUnitParams } from "@/schema/units";
+import { InsertEmployeeParams } from "@/schema/employees";
 import axios from "axios";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-const unitsUrl = process.env.BACKEND_URL + "/api/units";
+const EmployeesUrl = process.env.BACKEND_URL + "/api/employees";
 const userAuthToken = cookies().get("authToken")?.value;
 const bearerToken = `Bearer ${userAuthToken}`;
 
@@ -18,36 +18,39 @@ const handleErrors = (e: unknown) => {
   return errMsg;
 };
 
-const revalidateUnits = () => revalidatePath("/units");
-
-export const createUnitsActions = async (unit: InsertUnitParams) => {
+const revalidateEmployees = () => revalidatePath("/employees");
+export const createEmployeeAction = async (employee: InsertEmployeeParams) => {
   try {
-    const response = await axios.post(unitsUrl, unit, {
+    const response = await axios.post(EmployeesUrl, employee, {
       headers: {
         Authorization: bearerToken,
       },
     });
+
     if (response.status === 201) {
-      revalidateUnits();
-      return console.log("Units added successfully");
+      revalidateEmployees();
+      return console.log("Employee added successfully");
     }
   } catch (e) {
-    return handleErrors(e);
+    return handleErrors(e)
   }
 };
 
-export const deleteUnitAction = async (id: number) => {
+export const deleteEmployeeAction = async (id: number) => {
   try {
-    const response = await axios.delete(unitsUrl + "/" + id, {
-      headers: {
-        Authorization: bearerToken,
-      },
-    });
+    const response = await axios.delete(
+      EmployeesUrl + "/" + id,
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
     if (response.status === 204) {
-      revalidateUnits();
-      return console.log("Units deleted successfully");
+      revalidateEmployees();
+      return console.log("Employee deleted successfully");
     }
   } catch (e) {
     return handleErrors(e);
   }
-};
+}
