@@ -2,12 +2,12 @@ import axios from "axios";
 import { cookies} from "next/headers";
 
 export const getEuip = async () => {
-  const euipUrl = process.env.BACKEND_URL + "/api/equipment";
+  const equipUrl = process.env.BACKEND_URL + "/api/equipment";
   const userauthToken = cookies().get("authToken")?.value;
 
   const bearerToken = `Bearer${userauthToken}`;
 
-  const response = await axios.get(euipUrl, {
+  const response = await axios.get(equipUrl, {
     headers: {
       Authorization: bearerToken,
     },
