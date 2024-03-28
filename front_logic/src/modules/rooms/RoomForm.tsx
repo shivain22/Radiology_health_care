@@ -10,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useValidatedForm } from "@/hooks/useValidatedForm";
 import { formData, RoomData, RoomForm } from "@/schema/rooms";
-import { UnitData } from "@/schema/units";
 import { createRoomAction } from "@/server_actions/actions/rooms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFormStatus } from "react-dom";
@@ -31,7 +30,7 @@ export const Roomform = ({
   const form = useForm<RoomForm>({
     resolver: zodResolver(formData),
     defaultValues: {
-      roomNo: "none",
+      roomNo: "",
     },
   });
 
@@ -41,8 +40,8 @@ export const Roomform = ({
     try {
       const payload = {
         roomNo: Number(values.roomNo),
-      };
-      console.log(payload);
+      }
+      console.log(payload );
       await createRoomAction(payload);
     } catch (e) {
       console.log(e);
@@ -60,7 +59,7 @@ export const Roomform = ({
               <FormItem>
                 <FormLabel>Room No.</FormLabel>
                 <FormControl>
-                  <Input placeholder="room No." {...field} />
+                  <Input placeholder="roomNo." {...field} />
                 </FormControl>
               </FormItem>
             )}

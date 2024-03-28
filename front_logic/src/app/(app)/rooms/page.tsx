@@ -1,5 +1,7 @@
+import Loading from "@/app/loading";
+import RoomList from "@/modules/rooms/RoomList";
 import { getRooms } from "@/server_actions/(get-requests)/getRooms"
-import React from 'react'
+import React, { Suspense } from 'react'
 
 export default async function RoomsPage() {
     return (
@@ -17,9 +19,10 @@ export default async function RoomsPage() {
 const Rooms=async()=>{
     const rooms=await getRooms();
     console.log(rooms);
-
-    return(
-        <h1>Rooms</h1>
-        
-    )
-}
+  return(
+    <Suspense fallback={<Loading/>}>
+      <h1>Rooms</h1>
+      <RoomList rooms={rooms}/>
+    </Suspense>
+  );
+};

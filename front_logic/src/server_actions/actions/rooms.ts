@@ -1,10 +1,12 @@
+"use server";
 import { InsertRoomParams } from "@/schema/rooms";
 import axios from "axios";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 const roomsUrl = process.env.BACKEND_URL + "/api/rooms";
 const userAuthToken = cookies().get("authToken")?.value;
-const bearerToken = `Bearer${userAuthToken};
+const bearerToken = `Bearer ${userAuthToken};
 `;
 const handleErrors = (e: unknown) => {
   const errMsg = "Error,please try again";
@@ -17,7 +19,7 @@ const handleErrors = (e: unknown) => {
 
   return errMsg;
 };
-
+const revalidateRooms=()=>revalidatePath("/rooms");
 export const createRoomAction = async (values: InsertRoomParams) => {
   try {
     const response = await axios.post(
@@ -32,6 +34,7 @@ export const createRoomAction = async (values: InsertRoomParams) => {
       }
     );
     if (response.status === 201) {
+      revalidateRooms();
       console.log("Rooms added succesfully");
     }
   } catch (e) {
@@ -39,7 +42,7 @@ export const createRoomAction = async (values: InsertRoomParams) => {
   }
 };
 
-export const delteAction = async (id: number) => {
+export const deleteRoomAction = async (id: number) => {
   try {
     const response = await axios.delete(roomsUrl + "/" + id, {
       headers: {
