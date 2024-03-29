@@ -1,21 +1,23 @@
 "use client";
-import { RoomData } from "@/schema/rooms";
-import Link from "next/link";
 import { useState } from "react";
-import Modal from "../shared/Modal";
-import { Roomform } from "./RoomForm";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
+
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import Modal from "../shared/Modal";
+// import { useOptimisticRooms } from "@/app/(app)/Rooms/useOptimisticRooms";
+import { Button } from "@/components/ui/button";
+// import RoomForm from "./RoomForm";
+import { PlusIcon } from "lucide-react";
+import { RoomData } from "@/schema/rooms";
+
 import { deleteRoomAction } from "@/server_actions/actions/rooms";
+import { Roomform } from "./RoomForm";
 
 type TOpenModal = (room?: RoomData) => void;
-
-export default function RoomList({ rooms }: { rooms: RoomData[]; }) {
+export default function RoomList({ rooms }: { rooms: RoomData[] }) {
   const [open, setOpen] = useState(false);
   const [activeRoom, setActiveRoom] = useState<RoomData | null>(null);
-
   const openModal = (room?: RoomData) => {
     setOpen(true);
     room && setActiveRoom(room);
@@ -30,17 +32,14 @@ export default function RoomList({ rooms }: { rooms: RoomData[]; }) {
       <Modal
         open={open}
         setOpen={setOpen}
-        title={activeRoom ? "Editing Room" : "Add Room"}
+        title={activeRoom ? "Edit Room" : "Add Room"}
       >
         <div>
-          <Roomform
-            room={activeRoom}
-            openModal={openModal}
-            closeModal={closeModal}
-          />
+          <Roomform room={activeRoom} closeModal={closeModal} openModal={openModal} />
+          
         </div>
       </Modal>
-      <div className="absolute top-0 right-0">
+      <div className="absolute right-0 top-0 ">
         <Button onClick={() => openModal()} variant={"outline"}>
           +
         </Button>
@@ -58,6 +57,7 @@ export default function RoomList({ rooms }: { rooms: RoomData[]; }) {
   );
 }
 
+//Displaying Individual Room Component
 const Room = ({
   room,
   openModal,
@@ -66,12 +66,13 @@ const Room = ({
   openModal: TOpenModal;
 }) => {
   const pathname = usePathname();
-  const basePath = pathname.includes("rooms") ? pathname : pathname + "/rooms/";
+  const basePath = pathname.includes("rooms")
+    ? pathname
+    : pathname + "/rooms/";
 
   return (
     <li className={cn("flex justify-between my-2")}>
       <div className="w-full">
-        
         <div>{room.roomNo}</div>
       </div>
       <div className="flex gap-2 mr-5">
@@ -79,7 +80,7 @@ const Room = ({
           <Link href={basePath + "/" + room.id}>Edit</Link>
         </Button>
         <Button
-          onClick={() => deleteRoomAction(room.id)}
+            onClick={() => deleteRoomAction(room.id)}
           variant={"destructive"}
         >
           Delete
@@ -91,17 +92,16 @@ const Room = ({
 
 const EmptyState = ({ openModal }: { openModal: TOpenModal }) => {
   return (
-    <div className="test-center">
+    <div className="text-center">
       <h3 className="mt-2 text-sm font-semibold text-secondary-foreground">
-        No rooms
+        No Rooms
       </h3>
       <p className="mt-1 text-sm text-muted-foreground">
-        Get Started by creating a new room.
+        Get started by creating a new room.
       </p>
       <div className="mt-6">
         <Button onClick={() => openModal()}>
-          <PlusIcon className="h-4" />
-          New Room{""}
+          <PlusIcon className="h-4" /> New Room{" "}
         </Button>
       </div>
     </div>
