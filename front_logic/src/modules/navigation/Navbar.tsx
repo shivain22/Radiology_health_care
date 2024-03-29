@@ -38,6 +38,7 @@ import { LucideIcon } from "lucide-react";
 import { defaultLinks } from "@/config/nav";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import SignOut from "../shared/SignOut";
 
 export interface SidebarLink {
   title: string;
@@ -55,17 +56,17 @@ const SidebarLink = ({
     <Link
       href={link.href}
       className={`group transition-colors p-2 inline-block hover:bg-popover hover:text-primary text-muted-foreground text-xs hover:shadow rounded-md w-full${
-        active ? " text-primary font-semibold" : ""
+        active ? " text-primary bg:popover font-semibold" : ""
       }`}
     >
       <div className="flex items-center">
         <div
           className={cn(
-            "opacity-0 left-0 h-6 w-[4px] absolute rounded-r-lg bg-primary",
+            "opacity-0 left-0 h-10 w-[5px] absolute  bg-primary",
             active ? "opacity-100" : ""
           )}
         />
-        <link.icon className="h-3.5 mr-1" />
+        <link.icon className="h-5 mr-4" />
         <span>{link.title}</span>
       </div>
     </Link>
@@ -82,8 +83,6 @@ const SidebarLinkGroup = ({
   border?: boolean;
 }) => {
   const fullPathname = usePathname();
-  const pathname = "/" + fullPathname.split("/")[1];
-
   return (
     <div className={border ? "border-border border-t my-8 pt-4" : ""}>
       {title ? (
@@ -94,7 +93,7 @@ const SidebarLinkGroup = ({
       <ul>
         {links.map((link) => (
           <li key={link.title}>
-            <SidebarLink link={link} active={pathname === link.href} />
+            <SidebarLink link={link} active={fullPathname === link.href} />
           </li>
         ))}
       </ul>
@@ -102,9 +101,8 @@ const SidebarLinkGroup = ({
   );
 };
 
-export function Navbar({ children }: { children: React.ReactNode }) {
-  const fullPathname = usePathname();
-  const pathname = "/" + fullPathname.split("/")[1];
+export function Navbar({ children }: { children?: React.ReactNode }) {
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -160,51 +158,7 @@ export function Navbar({ children }: { children: React.ReactNode }) {
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
               <nav className="grid gap-2 text-lg font-medium">
-                <Link
-                  href="/dashboard"
-                  className="flex items-center gap-2 text-lg font-semibold"
-                >
-                  <BriefcaseMedical className="h-6 w-6" />
-                  <span className="sr-only">Acme Inc</span>
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Home className="h-5 w-5" />
-                  Navbar
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-                >
-                  <ShoppingCart className="h-5 w-5" />
-                  Orders
-                  <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                    6
-                  </Badge>
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Package className="h-5 w-5" />
-                  Products
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Users className="h-5 w-5" />
-                  Customers
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <LineChart className="h-5 w-5" />
-                  Analytics
-                </Link>
+               <SidebarLinkGroup links={defaultLinks} />
               </nav>
               <div className="mt-auto">
                 <Card>
@@ -225,7 +179,7 @@ export function Navbar({ children }: { children: React.ReactNode }) {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <form>
+            {/* <form>
               <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -234,7 +188,7 @@ export function Navbar({ children }: { children: React.ReactNode }) {
                   className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
                 />
               </div>
-            </form>
+            </form> */}
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -243,13 +197,15 @@ export function Navbar({ children }: { children: React.ReactNode }) {
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-30">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem>
+                <SignOut />
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
