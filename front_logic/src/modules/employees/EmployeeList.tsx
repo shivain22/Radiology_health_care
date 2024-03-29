@@ -101,7 +101,7 @@ const Employee = ({
 
   return (
     <li className={cn("flex justify-between my-2")}>
-      <div className="w-full flex gap-2">
+      <div className="w-full flex flex-col gap-2 sm:flex-row">
         <h1>Name:</h1>
         <div>{employee.name}</div>-<h1>Employee His :</h1>
         <div>{employee.his}</div>

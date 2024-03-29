@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 import { AlignRight } from "lucide-react";
-import { defaultLinks } from "@/config/nav";
+  import { defaultLinks } from "@/config/nav";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -23,20 +23,18 @@ export default function Navbar() {
       {open ? (
         <div className="my-4 p-4 bg-muted">
           <ul className="space-y-2">
-            {defaultLinks.map((link) => (
-              <li key={link.title} onClick={() => setOpen(false)} className="">
-                <Link
-                  href={link.href}
-                  className={
-                    pathname === link.href
-                      ? "text-primary hover:text-primary font-semibold"
-                      : "text-muted-foreground hover:text-primary"
-                  }
-                >
-                  {link.title}
-                </Link>
-              </li>
-            ))}
+              {defaultLinks.map((link) => (
+                  <Link
+                    href={link.href}
+                    className={
+                      pathname === link.href
+                        ? "text-primary hover:text-primary font-semibold"
+                        : "text-muted-foreground hover:text-primary"
+                    }
+                  >
+                    {link.title}
+                  </Link>
+              ))}
           </ul>
         </div>
       ) : null}
