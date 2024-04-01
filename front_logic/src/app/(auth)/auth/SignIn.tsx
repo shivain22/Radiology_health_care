@@ -42,11 +42,11 @@ const SignIn = () => {
     }
   };
   return (
-    <main className="flex flex-col  justify-between pt-5">
+    <main className="">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmit)}
-          className="max-w-md w-full flex flex-col gap-4"
+          className="max-w-lg mx-auto space-y-4"
         >
           <FormField
             control={form.control}
@@ -105,7 +105,7 @@ export default SignIn;
 const Btn = () => {
   const { pending } = useFormStatus();
   return (
-    <Button className="w-full" disabled={pending} type="submit">
+    <Button className="w-full mt-4" disabled={pending} type="submit">
       {pending ? "Signing In" : "Sign In"}
     </Button>
   );
