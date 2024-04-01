@@ -20,7 +20,7 @@ public class PatientInfoDTO implements Serializable {
 
     private String dateOfBirth;
 
-    private Integer mobile;
+    private Long mobile;
 
     private String relation;
 
@@ -97,11 +97,11 @@ public class PatientInfoDTO implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Integer getMobile() {
+    public Long getMobile() {
         return mobile;
     }
 
-    public void setMobile(Integer mobile) {
+    public void setMobile(Long mobile) {
         this.mobile = mobile;
     }
 

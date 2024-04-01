@@ -335,7 +335,7 @@
             <column name="age" type="INT"/>
             <column name="gender" type="VARCHAR(255)"/>
             <column name="date_of_birth" type="VARCHAR(255)"/>
-            <column name="mobile" type="INT"/>
+            <column name="mobile" type="BIGINT"/>
             <column name="relation" type="VARCHAR(255)"/>
             <column name="employee_id_id" type="BIGINT"/>
             <column name="employee_his_id" type="BIGINT"/>
@@ -354,7 +354,7 @@
             <column name="age" type="INT"/>
             <column name="date_of_birth" type="VARCHAR(255)"/>
             <column name="gender" type="VARCHAR(255)"/>
-            <column name="mobile" type="INT"/>
+            <column name="mobile" type="BIGINT"/>
             <column name="name" type="VARCHAR(255)"/>
             <column name="relation" type="VARCHAR(255)"/>
             <column name="employee_his_id" type="BIGINT"/>

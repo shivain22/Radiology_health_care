@@ -393,7 +393,7 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>shivain22/radiology_health_care:backend4</image>
+                            <image>shivain22/radiology_health_care:backend5</image>
                         </to>
                         <container>
                             <entrypoint>
@@ -562,8 +562,8 @@
                     <version>${maven-failsafe-plugin.version}</version>
                     <configuration>
                      #  Due to spring-boot repackage, without adding this property test classes are not found
-                        #     See https://github.com/spring-projects/spring-boot/issues/6254 
-                       # Force alphabetical order to have a reproducible build 
+                        #     See https://github.com/spring-projects/spring-boot/issues/6254
+                       # Force alphabetical order to have a reproducible build
                         <classesDirectory>${project.build.outputDirectory}</classesDirectory>
                         <runOrder>alphabetical</runOrder>
                         <includes>
