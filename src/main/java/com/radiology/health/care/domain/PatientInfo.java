@@ -5,14 +5,12 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import org.hibernate.envers.Audited;
 
 /**
  * A PatientInfo.
  */
 @Entity
 @Table(name = "patient_info")
-@Audited
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class PatientInfo implements Serializable {
 
@@ -35,11 +33,11 @@ public class PatientInfo implements Serializable {
     @Column(name = "date_of_birth")
     private String dateOfBirth;
 
-    @Column(name = "mobile")
-    private Integer mobile;
-
     @Column(name = "relation")
     private String relation;
+
+    @Column(name = "mobile")
+    private Long mobile;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
@@ -160,19 +158,6 @@ public class PatientInfo implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Integer getMobile() {
-        return this.mobile;
-    }
-
-    public PatientInfo mobile(Integer mobile) {
-        this.setMobile(mobile);
-        return this;
-    }
-
-    public void setMobile(Integer mobile) {
-        this.mobile = mobile;
-    }
-
     public String getRelation() {
         return this.relation;
     }
@@ -184,6 +169,19 @@ public class PatientInfo implements Serializable {
 
     public void setRelation(String relation) {
         this.relation = relation;
+    }
+
+    public Long getMobile() {
+        return this.mobile;
+    }
+
+    public PatientInfo mobile(Long mobile) {
+        this.setMobile(mobile);
+        return this;
+    }
+
+    public void setMobile(Long mobile) {
+        this.mobile = mobile;
     }
 
     public Employee getEmployeeId() {
@@ -284,8 +282,8 @@ public class PatientInfo implements Serializable {
             ", age=" + getAge() +
             ", gender='" + getGender() + "'" +
             ", dateOfBirth='" + getDateOfBirth() + "'" +
-            ", mobile=" + getMobile() +
             ", relation='" + getRelation() + "'" +
+            ", mobile=" + getMobile() +
             "}";
     }
 }

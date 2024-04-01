@@ -31,9 +31,9 @@ public class PatientInfoCriteria implements Serializable, Criteria {
 
     private StringFilter dateOfBirth;
 
-    private IntegerFilter mobile;
-
     private StringFilter relation;
+
+    private LongFilter mobile;
 
     private LongFilter employeeIdId;
 
@@ -53,8 +53,8 @@ public class PatientInfoCriteria implements Serializable, Criteria {
         this.age = other.age == null ? null : other.age.copy();
         this.gender = other.gender == null ? null : other.gender.copy();
         this.dateOfBirth = other.dateOfBirth == null ? null : other.dateOfBirth.copy();
-        this.mobile = other.mobile == null ? null : other.mobile.copy();
         this.relation = other.relation == null ? null : other.relation.copy();
+        this.mobile = other.mobile == null ? null : other.mobile.copy();
         this.employeeIdId = other.employeeIdId == null ? null : other.employeeIdId.copy();
         this.employeeHisId = other.employeeHisId == null ? null : other.employeeHisId.copy();
         this.employeeServiceNoId = other.employeeServiceNoId == null ? null : other.employeeServiceNoId.copy();
@@ -142,21 +142,6 @@ public class PatientInfoCriteria implements Serializable, Criteria {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public IntegerFilter getMobile() {
-        return mobile;
-    }
-
-    public IntegerFilter mobile() {
-        if (mobile == null) {
-            mobile = new IntegerFilter();
-        }
-        return mobile;
-    }
-
-    public void setMobile(IntegerFilter mobile) {
-        this.mobile = mobile;
-    }
-
     public StringFilter getRelation() {
         return relation;
     }
@@ -170,6 +155,21 @@ public class PatientInfoCriteria implements Serializable, Criteria {
 
     public void setRelation(StringFilter relation) {
         this.relation = relation;
+    }
+
+    public LongFilter getMobile() {
+        return mobile;
+    }
+
+    public LongFilter mobile() {
+        if (mobile == null) {
+            mobile = new LongFilter();
+        }
+        return mobile;
+    }
+
+    public void setMobile(LongFilter mobile) {
+        this.mobile = mobile;
     }
 
     public LongFilter getEmployeeIdId() {
@@ -255,8 +255,8 @@ public class PatientInfoCriteria implements Serializable, Criteria {
             Objects.equals(age, that.age) &&
             Objects.equals(gender, that.gender) &&
             Objects.equals(dateOfBirth, that.dateOfBirth) &&
-            Objects.equals(mobile, that.mobile) &&
             Objects.equals(relation, that.relation) &&
+            Objects.equals(mobile, that.mobile) &&
             Objects.equals(employeeIdId, that.employeeIdId) &&
             Objects.equals(employeeHisId, that.employeeHisId) &&
             Objects.equals(employeeServiceNoId, that.employeeServiceNoId) &&
@@ -273,8 +273,8 @@ public class PatientInfoCriteria implements Serializable, Criteria {
             age,
             gender,
             dateOfBirth,
-            mobile,
             relation,
+            mobile,
             employeeIdId,
             employeeHisId,
             employeeServiceNoId,
@@ -292,8 +292,8 @@ public class PatientInfoCriteria implements Serializable, Criteria {
             (age != null ? "age=" + age + ", " : "") +
             (gender != null ? "gender=" + gender + ", " : "") +
             (dateOfBirth != null ? "dateOfBirth=" + dateOfBirth + ", " : "") +
-            (mobile != null ? "mobile=" + mobile + ", " : "") +
             (relation != null ? "relation=" + relation + ", " : "") +
+            (mobile != null ? "mobile=" + mobile + ", " : "") +
             (employeeIdId != null ? "employeeIdId=" + employeeIdId + ", " : "") +
             (employeeHisId != null ? "employeeHisId=" + employeeHisId + ", " : "") +
             (employeeServiceNoId != null ? "employeeServiceNoId=" + employeeServiceNoId + ", " : "") +

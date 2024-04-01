@@ -44,13 +44,13 @@ export const PatientInfoDetail = () => {
           </dt>
           <dd>{patientInfoEntity.dateOfBirth}</dd>
           <dt>
-            <span id="mobile">Mobile</span>
-          </dt>
-          <dd>{patientInfoEntity.mobile}</dd>
-          <dt>
             <span id="relation">Relation</span>
           </dt>
           <dd>{patientInfoEntity.relation}</dd>
+          <dt>
+            <span id="mobile">Mobile</span>
+          </dt>
+          <dd>{patientInfoEntity.mobile}</dd>
           <dt>Employee Id</dt>
           <dd>{patientInfoEntity.employeeId ? patientInfoEntity.employeeId.id : ''}</dd>
           <dt>Employee His</dt>

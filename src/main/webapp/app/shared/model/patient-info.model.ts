@@ -7,8 +7,8 @@ export interface IPatientInfo {
   age?: number | null;
   gender?: string | null;
   dateOfBirth?: string | null;
-  mobile?: number | null;
   relation?: string | null;
+  mobile?: number | null;
   employeeId?: IEmployee | null;
   employeeHis?: IEmployee | null;
   employeeServiceNo?: IEmployee | null;

@@ -102,8 +102,8 @@ export const PatientInfoUpdate = () => {
               <ValidatedField label="Age" id="patient-info-age" name="age" data-cy="age" type="text" />
               <ValidatedField label="Gender" id="patient-info-gender" name="gender" data-cy="gender" type="text" />
               <ValidatedField label="Date Of Birth" id="patient-info-dateOfBirth" name="dateOfBirth" data-cy="dateOfBirth" type="text" />
-              <ValidatedField label="Mobile" id="patient-info-mobile" name="mobile" data-cy="mobile" type="text" />
               <ValidatedField label="Relation" id="patient-info-relation" name="relation" data-cy="relation" type="text" />
+              <ValidatedField label="Mobile" id="patient-info-mobile" name="mobile" data-cy="mobile" type="text" />
               <ValidatedField id="patient-info-employeeId" name="employeeId" data-cy="employeeId" label="Employee Id" type="select">
                 <option value="" key="0" />
                 {employees

@@ -55,12 +55,12 @@ class PatientInfoResourceIT {
     private static final String DEFAULT_DATE_OF_BIRTH = "AAAAAAAAAA";
     private static final String UPDATED_DATE_OF_BIRTH = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_MOBILE = 1;
-    private static final Integer UPDATED_MOBILE = 2;
-    private static final Integer SMALLER_MOBILE = 1 - 1;
-
     private static final String DEFAULT_RELATION = "AAAAAAAAAA";
     private static final String UPDATED_RELATION = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_MOBILE = 1L;
+    private static final Long UPDATED_MOBILE = 2L;
+    private static final Long SMALLER_MOBILE = 1L - 1L;
 
     private static final String ENTITY_API_URL = "/api/patient-infos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -100,8 +100,8 @@ class PatientInfoResourceIT {
             .age(DEFAULT_AGE)
             .gender(DEFAULT_GENDER)
             .dateOfBirth(DEFAULT_DATE_OF_BIRTH)
-            .mobile(DEFAULT_MOBILE)
-            .relation(DEFAULT_RELATION);
+            .relation(DEFAULT_RELATION)
+            .mobile(DEFAULT_MOBILE);
         return patientInfo;
     }
 
@@ -117,8 +117,8 @@ class PatientInfoResourceIT {
             .age(UPDATED_AGE)
             .gender(UPDATED_GENDER)
             .dateOfBirth(UPDATED_DATE_OF_BIRTH)
-            .mobile(UPDATED_MOBILE)
-            .relation(UPDATED_RELATION);
+            .relation(UPDATED_RELATION)
+            .mobile(UPDATED_MOBILE);
         return patientInfo;
     }
 
@@ -147,8 +147,8 @@ class PatientInfoResourceIT {
         assertThat(testPatientInfo.getAge()).isEqualTo(DEFAULT_AGE);
         assertThat(testPatientInfo.getGender()).isEqualTo(DEFAULT_GENDER);
         assertThat(testPatientInfo.getDateOfBirth()).isEqualTo(DEFAULT_DATE_OF_BIRTH);
-        assertThat(testPatientInfo.getMobile()).isEqualTo(DEFAULT_MOBILE);
         assertThat(testPatientInfo.getRelation()).isEqualTo(DEFAULT_RELATION);
+        assertThat(testPatientInfo.getMobile()).isEqualTo(DEFAULT_MOBILE);
     }
 
     @Test
@@ -188,8 +188,8 @@ class PatientInfoResourceIT {
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER)))
             .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH)))
-            .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE)))
-            .andExpect(jsonPath("$.[*].relation").value(hasItem(DEFAULT_RELATION)));
+            .andExpect(jsonPath("$.[*].relation").value(hasItem(DEFAULT_RELATION)))
+            .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE.intValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -225,8 +225,8 @@ class PatientInfoResourceIT {
             .andExpect(jsonPath("$.age").value(DEFAULT_AGE))
             .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER))
             .andExpect(jsonPath("$.dateOfBirth").value(DEFAULT_DATE_OF_BIRTH))
-            .andExpect(jsonPath("$.mobile").value(DEFAULT_MOBILE))
-            .andExpect(jsonPath("$.relation").value(DEFAULT_RELATION));
+            .andExpect(jsonPath("$.relation").value(DEFAULT_RELATION))
+            .andExpect(jsonPath("$.mobile").value(DEFAULT_MOBILE.intValue()));
     }
 
     @Test
@@ -535,6 +535,71 @@ class PatientInfoResourceIT {
 
     @Test
     @Transactional
+    void getAllPatientInfosByRelationIsEqualToSomething() throws Exception {
+        // Initialize the database
+        patientInfoRepository.saveAndFlush(patientInfo);
+
+        // Get all the patientInfoList where relation equals to DEFAULT_RELATION
+        defaultPatientInfoShouldBeFound("relation.equals=" + DEFAULT_RELATION);
+
+        // Get all the patientInfoList where relation equals to UPDATED_RELATION
+        defaultPatientInfoShouldNotBeFound("relation.equals=" + UPDATED_RELATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientInfosByRelationIsInShouldWork() throws Exception {
+        // Initialize the database
+        patientInfoRepository.saveAndFlush(patientInfo);
+
+        // Get all the patientInfoList where relation in DEFAULT_RELATION or UPDATED_RELATION
+        defaultPatientInfoShouldBeFound("relation.in=" + DEFAULT_RELATION + "," + UPDATED_RELATION);
+
+        // Get all the patientInfoList where relation equals to UPDATED_RELATION
+        defaultPatientInfoShouldNotBeFound("relation.in=" + UPDATED_RELATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientInfosByRelationIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        patientInfoRepository.saveAndFlush(patientInfo);
+
+        // Get all the patientInfoList where relation is not null
+        defaultPatientInfoShouldBeFound("relation.specified=true");
+
+        // Get all the patientInfoList where relation is null
+        defaultPatientInfoShouldNotBeFound("relation.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientInfosByRelationContainsSomething() throws Exception {
+        // Initialize the database
+        patientInfoRepository.saveAndFlush(patientInfo);
+
+        // Get all the patientInfoList where relation contains DEFAULT_RELATION
+        defaultPatientInfoShouldBeFound("relation.contains=" + DEFAULT_RELATION);
+
+        // Get all the patientInfoList where relation contains UPDATED_RELATION
+        defaultPatientInfoShouldNotBeFound("relation.contains=" + UPDATED_RELATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientInfosByRelationNotContainsSomething() throws Exception {
+        // Initialize the database
+        patientInfoRepository.saveAndFlush(patientInfo);
+
+        // Get all the patientInfoList where relation does not contain DEFAULT_RELATION
+        defaultPatientInfoShouldNotBeFound("relation.doesNotContain=" + DEFAULT_RELATION);
+
+        // Get all the patientInfoList where relation does not contain UPDATED_RELATION
+        defaultPatientInfoShouldBeFound("relation.doesNotContain=" + UPDATED_RELATION);
+    }
+
+    @Test
+    @Transactional
     void getAllPatientInfosByMobileIsEqualToSomething() throws Exception {
         // Initialize the database
         patientInfoRepository.saveAndFlush(patientInfo);
@@ -622,71 +687,6 @@ class PatientInfoResourceIT {
 
         // Get all the patientInfoList where mobile is greater than SMALLER_MOBILE
         defaultPatientInfoShouldBeFound("mobile.greaterThan=" + SMALLER_MOBILE);
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientInfosByRelationIsEqualToSomething() throws Exception {
-        // Initialize the database
-        patientInfoRepository.saveAndFlush(patientInfo);
-
-        // Get all the patientInfoList where relation equals to DEFAULT_RELATION
-        defaultPatientInfoShouldBeFound("relation.equals=" + DEFAULT_RELATION);
-
-        // Get all the patientInfoList where relation equals to UPDATED_RELATION
-        defaultPatientInfoShouldNotBeFound("relation.equals=" + UPDATED_RELATION);
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientInfosByRelationIsInShouldWork() throws Exception {
-        // Initialize the database
-        patientInfoRepository.saveAndFlush(patientInfo);
-
-        // Get all the patientInfoList where relation in DEFAULT_RELATION or UPDATED_RELATION
-        defaultPatientInfoShouldBeFound("relation.in=" + DEFAULT_RELATION + "," + UPDATED_RELATION);
-
-        // Get all the patientInfoList where relation equals to UPDATED_RELATION
-        defaultPatientInfoShouldNotBeFound("relation.in=" + UPDATED_RELATION);
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientInfosByRelationIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        patientInfoRepository.saveAndFlush(patientInfo);
-
-        // Get all the patientInfoList where relation is not null
-        defaultPatientInfoShouldBeFound("relation.specified=true");
-
-        // Get all the patientInfoList where relation is null
-        defaultPatientInfoShouldNotBeFound("relation.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientInfosByRelationContainsSomething() throws Exception {
-        // Initialize the database
-        patientInfoRepository.saveAndFlush(patientInfo);
-
-        // Get all the patientInfoList where relation contains DEFAULT_RELATION
-        defaultPatientInfoShouldBeFound("relation.contains=" + DEFAULT_RELATION);
-
-        // Get all the patientInfoList where relation contains UPDATED_RELATION
-        defaultPatientInfoShouldNotBeFound("relation.contains=" + UPDATED_RELATION);
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientInfosByRelationNotContainsSomething() throws Exception {
-        // Initialize the database
-        patientInfoRepository.saveAndFlush(patientInfo);
-
-        // Get all the patientInfoList where relation does not contain DEFAULT_RELATION
-        defaultPatientInfoShouldNotBeFound("relation.doesNotContain=" + DEFAULT_RELATION);
-
-        // Get all the patientInfoList where relation does not contain UPDATED_RELATION
-        defaultPatientInfoShouldBeFound("relation.doesNotContain=" + UPDATED_RELATION);
     }
 
     @Test
@@ -790,8 +790,8 @@ class PatientInfoResourceIT {
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER)))
             .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH)))
-            .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE)))
-            .andExpect(jsonPath("$.[*].relation").value(hasItem(DEFAULT_RELATION)));
+            .andExpect(jsonPath("$.[*].relation").value(hasItem(DEFAULT_RELATION)))
+            .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE.intValue())));
 
         // Check, that the count call also returns 1
         restPatientInfoMockMvc
@@ -844,8 +844,8 @@ class PatientInfoResourceIT {
             .age(UPDATED_AGE)
             .gender(UPDATED_GENDER)
             .dateOfBirth(UPDATED_DATE_OF_BIRTH)
-            .mobile(UPDATED_MOBILE)
-            .relation(UPDATED_RELATION);
+            .relation(UPDATED_RELATION)
+            .mobile(UPDATED_MOBILE);
         PatientInfoDTO patientInfoDTO = patientInfoMapper.toDto(updatedPatientInfo);
 
         restPatientInfoMockMvc
@@ -864,8 +864,8 @@ class PatientInfoResourceIT {
         assertThat(testPatientInfo.getAge()).isEqualTo(UPDATED_AGE);
         assertThat(testPatientInfo.getGender()).isEqualTo(UPDATED_GENDER);
         assertThat(testPatientInfo.getDateOfBirth()).isEqualTo(UPDATED_DATE_OF_BIRTH);
-        assertThat(testPatientInfo.getMobile()).isEqualTo(UPDATED_MOBILE);
         assertThat(testPatientInfo.getRelation()).isEqualTo(UPDATED_RELATION);
+        assertThat(testPatientInfo.getMobile()).isEqualTo(UPDATED_MOBILE);
     }
 
     @Test
@@ -945,7 +945,7 @@ class PatientInfoResourceIT {
         PatientInfo partialUpdatedPatientInfo = new PatientInfo();
         partialUpdatedPatientInfo.setId(patientInfo.getId());
 
-        partialUpdatedPatientInfo.name(UPDATED_NAME).mobile(UPDATED_MOBILE).relation(UPDATED_RELATION);
+        partialUpdatedPatientInfo.name(UPDATED_NAME).relation(UPDATED_RELATION).mobile(UPDATED_MOBILE);
 
         restPatientInfoMockMvc
             .perform(
@@ -963,8 +963,8 @@ class PatientInfoResourceIT {
         assertThat(testPatientInfo.getAge()).isEqualTo(DEFAULT_AGE);
         assertThat(testPatientInfo.getGender()).isEqualTo(DEFAULT_GENDER);
         assertThat(testPatientInfo.getDateOfBirth()).isEqualTo(DEFAULT_DATE_OF_BIRTH);
-        assertThat(testPatientInfo.getMobile()).isEqualTo(UPDATED_MOBILE);
         assertThat(testPatientInfo.getRelation()).isEqualTo(UPDATED_RELATION);
+        assertThat(testPatientInfo.getMobile()).isEqualTo(UPDATED_MOBILE);
     }
 
     @Test
@@ -984,8 +984,8 @@ class PatientInfoResourceIT {
             .age(UPDATED_AGE)
             .gender(UPDATED_GENDER)
             .dateOfBirth(UPDATED_DATE_OF_BIRTH)
-            .mobile(UPDATED_MOBILE)
-            .relation(UPDATED_RELATION);
+            .relation(UPDATED_RELATION)
+            .mobile(UPDATED_MOBILE);
 
         restPatientInfoMockMvc
             .perform(
@@ -1003,8 +1003,8 @@ class PatientInfoResourceIT {
         assertThat(testPatientInfo.getAge()).isEqualTo(UPDATED_AGE);
         assertThat(testPatientInfo.getGender()).isEqualTo(UPDATED_GENDER);
         assertThat(testPatientInfo.getDateOfBirth()).isEqualTo(UPDATED_DATE_OF_BIRTH);
-        assertThat(testPatientInfo.getMobile()).isEqualTo(UPDATED_MOBILE);
         assertThat(testPatientInfo.getRelation()).isEqualTo(UPDATED_RELATION);
+        assertThat(testPatientInfo.getMobile()).isEqualTo(UPDATED_MOBILE);
     }
 
     @Test

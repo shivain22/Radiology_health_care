@@ -140,11 +140,11 @@ export const PatientInfo = () => {
                   <th className="hand" onClick={sort('dateOfBirth')}>
                     Date Of Birth <FontAwesomeIcon icon={getSortIconByFieldName('dateOfBirth')} />
                   </th>
-                  <th className="hand" onClick={sort('mobile')}>
-                    Mobile <FontAwesomeIcon icon={getSortIconByFieldName('mobile')} />
-                  </th>
                   <th className="hand" onClick={sort('relation')}>
                     Relation <FontAwesomeIcon icon={getSortIconByFieldName('relation')} />
+                  </th>
+                  <th className="hand" onClick={sort('mobile')}>
+                    Mobile <FontAwesomeIcon icon={getSortIconByFieldName('mobile')} />
                   </th>
                   <th>
                     Employee Id <FontAwesomeIcon icon="sort" />
@@ -170,8 +170,8 @@ export const PatientInfo = () => {
                     <td>{patientInfo.age}</td>
                     <td>{patientInfo.gender}</td>
                     <td>{patientInfo.dateOfBirth}</td>
-                    <td>{patientInfo.mobile}</td>
                     <td>{patientInfo.relation}</td>
+                    <td>{patientInfo.mobile}</td>
                     <td>
                       {patientInfo.employeeId ? <Link to={`/employee/${patientInfo.employeeId.id}`}>{patientInfo.employeeId.id}</Link> : ''}
                     </td>

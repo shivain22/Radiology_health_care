@@ -6,16 +6,14 @@ import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import org.hibernate.envers.Audited;
 
 /**
  * A Equipment.
  */
 @Entity
 @Table(name = "equipment")
-@Audited
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Equipment extends AbstractAuditingEntity<Long> implements Serializable {
+public class Equipment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,16 +33,6 @@ public class Equipment extends AbstractAuditingEntity<Long> implements Serializa
     @ManyToOne(optional = false)
     @NotNull
     private User user;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    private String login;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipment")
     @JsonIgnoreProperties(value = { "equipment", "employee", "user" }, allowSetters = true)

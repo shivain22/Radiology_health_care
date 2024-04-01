@@ -12,11 +12,11 @@ public class PatientInfoTestSamples {
     private static final AtomicInteger intCount = new AtomicInteger(random.nextInt() + (2 * Short.MAX_VALUE));
 
     public static PatientInfo getPatientInfoSample1() {
-        return new PatientInfo().id(1L).name("name1").age(1).gender("gender1").dateOfBirth("dateOfBirth1").mobile(1).relation("relation1");
+        return new PatientInfo().id(1L).name("name1").age(1).gender("gender1").dateOfBirth("dateOfBirth1").relation("relation1").mobile(1L);
     }
 
     public static PatientInfo getPatientInfoSample2() {
-        return new PatientInfo().id(2L).name("name2").age(2).gender("gender2").dateOfBirth("dateOfBirth2").mobile(2).relation("relation2");
+        return new PatientInfo().id(2L).name("name2").age(2).gender("gender2").dateOfBirth("dateOfBirth2").relation("relation2").mobile(2L);
     }
 
     public static PatientInfo getPatientInfoRandomSampleGenerator() {
@@ -26,7 +26,7 @@ public class PatientInfoTestSamples {
             .age(intCount.incrementAndGet())
             .gender(UUID.randomUUID().toString())
             .dateOfBirth(UUID.randomUUID().toString())
-            .mobile(intCount.incrementAndGet())
-            .relation(UUID.randomUUID().toString());
+            .relation(UUID.randomUUID().toString())
+            .mobile(longCount.incrementAndGet());
     }
 }

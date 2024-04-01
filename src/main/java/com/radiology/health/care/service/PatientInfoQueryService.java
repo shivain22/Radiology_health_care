@@ -102,11 +102,11 @@ public class PatientInfoQueryService extends QueryService<PatientInfo> {
             if (criteria.getDateOfBirth() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDateOfBirth(), PatientInfo_.dateOfBirth));
             }
-            if (criteria.getMobile() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getMobile(), PatientInfo_.mobile));
-            }
             if (criteria.getRelation() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getRelation(), PatientInfo_.relation));
+            }
+            if (criteria.getMobile() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getMobile(), PatientInfo_.mobile));
             }
             if (criteria.getEmployeeIdId() != null) {
                 specification =

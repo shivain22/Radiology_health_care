@@ -22,12 +22,12 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "mobile",
-      "fieldType": "Integer"
-    },
-    {
       "fieldName": "relation",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "mobile",
+      "fieldType": "Long"
     }
   ],
   "jpaMetamodelFiltering": true,

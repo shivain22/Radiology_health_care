@@ -26,10 +26,10 @@
             <column name="date_of_birth" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="mobile" type="integer">
+            <column name="relation" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="relation" type="varchar(255)">
+            <column name="mobile" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="employee_id_id" type="bigint">
@@ -66,8 +66,8 @@
             <column name="age" type="numeric"/>
             <column name="gender" type="string"/>
             <column name="date_of_birth" type="string"/>
-            <column name="mobile" type="numeric"/>
             <column name="relation" type="string"/>
+            <column name="mobile" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
