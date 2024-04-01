@@ -23,7 +23,7 @@
     },
     {
       "fieldName": "mobile",
-      "fieldType": "Integer"
+      "fieldType": "Long"
     },
     {
       "fieldName": "relation",

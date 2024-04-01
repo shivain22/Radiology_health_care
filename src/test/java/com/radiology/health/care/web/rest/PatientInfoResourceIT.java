@@ -55,9 +55,9 @@ class PatientInfoResourceIT {
     private static final String DEFAULT_DATE_OF_BIRTH = "AAAAAAAAAA";
     private static final String UPDATED_DATE_OF_BIRTH = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_MOBILE = 1;
-    private static final Integer UPDATED_MOBILE = 2;
-    private static final Integer SMALLER_MOBILE = 1 - 1;
+    private static final Long DEFAULT_MOBILE = 1L;
+    private static final Long UPDATED_MOBILE = 2L;
+    private static final Long SMALLER_MOBILE = 1L - 1L;
 
     private static final String DEFAULT_RELATION = "AAAAAAAAAA";
     private static final String UPDATED_RELATION = "BBBBBBBBBB";

@@ -36,7 +36,7 @@ public class PatientInfo implements Serializable {
     private String dateOfBirth;
 
     @Column(name = "mobile")
-    private Integer mobile;
+    private Long mobile;
 
     @Column(name = "relation")
     private String relation;
@@ -160,16 +160,16 @@ public class PatientInfo implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Integer getMobile() {
+    public Long getMobile() {
         return this.mobile;
     }
 
-    public PatientInfo mobile(Integer mobile) {
+    public PatientInfo mobile(Long mobile) {
         this.setMobile(mobile);
         return this;
     }
 
-    public void setMobile(Integer mobile) {
+    public void setMobile(Long mobile) {
         this.mobile = mobile;
     }
 
