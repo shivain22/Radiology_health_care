@@ -37,10 +37,10 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="flex flex-col  justify-between pt-5">
+    <div className=" md:px-5 ">
       <Form {...form}>
         <form
-          className="max-w-md w-full flex flex-col gap-4"
+          className="space-y-2"
           onSubmit={form.handleSubmit(handleSubmit)}
         >
           <FormField
@@ -59,6 +59,8 @@ const SignUp = () => {
             }}
           />
 
+<div className="md:flex gap-4 md:gap-6">
+
           <FormField
             control={form.control}
             name="firstname"
@@ -67,7 +69,7 @@ const SignUp = () => {
                 <FormItem>
                   <FormLabel>First Name:</FormLabel>
                   <FormControl>
-                    <Input placeholder="First Name" {...field} />
+                    <Input className="w-full" placeholder="First Name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -83,12 +85,13 @@ const SignUp = () => {
                 <FormItem>
                   <FormLabel>Last Name:</FormLabel>
                   <FormControl>
-                    <Input placeholder="Last Name" {...field} />
+                    <Input className="w-full" placeholder="Last Name" {...field} />
                   </FormControl>
                 </FormItem>
               );
             }}
           />
+</div>
 
           <FormField
             control={form.control}
@@ -150,7 +153,7 @@ export default SignUp;
 const Btn = () => {
   const { pending } = useFormStatus();
   return (
-    <Button className="w-full" disabled={pending} type="submit">
+    <Button className="w-full mt-4" disabled={pending} type="submit">
       {pending ? "Submitting" : "Submit"}
     </Button>
   );

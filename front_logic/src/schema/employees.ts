@@ -26,3 +26,16 @@ const insertEmployeeParams = EmployeeData.omit({ id: true });
 export type Employeeform = z.infer<typeof formData>;
 export type EmployeeData = z.infer<typeof EmployeeData>;
 export type InsertEmployeeParams = z.infer<typeof insertEmployeeParams>;
+export type TransformEmployeeData = {
+  id: number;
+  name: string;
+  technician: boolean;
+  his: string;
+  serviceNo: string;
+  empServiceId?: number;
+  rankId?: number;
+  unitId?: number;
+  empServiceName: string;
+  unitName: string;
+  rankName: string;
+};

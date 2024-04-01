@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import React, { useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
-import { useBackPath } from "../shared/BackButton";
+import { useBackPath } from "../../../../../modules/shared/BackButton";
 import { createRankAction } from "@/server_actions/actions/ranks";
 import { DialogClose } from "@/components/ui/dialog";
 import { EmployeeData, Employeeform, formData } from "@/schema/employees";
@@ -76,6 +76,18 @@ const EmployeeForm = ({
   const [filterRanks, setFilterRanks] = useState<RankData[]>([]);
   const [filterUnits, setFilterUnits] = useState<UnitData[]>([]);
 
+  const [filterText, setFilterText] = useState<string>("");
+  const [filteredSevices, setFilteredServices] = useState(services || []);
+
+  const handleServiceFilter = (value: string) => {
+    setFilterText(value);
+
+    const filteredServices = services.filter((service) =>
+      service.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredServices(filteredServices);
+  };
+
   const handleRankandUnitFilter = (value: string) => {
     const serviceValue = Number(value);
 
@@ -101,7 +113,7 @@ const EmployeeForm = ({
         rankId: Number(data.rankId),
         unitId: Number(data.unitId),
       };
-      
+
       await createEmployeeAction(payload);
     } catch (e) {
       console.log(e);
@@ -175,38 +187,51 @@ const EmployeeForm = ({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="empServiceId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Service</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                      handleRankandUnitFilter(value);
-                    }}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select the Service" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {services?.map((service) => (
-                        <SelectItem
-                          key={service.id}
-                          value={service.id.toString()}
-                        >
-                          {service.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+          <div className="flex gap-2">
+            <FormField
+              control={form.control}
+              name="empServiceId"
+              render={({ field }) => (
+                <FormItem className="flex-1 ">
+                  <FormLabel>Service</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        handleRankandUnitFilter(value);
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select the Service" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {filteredSevices.map((service) => (
+                          <SelectItem
+                            key={service.id}
+                            value={service.id.toString()}
+                          >
+                            {service.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex-1 content-end">
+              <Input
+                className=""
+                placeholder="Search"
+                onChange={(e) => {
+                  handleServiceFilter(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+
           <FormField
             control={form.control}
             name="rankId"

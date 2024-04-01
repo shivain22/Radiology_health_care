@@ -1,10 +1,17 @@
-import Loading from '@/app/loading';
-import EmployeeList from '@/modules/employees/EmployeeList';
-import { getEmployees } from '@/server_actions/(get-requests)/getEmployess';
-import { getRanks } from '@/server_actions/(get-requests)/getRanks';
-import { getServices } from '@/server_actions/(get-requests)/getServices';
-import { getUnits } from '@/server_actions/(get-requests)/getUnits';
-import React, { Suspense } from 'react'
+import Loading from "@/app/loading";
+
+import { getEmployees } from "@/server_actions/(get-requests)/getEmployees";
+
+import { getRanks } from "@/server_actions/(get-requests)/getRanks";
+import { getServices } from "@/server_actions/(get-requests)/getServices";
+import { getUnits } from "@/server_actions/(get-requests)/getUnits";
+import React, { Suspense } from "react";
+import EmployeeList from "./components/EmployeeList";
+
+import { ServiceData } from "@/schema/services";
+import { RankData } from "@/schema/ranks";
+import { UnitData } from "@/schema/units";
+import { EmployeeData, TransformEmployeeData } from "@/schema/employees";
 
 const EmployeesPage = () => {
   return (
@@ -17,29 +24,64 @@ const EmployeesPage = () => {
       </div>
     </main>
   );
-}
+};
 
-export default EmployeesPage
-
+export default EmployeesPage;
 
 const Employees = async () => {
-
   const employees = await getEmployees();
   const services = await getServices();
   const ranks = await getRanks();
-  const units = await getUnits();  
+  const units = await getUnits();
 
+  const serviceMap = new Map<number, string>(
+    services.map((service: ServiceData) => [service.id, service.name])
+  );
 
+  const rankMap = new Map<number, string>(
+    ranks.map((rank: RankData) => [rank.id, rank.name])
+  );
+
+  const unitMap = new Map<number, string>(
+    units.map((unit: UnitData) => [unit.id, unit.name])
+  );
+
+  const transformEmployee = (
+    employee: EmployeeData,
+    serviceMap: Map<number, string>,
+    rankMap: Map<number, string>,
+    unitMap: Map<number, string>
+  ): TransformEmployeeData => {
+    // ... Rest of the function logic remains the same ...
+
+    const transformedEmployee: TransformEmployeeData = {
+      ...employee,
+      empServiceName: serviceMap.get(employee.empServiceId) || "",
+      rankName: rankMap.get(employee.rankId) || "",
+      unitName: unitMap.get(employee.unitId) || "",
+    };
+    delete transformedEmployee.empServiceId;
+    delete transformedEmployee.rankId;
+    delete transformedEmployee.unitId;
+
+    return transformedEmployee;
+  };
+
+  const transformedEmployees: TransformEmployeeData[] = employees.map(
+    (employee: EmployeeData) =>
+      transformEmployee(employee, serviceMap, rankMap, unitMap)
+  );
+
+  console.log(transformedEmployees);
   return (
     <Suspense fallback={<Loading />}>
-
-
-    {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
-    {/* <RankList ranks={ranks} services={services} /> */}
-    <h1>Employees</h1>
-   <EmployeeList employees={employees} services={services} ranks={ranks} units={units} />
-   
-  </Suspense>
-
-  )
-}
+      {/* getting the Transformed data for the services and ranks for and displaying it in the form a table for the ranks */}
+      <EmployeeList
+        employees={transformedEmployees}
+        services={services}
+        ranks={ranks}
+        units={units}
+      />
+    </Suspense>
+  );
+};

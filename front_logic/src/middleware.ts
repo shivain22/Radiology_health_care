@@ -6,6 +6,7 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   const isPublicPath = path === "/auth";
+  const isTokenPresent = request.cookies.has("authToken");
   const token = request.cookies.get("authToken")?.value || "";
 
   if (isPublicPath && token) {
@@ -20,5 +21,13 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/signin", "/dashboard/:path*" , "/ranks/:path*", "/services/:path*", "/units/:path*", "/employees/:path*"]
+  matcher: [
+    "/",
+    "/signin",
+    "/dashboard/:path*",
+    "/ranks/:path*",
+    "/services/:path*",
+    "/units/:path*",
+    "/employees/:path*",
+  ],
 };
