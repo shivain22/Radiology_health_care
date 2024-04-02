@@ -1,15 +1,10 @@
 "use client";
 import { ServiceData } from "@/schema/services";
-import { UnitData } from "@/schema/units";
+import { TransformUnitData, UnitData} from "@/schema/units";
 import { useState } from "react";
 import Modal from "../shared/Modal";
 import { UnitForm } from "./UnitForm";
 import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { PlusIcon } from "lucide-react";
-import { deleteUnitAction } from "@/server_actions/actions/units";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 
@@ -20,7 +15,7 @@ export default function UnitList({
   services,
   serviceId,
 }: {
-  units: UnitData[];
+  units: TransformUnitData[];
   services: ServiceData[];
   serviceId?: number;
 }) {
@@ -58,13 +53,7 @@ export default function UnitList({
           +
         </Button>
       </div>
-      <DataTable
-        columns={columns}
-        data={units}
-        openModal={()=>openModal()}/>
-      </div>
+      <DataTable columns={columns} data={units} openModal={() => openModal()} />
+    </div>
   );
 }
-
-
-

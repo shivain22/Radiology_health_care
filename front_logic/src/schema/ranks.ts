@@ -28,3 +28,10 @@ const insertRankParams = rankData.omit({ id: true });
 export type RankedForm = z.infer<typeof formData>;
 export type RankData = z.infer<typeof rankData>;
 export type InsertRankParams = z.infer<typeof insertRankParams>;
+
+export type TransformRankData={
+  id:number;
+  name:string;
+  empServiceId?:number;
+  empServiceName:string;
+};
