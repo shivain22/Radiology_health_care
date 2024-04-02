@@ -16,16 +16,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TOpenModal } from "./EmployeeList";
+
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
-import { EmployeeData } from "@/schema/employees";
 import { DataTablePagination } from "@/modules/shared/data-table-pagination";
+import { PatientTestsData } from "@/schema/patient-tests";
+import { TOpenModal } from "./PatientTestsList";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  openModal: (employee?: EmployeeData) => void;
+  openModal: (patientTests?: PatientTestsData) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -92,31 +93,9 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
         <div className="py-4 px-2">
-
-        <DataTablePagination table={table} />
+          <DataTablePagination table={table} />
         </div>
-
-        {/* <div className="flex items-center justify-end space-x-2 py-4 ">
-          <Button 
-            variant={"outline"}
-            size="sm"
-            onClick={()=> table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button 
-            variant={"outline"}
-            size="sm"
-            onClick={()=> table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div> */}
       </div>
-
-      
     </div>
   );
 }
@@ -131,7 +110,7 @@ const EmptyState = ({ openModal }: { openModal: TOpenModal }) => {
       </p>
       <div className="mt-6">
         <Button onClick={() => openModal()}>
-          <PlusIcon className="h-4" /> New Employees{" "}
+          <PlusIcon className="h-4" /> New Patient Tests{" "}
         </Button>
       </div>
     </div>
