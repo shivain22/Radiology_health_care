@@ -10,8 +10,10 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { PlusIcon } from "lucide-react";
 import { deleteUnitAction } from "@/server_actions/actions/units";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
-type NOpenModal = (unit?: UnitData) => void;
+export type TOpenModal = (unit?: UnitData) => void;
 
 export default function UnitList({
   units,
@@ -56,65 +58,13 @@ export default function UnitList({
           +
         </Button>
       </div>
-      {units.length === 0 ? (
-        <EmptyState openModal={openModal} />
-      ) : (
-        <ul>
-          {units.map((unit) => (
-            <Unit unit={unit} key={unit.id} openModal={openModal} />
-          ))}
-        </ul>
-      )}
-    </div>
+      <DataTable
+        columns={columns}
+        data={units}
+        openModal={()=>openModal()}/>
+      </div>
   );
 }
 
-const Unit = ({
-  unit,
-  openModal,
-}: {
-  unit: UnitData;
-  openModal: NOpenModal;
-}) => {
-  const pathname = usePathname();
-  const basePath = pathname.includes("units") ? pathname : pathname + "/units/";
 
-  return (
-    <li className={cn("flex justify-between my-2")}>
-      <div className="w-full flex gap-2">
-        <div>{unit.name}</div>
-        -
-        <h1>Unit Id :</h1>
-        <div>{unit.id}</div>
-        -
-        Employee service ID
-        <div>{unit.empServiceId}</div>
-      </div>
-      <div className="flex gap-2 mr-5">
 
-      <Button variant={"link"} asChild>
-        <Link href={basePath + "/" + unit.id}>Edit</Link>
-      </Button>
-      <Button onClick={()=> deleteUnitAction(unit.id)} variant={"destructive"}>Delete</Button>
-      </div>
-    </li>
-  );
-};
-
-const EmptyState = ({ openModal }: { openModal: NOpenModal }) => {
-  return (
-    <div className="text-center">
-      <h3 className="mt-2 text-sm font-semibold text-secondary-foreground">
-        No units
-      </h3>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Get started by creating a new unit.
-      </p>
-      <div className="mt-6">
-        <Button onClick={() => openModal()}>
-          <PlusIcon className="h-4" /> New Units{" "}
-        </Button>
-      </div>
-    </div>
-  );
-};
