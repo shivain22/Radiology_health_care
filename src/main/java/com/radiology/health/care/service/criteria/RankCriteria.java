@@ -1,5 +1,6 @@
 package com.radiology.health.care.service.criteria;
 
+import com.radiology.health.care.domain.enumeration.rankDivisions;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springdoc.core.annotations.ParameterObject;
@@ -19,11 +20,32 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class RankCriteria implements Serializable, Criteria {
 
+    /**
+     * Class for filtering rankDivisions
+     */
+    public static class rankDivisionsFilter extends Filter<rankDivisions> {
+
+        public rankDivisionsFilter() {}
+
+        public rankDivisionsFilter(rankDivisionsFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public rankDivisionsFilter copy() {
+            return new rankDivisionsFilter(this);
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
 
     private StringFilter name;
+
+    private StringFilter shortName;
+
+    private rankDivisionsFilter division;
 
     private LongFilter empServiceId;
 
@@ -38,6 +60,8 @@ public class RankCriteria implements Serializable, Criteria {
     public RankCriteria(RankCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
+        this.shortName = other.shortName == null ? null : other.shortName.copy();
+        this.division = other.division == null ? null : other.division.copy();
         this.empServiceId = other.empServiceId == null ? null : other.empServiceId.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
         this.employeeId = other.employeeId == null ? null : other.employeeId.copy();
@@ -77,6 +101,36 @@ public class RankCriteria implements Serializable, Criteria {
 
     public void setName(StringFilter name) {
         this.name = name;
+    }
+
+    public StringFilter getShortName() {
+        return shortName;
+    }
+
+    public StringFilter shortName() {
+        if (shortName == null) {
+            shortName = new StringFilter();
+        }
+        return shortName;
+    }
+
+    public void setShortName(StringFilter shortName) {
+        this.shortName = shortName;
+    }
+
+    public rankDivisionsFilter getDivision() {
+        return division;
+    }
+
+    public rankDivisionsFilter division() {
+        if (division == null) {
+            division = new rankDivisionsFilter();
+        }
+        return division;
+    }
+
+    public void setDivision(rankDivisionsFilter division) {
+        this.division = division;
     }
 
     public LongFilter getEmpServiceId() {
@@ -144,6 +198,8 @@ public class RankCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
+            Objects.equals(shortName, that.shortName) &&
+            Objects.equals(division, that.division) &&
             Objects.equals(empServiceId, that.empServiceId) &&
             Objects.equals(userId, that.userId) &&
             Objects.equals(employeeId, that.employeeId) &&
@@ -153,7 +209,7 @@ public class RankCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, empServiceId, userId, employeeId, distinct);
+        return Objects.hash(id, name, shortName, division, empServiceId, userId, employeeId, distinct);
     }
 
     // prettier-ignore
@@ -162,6 +218,8 @@ public class RankCriteria implements Serializable, Criteria {
         return "RankCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
+            (shortName != null ? "shortName=" + shortName + ", " : "") +
+            (division != null ? "division=" + division + ", " : "") +
             (empServiceId != null ? "empServiceId=" + empServiceId + ", " : "") +
             (userId != null ? "userId=" + userId + ", " : "") +
             (employeeId != null ? "employeeId=" + employeeId + ", " : "") +

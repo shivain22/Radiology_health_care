@@ -93,6 +93,12 @@ public class RankQueryService extends QueryService<Rank> {
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), Rank_.name));
             }
+            if (criteria.getShortName() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getShortName(), Rank_.shortName));
+            }
+            if (criteria.getDivision() != null) {
+                specification = specification.and(buildSpecification(criteria.getDivision(), Rank_.division));
+            }
             if (criteria.getEmpServiceId() != null) {
                 specification =
                     specification.and(

@@ -16,60 +16,11 @@ public class TechnicianEquipmentMappingDTO implements Serializable {
     @NotNull
     private Instant dateTime;
 
-    private Long equipmentId;
+    private EquipmentDTO equipment;
 
-    private Long employeeId;
+    private EmployeeDTO employee;
 
-    private Long userId;
-
-    private String login;
-    private String createdBy;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    private Instant createdDate;
-
-    private String lastModifiedBy;
-
-    private Instant lastModifiedDate;
+    private UserDTO user;
 
     public Long getId() {
         return id;
@@ -87,28 +38,28 @@ public class TechnicianEquipmentMappingDTO implements Serializable {
         this.dateTime = dateTime;
     }
 
-    public Long getEquipmentId() {
-        return equipmentId;
+    public EquipmentDTO getEquipment() {
+        return equipment;
     }
 
-    public void setEquipmentId(Long equipmentId) {
-        this.equipmentId = equipmentId;
+    public void setEquipment(EquipmentDTO equipment) {
+        this.equipment = equipment;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public EmployeeDTO getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
     }
 
-    public Long getUserId() {
-        return userId;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     @Override
@@ -138,9 +89,9 @@ public class TechnicianEquipmentMappingDTO implements Serializable {
         return "TechnicianEquipmentMappingDTO{" +
             "id=" + getId() +
             ", dateTime='" + getDateTime() + "'" +
-            ", equipmentId=" + getEquipmentId() +
-            ", employeeId=" + getEmployeeId() +
-            ", userId=" + getUserId() +
+            ", equipment=" + getEquipment() +
+            ", employee=" + getEmployee() +
+            ", user=" + getUser() +
             "}";
     }
 }

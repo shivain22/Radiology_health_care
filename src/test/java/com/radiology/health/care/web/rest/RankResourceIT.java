@@ -10,6 +10,7 @@ import com.radiology.health.care.domain.EmpService;
 import com.radiology.health.care.domain.Employee;
 import com.radiology.health.care.domain.Rank;
 import com.radiology.health.care.domain.User;
+import com.radiology.health.care.domain.enumeration.rankDivisions;
 import com.radiology.health.care.repository.RankRepository;
 import com.radiology.health.care.service.dto.RankDTO;
 import com.radiology.health.care.service.mapper.RankMapper;
@@ -36,6 +37,12 @@ class RankResourceIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SHORT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_SHORT_NAME = "BBBBBBBBBB";
+
+    private static final rankDivisions DEFAULT_DIVISION = rankDivisions.OTHER;
+    private static final rankDivisions UPDATED_DIVISION = rankDivisions.COMMISSIONED;
 
     private static final String ENTITY_API_URL = "/api/ranks";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -64,7 +71,7 @@ class RankResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Rank createEntity(EntityManager em) {
-        Rank rank = new Rank().name(DEFAULT_NAME);
+        Rank rank = new Rank().name(DEFAULT_NAME).shortName(DEFAULT_SHORT_NAME).division(DEFAULT_DIVISION);
         // Add required entity
         EmpService empService;
         if (TestUtil.findAll(em, EmpService.class).isEmpty()) {
@@ -90,7 +97,7 @@ class RankResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Rank createUpdatedEntity(EntityManager em) {
-        Rank rank = new Rank().name(UPDATED_NAME);
+        Rank rank = new Rank().name(UPDATED_NAME).shortName(UPDATED_SHORT_NAME).division(UPDATED_DIVISION);
         // Add required entity
         EmpService empService;
         if (TestUtil.findAll(em, EmpService.class).isEmpty()) {
@@ -129,6 +136,8 @@ class RankResourceIT {
         assertThat(rankList).hasSize(databaseSizeBeforeCreate + 1);
         Rank testRank = rankList.get(rankList.size() - 1);
         assertThat(testRank.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testRank.getShortName()).isEqualTo(DEFAULT_SHORT_NAME);
+        assertThat(testRank.getDivision()).isEqualTo(DEFAULT_DIVISION);
     }
 
     @Test
@@ -180,7 +189,9 @@ class RankResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(rank.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)))
+            .andExpect(jsonPath("$.[*].division").value(hasItem(DEFAULT_DIVISION.toString())));
     }
 
     @Test
@@ -195,7 +206,9 @@ class RankResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(rank.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.shortName").value(DEFAULT_SHORT_NAME))
+            .andExpect(jsonPath("$.division").value(DEFAULT_DIVISION.toString()));
     }
 
     @Test
@@ -283,6 +296,110 @@ class RankResourceIT {
 
     @Test
     @Transactional
+    void getAllRanksByShortNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        rankRepository.saveAndFlush(rank);
+
+        // Get all the rankList where shortName equals to DEFAULT_SHORT_NAME
+        defaultRankShouldBeFound("shortName.equals=" + DEFAULT_SHORT_NAME);
+
+        // Get all the rankList where shortName equals to UPDATED_SHORT_NAME
+        defaultRankShouldNotBeFound("shortName.equals=" + UPDATED_SHORT_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllRanksByShortNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        rankRepository.saveAndFlush(rank);
+
+        // Get all the rankList where shortName in DEFAULT_SHORT_NAME or UPDATED_SHORT_NAME
+        defaultRankShouldBeFound("shortName.in=" + DEFAULT_SHORT_NAME + "," + UPDATED_SHORT_NAME);
+
+        // Get all the rankList where shortName equals to UPDATED_SHORT_NAME
+        defaultRankShouldNotBeFound("shortName.in=" + UPDATED_SHORT_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllRanksByShortNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        rankRepository.saveAndFlush(rank);
+
+        // Get all the rankList where shortName is not null
+        defaultRankShouldBeFound("shortName.specified=true");
+
+        // Get all the rankList where shortName is null
+        defaultRankShouldNotBeFound("shortName.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllRanksByShortNameContainsSomething() throws Exception {
+        // Initialize the database
+        rankRepository.saveAndFlush(rank);
+
+        // Get all the rankList where shortName contains DEFAULT_SHORT_NAME
+        defaultRankShouldBeFound("shortName.contains=" + DEFAULT_SHORT_NAME);
+
+        // Get all the rankList where shortName contains UPDATED_SHORT_NAME
+        defaultRankShouldNotBeFound("shortName.contains=" + UPDATED_SHORT_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllRanksByShortNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        rankRepository.saveAndFlush(rank);
+
+        // Get all the rankList where shortName does not contain DEFAULT_SHORT_NAME
+        defaultRankShouldNotBeFound("shortName.doesNotContain=" + DEFAULT_SHORT_NAME);
+
+        // Get all the rankList where shortName does not contain UPDATED_SHORT_NAME
+        defaultRankShouldBeFound("shortName.doesNotContain=" + UPDATED_SHORT_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllRanksByDivisionIsEqualToSomething() throws Exception {
+        // Initialize the database
+        rankRepository.saveAndFlush(rank);
+
+        // Get all the rankList where division equals to DEFAULT_DIVISION
+        defaultRankShouldBeFound("division.equals=" + DEFAULT_DIVISION);
+
+        // Get all the rankList where division equals to UPDATED_DIVISION
+        defaultRankShouldNotBeFound("division.equals=" + UPDATED_DIVISION);
+    }
+
+    @Test
+    @Transactional
+    void getAllRanksByDivisionIsInShouldWork() throws Exception {
+        // Initialize the database
+        rankRepository.saveAndFlush(rank);
+
+        // Get all the rankList where division in DEFAULT_DIVISION or UPDATED_DIVISION
+        defaultRankShouldBeFound("division.in=" + DEFAULT_DIVISION + "," + UPDATED_DIVISION);
+
+        // Get all the rankList where division equals to UPDATED_DIVISION
+        defaultRankShouldNotBeFound("division.in=" + UPDATED_DIVISION);
+    }
+
+    @Test
+    @Transactional
+    void getAllRanksByDivisionIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        rankRepository.saveAndFlush(rank);
+
+        // Get all the rankList where division is not null
+        defaultRankShouldBeFound("division.specified=true");
+
+        // Get all the rankList where division is null
+        defaultRankShouldNotBeFound("division.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllRanksByEmpServiceIsEqualToSomething() throws Exception {
         EmpService empService;
         if (TestUtil.findAll(em, EmpService.class).isEmpty()) {
@@ -356,7 +473,9 @@ class RankResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(rank.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)))
+            .andExpect(jsonPath("$.[*].division").value(hasItem(DEFAULT_DIVISION.toString())));
 
         // Check, that the count call also returns 1
         restRankMockMvc
@@ -404,7 +523,7 @@ class RankResourceIT {
         Rank updatedRank = rankRepository.findById(rank.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedRank are not directly saved in db
         em.detach(updatedRank);
-        updatedRank.name(UPDATED_NAME);
+        updatedRank.name(UPDATED_NAME).shortName(UPDATED_SHORT_NAME).division(UPDATED_DIVISION);
         RankDTO rankDTO = rankMapper.toDto(updatedRank);
 
         restRankMockMvc
@@ -420,6 +539,8 @@ class RankResourceIT {
         assertThat(rankList).hasSize(databaseSizeBeforeUpdate);
         Rank testRank = rankList.get(rankList.size() - 1);
         assertThat(testRank.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testRank.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
+        assertThat(testRank.getDivision()).isEqualTo(UPDATED_DIVISION);
     }
 
     @Test
@@ -499,6 +620,8 @@ class RankResourceIT {
         Rank partialUpdatedRank = new Rank();
         partialUpdatedRank.setId(rank.getId());
 
+        partialUpdatedRank.division(UPDATED_DIVISION);
+
         restRankMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedRank.getId())
@@ -512,6 +635,8 @@ class RankResourceIT {
         assertThat(rankList).hasSize(databaseSizeBeforeUpdate);
         Rank testRank = rankList.get(rankList.size() - 1);
         assertThat(testRank.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testRank.getShortName()).isEqualTo(DEFAULT_SHORT_NAME);
+        assertThat(testRank.getDivision()).isEqualTo(UPDATED_DIVISION);
     }
 
     @Test
@@ -526,7 +651,7 @@ class RankResourceIT {
         Rank partialUpdatedRank = new Rank();
         partialUpdatedRank.setId(rank.getId());
 
-        partialUpdatedRank.name(UPDATED_NAME);
+        partialUpdatedRank.name(UPDATED_NAME).shortName(UPDATED_SHORT_NAME).division(UPDATED_DIVISION);
 
         restRankMockMvc
             .perform(
@@ -541,6 +666,8 @@ class RankResourceIT {
         assertThat(rankList).hasSize(databaseSizeBeforeUpdate);
         Rank testRank = rankList.get(rankList.size() - 1);
         assertThat(testRank.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testRank.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
+        assertThat(testRank.getDivision()).isEqualTo(UPDATED_DIVISION);
     }
 
     @Test

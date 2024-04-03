@@ -5,14 +5,12 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import org.hibernate.envers.Audited;
 
 /**
  * A PatientInfo.
  */
 @Entity
 @Table(name = "patient_info")
-@Audited
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class PatientInfo implements Serializable {
 

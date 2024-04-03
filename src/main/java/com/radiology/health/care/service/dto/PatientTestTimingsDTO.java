@@ -2,7 +2,6 @@ package com.radiology.health.care.service.dto;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -22,58 +21,9 @@ public class PatientTestTimingsDTO implements Serializable {
 
     private String spclInstruction;
 
-    private Long patientInfoId;
+    private PatientInfoDTO patientInfo;
 
-    private Long testCategoriesId;
-
-    private String login;
-    private String createdBy;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    private Instant createdDate;
-
-    private String lastModifiedBy;
-
-    private Instant lastModifiedDate;
+    private TestCategoriesDTO testCategories;
 
     public Long getId() {
         return id;
@@ -107,28 +57,28 @@ public class PatientTestTimingsDTO implements Serializable {
         this.clinicalNote = clinicalNote;
     }
 
-    public Long getPatientInfoId() {
-        return patientInfoId;
-    }
-
-    public void setPatientInfoId(Long patientInfoId) {
-        this.patientInfoId = patientInfoId;
-    }
-
-    public Long getTestCategoriesId() {
-        return testCategoriesId;
-    }
-
-    public void setTestCategoriesId(Long testCategoriesId) {
-        this.testCategoriesId = testCategoriesId;
-    }
-
     public String getSpclInstruction() {
         return spclInstruction;
     }
 
     public void setSpclInstruction(String spclInstruction) {
         this.spclInstruction = spclInstruction;
+    }
+
+    public PatientInfoDTO getPatientInfo() {
+        return patientInfo;
+    }
+
+    public void setPatientInfo(PatientInfoDTO patientInfo) {
+        this.patientInfo = patientInfo;
+    }
+
+    public TestCategoriesDTO getTestCategories() {
+        return testCategories;
+    }
+
+    public void setTestCategories(TestCategoriesDTO testCategories) {
+        this.testCategories = testCategories;
     }
 
     @Override
@@ -161,8 +111,8 @@ public class PatientTestTimingsDTO implements Serializable {
             ", priority='" + getPriority() + "'" +
             ", clinicalNote='" + getClinicalNote() + "'" +
             ", spclInstruction='" + getSpclInstruction() + "'" +
-            ", patientInfoId=" + getPatientInfoId() +
-            ", testCategoriesId=" + getTestCategoriesId() +
+            ", patientInfo=" + getPatientInfo() +
+            ", testCategories=" + getTestCategories() +
             "}";
     }
 }

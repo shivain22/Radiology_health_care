@@ -253,11 +253,6 @@
             <artifactId>mysql</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-envers</artifactId>
-            <version>6.4.4.Final</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -393,7 +388,8 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>shivain22/radiology_health_care:backend5</image>
+                            <image>radiologyhealthcare:latest</image>
+
                         </to>
                         <container>
                             <entrypoint>
@@ -517,6 +513,7 @@
                     <version>${maven-eclipse-plugin.version}</version>
                     <configuration>
                         <downloadSources>true</downloadSources>
+
                     </configuration>
                 </plugin>
                 <plugin>
@@ -556,14 +553,17 @@
                         </rules>
                     </configuration>
                 </plugin>
-<!--                 <plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
                     <configuration>
-                     #  Due to spring-boot repackage, without adding this property test classes are not found
-                        #     See https://github.com/spring-projects/spring-boot/issues/6254
-                       # Force alphabetical order to have a reproducible build
+
+                   
+                        <!-- Due to spring-boot repackage, without adding this property test classes are not found
+                             See https://github.com/spring-projects/spring-boot/issues/6254 -->
+                        <!-- Force alphabetical order to have a reproducible build -->
+
                         <classesDirectory>${project.build.outputDirectory}</classesDirectory>
                         <runOrder>alphabetical</runOrder>
                         <includes>
@@ -586,7 +586,7 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin> -->
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-idea-plugin</artifactId>
@@ -977,7 +977,7 @@
                                 </goals>
                                 <phase>test</phase>
                                 <configuration>
-<!--                                     <arguments>run webapp:test</arguments> -->
+                                    <arguments>run webapp:test</arguments>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
                                 </configuration>
                             </execution>
