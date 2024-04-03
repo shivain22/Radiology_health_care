@@ -26,7 +26,7 @@ const PatientTestsData = z.object({
     testCategoriesId: z.number()
 })
 
-const formData = z.object({
+export const formData = z.object({
     testTimings: z.string(),
     priority : z.string(),
     clinicalNote: z.string(),
@@ -39,3 +39,5 @@ const insertPatientTestsParams = PatientTestsData.omit({ id: true });
 
 export type PatientTestsform = z.infer<typeof formData>;
 export type PatientTestsData = z.infer<typeof PatientTestsData>
+
+
