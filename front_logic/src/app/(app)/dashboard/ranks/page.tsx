@@ -1,0 +1,58 @@
+import Loading from "@/app/loading";
+import RankList from "@/modules/ranks/RankList";
+import { RankData, TransformRankData } from "@/schema/ranks";
+import { ServiceData } from "@/schema/services";
+
+import { getRanks } from "@/server_actions/(get-requests)/getRanks";
+import { getServices } from "@/server_actions/(get-requests)/getServices";
+import React from "react";
+import { Suspense } from "react";
+
+export default async function RanksPage() {
+  return (
+    <main>
+      <div className="relative">
+        <div className="flex justify-between">
+          <h1 className="font-semibold text-2xl my-2">Ranks</h1>
+        </div>
+        <Ranks />
+      </div>
+    </main>
+  );
+}
+
+const Ranks = async () => {
+  //getting the data for the ranks and
+  const ranks = await getRanks();
+  const services = await getServices();
+  const serviceMap = new Map<number, string>(
+    services.map((service: ServiceData) => [service.id, service.name])
+  );
+
+  const transformRank = (
+    rank: RankData,
+    serviceMap: Map<number, string>
+  ): TransformRankData => {
+    const transformedRank: TransformRankData = {
+      ...rank,
+      empServiceName: serviceMap.get(rank.empServiceId) || "",
+    };
+
+    delete transformedRank.empServiceId;
+
+    return transformedRank;
+  };
+
+  const transformedRanks: TransformRankData[] = ranks.map((rank: RankData) =>
+    transformRank(rank, serviceMap)
+  );
+
+  return (
+    <Suspense fallback={<Loading />}>
+      {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
+      {/* <RankList ranks={ranks} services={services} /> */}
+      <h1>Ranks</h1>
+      <RankList ranks={transformedRanks} services={services} />
+    </Suspense>
+  );
+};
