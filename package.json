@@ -50,7 +50,7 @@
     "start": "npm run webapp:dev --",
     "start-tls": "npm run webapp:dev -- --env.tls",
     "pretest": "npm run lint",
-    
+    "test": "npm run jest --",
     "test-ci": "npm run lint && npm run jest:update --",
     "test:watch": "npm run jest -- --watch",
     "watch": "concurrently 'npm run start' npm:backend:start",
@@ -60,7 +60,7 @@
     "webapp:dev": "npm run webpack-dev-server -- --config webpack/webpack.dev.js --env stats=minimal",
     "webapp:dev-verbose": "npm run webpack-dev-server -- --config webpack/webpack.dev.js --progress=profile --env stats=normal",
     "webapp:prod": "npm run clean-www && npm run webapp:build:prod --",
-  
+    "webapp:test": "npm run test --",
     "webpack-dev-server": "webpack serve"
   },
   "config": {

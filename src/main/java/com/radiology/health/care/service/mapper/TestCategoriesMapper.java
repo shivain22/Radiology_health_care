@@ -13,45 +13,10 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface TestCategoriesMapper extends EntityMapper<TestCategoriesDTO, TestCategories> {
-    @Mapping(target = "equipmentId", source = "equipment.id")
-    @Mapping(target = "parentTestCategoryId", source = "parentTestCategory.id")
-    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "equipment", source = "equipment", qualifiedByName = "equipmentId")
+    @Mapping(target = "parentTestCategory", source = "parentTestCategory", qualifiedByName = "testCategoriesId")
+    @Mapping(target = "user", source = "user", qualifiedByName = "userId")
     TestCategoriesDTO toDto(TestCategories s);
-
-    @Mapping(target = "equipment.id", source = "equipmentId")
-    @Mapping(target = "parentTestCategory.id", source = "parentTestCategoryId")
-    @Mapping(target = "user.id", source = "userId")
-    default TestCategories toEntity(TestCategoriesDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-
-        TestCategories testCategories = new TestCategories();
-        Equipment equipment = new Equipment();
-        TestCategories parentTestCategory = null;
-        User user = new User();
-
-        equipment.setId(dto.getEquipmentId());
-        if (dto.getParentTestCategoryId() != 0 && dto.getParentTestCategoryId() != null) {
-            parentTestCategory = new TestCategories();
-            parentTestCategory.setId(dto.getParentTestCategoryId());
-        }
-
-        user.setId(dto.getUserId());
-
-        testCategories.setCreatedBy(dto.getCreatedBy());
-        testCategories.setCreatedDate(dto.getCreatedDate());
-        testCategories.setLastModifiedBy(dto.getLastModifiedBy());
-        testCategories.setLastModifiedDate(dto.getLastModifiedDate());
-        testCategories.setId(dto.getId());
-        testCategories.setTestName(dto.getTestName());
-        testCategories.equipment(equipment);
-        testCategories.parentTestCategory(parentTestCategory);
-        testCategories.user(user);
-        testCategories.setLogin(dto.getLogin());
-
-        return testCategories;
-    }
 
     @Named("equipmentId")
     @BeanMapping(ignoreByDefault = true)

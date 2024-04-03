@@ -11,29 +11,8 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface RoomMapper extends EntityMapper<RoomDTO, Room> {
-    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "user", source = "user", qualifiedByName = "userId")
     RoomDTO toDto(Room s);
-
-    @Mapping(target = "user.id", source = "userId")
-    default Room toEntity(RoomDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-
-        Room room = new Room();
-        User user = new User();
-        user.setId(dto.getUserId());
-
-        room.setCreatedBy(dto.getCreatedBy());
-        room.setCreatedDate(dto.getCreatedDate());
-        room.setLastModifiedBy(dto.getLastModifiedBy());
-        room.setLastModifiedDate(dto.getLastModifiedDate());
-        room.setId(dto.getId());
-        room.setRoomNo(dto.getRoomNo());
-        room.user(user);
-        room.setLogin(dto.getLogin());
-        return room;
-    }
 
     @Named("userId")
     @BeanMapping(ignoreByDefault = true)
