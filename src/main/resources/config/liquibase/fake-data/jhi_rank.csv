@@ -1,11 +1,11 @@
-id;name;emp_service_id;user_id
-1;that per interestingly;1;1
-2;persist accurate outlying;2;2
-3;searchingly;3;2
-4;female;4;1
-5;heavily expert;5;2
-6;carelessly ah;6;2
-7;whoa gadzooks;7;2
-8;outside eek glen;8;2
-9;warden pounce apropos;9;2
-10;supposing;10;1
+id;name;short_name;division;emp_service_id;user_id
+1;that per interestingly;persist accurate outlying;OTHER;1;1
+2;after;including;COMMISSIONED;2;2
+3;happily inasmuch;why;OTHER;3;2
+4;sustenance with;giant neck;OTHER;4;2
+5;whimsical oddly athwart;scrap arch afore;OTHER;5;2
+6;sum visible;whether;COMMISSIONED;6;2
+7;loftily refrigerate yet;whether because sympathetically;OTHER;7;2
+8;unfortunate plate wriggler;irritably stylish;NON_COMMISSIONED;8;1
+9;frankly through so;motionless utterly;NON_COMMISSIONED;9;2
+10;daily after hungry;popcorn ick;COMMISSIONED;10;1

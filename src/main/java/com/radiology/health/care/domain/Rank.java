@@ -1,21 +1,20 @@
 package com.radiology.health.care.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.radiology.health.care.domain.enumeration.rankDivisions;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import org.hibernate.envers.Audited;
 
 /**
  * A Rank.
  */
 @Entity
 @Table(name = "jhi_rank")
-@Audited
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Rank extends AbstractAuditingEntity<Long> implements Serializable {
+public class Rank implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,6 +27,13 @@ public class Rank extends AbstractAuditingEntity<Long> implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "short_name")
+    private String shortName;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "division")
+    private rankDivisions division;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "user", "ranks", "units", "employees" }, allowSetters = true)
@@ -36,16 +42,6 @@ public class Rank extends AbstractAuditingEntity<Long> implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     private User user;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    private String login;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "rank")
     @JsonIgnoreProperties(
@@ -89,6 +85,32 @@ public class Rank extends AbstractAuditingEntity<Long> implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getShortName() {
+        return this.shortName;
+    }
+
+    public Rank shortName(String shortName) {
+        this.setShortName(shortName);
+        return this;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    public rankDivisions getDivision() {
+        return this.division;
+    }
+
+    public Rank division(rankDivisions division) {
+        this.setDivision(division);
+        return this;
+    }
+
+    public void setDivision(rankDivisions division) {
+        this.division = division;
     }
 
     public EmpService getEmpService() {
@@ -173,6 +195,8 @@ public class Rank extends AbstractAuditingEntity<Long> implements Serializable {
         return "Rank{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", shortName='" + getShortName() + "'" +
+            ", division='" + getDivision() + "'" +
             "}";
     }
 }

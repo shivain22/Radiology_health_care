@@ -2,7 +2,6 @@ package com.radiology.health.care.service.dto;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -16,58 +15,9 @@ public class EquipmentDTO implements Serializable {
     @NotNull
     private String name;
 
-    private Long roomId;
+    private RoomDTO room;
 
-    private Long userId;
-
-    private String login;
-    private String createdBy;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    private Instant createdDate;
-
-    private String lastModifiedBy;
-
-    private Instant lastModifiedDate;
+    private UserDTO user;
 
     public Long getId() {
         return id;
@@ -85,20 +35,20 @@ public class EquipmentDTO implements Serializable {
         this.name = name;
     }
 
-    public Long getRoomId() {
-        return roomId;
+    public RoomDTO getRoom() {
+        return room;
     }
 
-    public void setRoomId(Long roomId) {
-        this.roomId = roomId;
+    public void setRoom(RoomDTO room) {
+        this.room = room;
     }
 
-    public Long getUserId() {
-        return userId;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     @Override
@@ -128,8 +78,8 @@ public class EquipmentDTO implements Serializable {
         return "EquipmentDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", roomId=" + getRoomId() +
-            ", userId=" + getUserId() +
+            ", room=" + getRoom() +
+            ", user=" + getUser() +
             "}";
     }
 }

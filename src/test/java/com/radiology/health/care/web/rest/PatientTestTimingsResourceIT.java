@@ -8,11 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.radiology.health.care.IntegrationTest;
 import com.radiology.health.care.domain.PatientInfo;
 import com.radiology.health.care.domain.PatientTestTimings;
-import com.radiology.health.care.domain.Room;
 import com.radiology.health.care.domain.TestCategories;
-import com.radiology.health.care.repository.PatientInfoRepository;
 import com.radiology.health.care.repository.PatientTestTimingsRepository;
-import com.radiology.health.care.repository.TestCategoriesRepository;
 import com.radiology.health.care.service.dto.PatientTestTimingsDTO;
 import com.radiology.health.care.service.mapper.PatientTestTimingsMapper;
 import jakarta.persistence.EntityManager;
@@ -73,12 +70,6 @@ class PatientTestTimingsResourceIT {
 
     private PatientTestTimings patientTestTimings;
 
-    @Autowired
-    private PatientInfoRepository patientInfoRepository;
-
-    @Autowired
-    private TestCategoriesRepository testCategoriesRepository;
-
     /**
      * Create an entity for this test.
      *
@@ -101,17 +92,7 @@ class PatientTestTimingsResourceIT {
         } else {
             patientInfo = TestUtil.findAll(em, PatientInfo.class).get(0);
         }
-        // Add required entity
-        TestCategories testCategories;
-        if (TestUtil.findAll(em, TestCategories.class).isEmpty()) {
-            testCategories = TestCategoriesResourceIT.createEntity(em);
-            em.persist(testCategories);
-            em.flush();
-        } else {
-            testCategories = TestUtil.findAll(em, TestCategories.class).get(0);
-        }
         patientTestTimings.setPatientInfo(patientInfo);
-        patientTestTimings.setTestCategories(testCategories);
         return patientTestTimings;
     }
 
@@ -137,17 +118,7 @@ class PatientTestTimingsResourceIT {
         } else {
             patientInfo = TestUtil.findAll(em, PatientInfo.class).get(0);
         }
-        // Add required entity
-        TestCategories testCategories;
-        if (TestUtil.findAll(em, TestCategories.class).isEmpty()) {
-            testCategories = TestCategoriesResourceIT.createUpdatedEntity(em);
-            em.persist(testCategories);
-            em.flush();
-        } else {
-            testCategories = TestUtil.findAll(em, TestCategories.class).get(0);
-        }
         patientTestTimings.setPatientInfo(patientInfo);
-        patientTestTimings.setTestCategories(testCategories);
         return patientTestTimings;
     }
 
@@ -159,6 +130,7 @@ class PatientTestTimingsResourceIT {
     @Test
     @Transactional
     void createPatientTestTimings() throws Exception {
+
         // Create a TestCategories entity and save it
         PatientInfo patientInfo = PatientInfoResourceIT.createEntity(em);
         patientInfo = patientInfoRepository.save(patientInfo);
@@ -176,17 +148,26 @@ class PatientTestTimingsResourceIT {
         patientTestTimings.setStatus(DEFAULT_STATUS);
         // Set other attributes as needed
 
+
         int databaseSizeBeforeCreate = patientTestTimingsRepository.findAll().size();
+        // Create the PatientTestTimings
+        PatientTestTimingsDTO patientTestTimingsDTO = patientTestTimingsMapper.toDto(patientTestTimings);
+        restPatientTestTimingsMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(patientTestTimingsDTO))
+            )
+            .andExpect(status().isCreated());
 
-        // Save the PatientTestTimings entity
-        patientTestTimings = patientTestTimingsRepository.save(patientTestTimings);
-
-        // Validate the creation
-        assertThat(patientTestTimings.getId()).isNotNull();
-
-        // Validate the size of the database after creation
+        // Validate the PatientTestTimings in the database
         List<PatientTestTimings> patientTestTimingsList = patientTestTimingsRepository.findAll();
         assertThat(patientTestTimingsList).hasSize(databaseSizeBeforeCreate + 1);
+        PatientTestTimings testPatientTestTimings = patientTestTimingsList.get(patientTestTimingsList.size() - 1);
+        assertThat(testPatientTestTimings.getTestTimings()).isEqualTo(DEFAULT_TEST_TIMINGS);
+        assertThat(testPatientTestTimings.getPriority()).isEqualTo(DEFAULT_PRIORITY);
+        assertThat(testPatientTestTimings.getClinicalNote()).isEqualTo(DEFAULT_CLINICAL_NOTE);
+        assertThat(testPatientTestTimings.getSpclInstruction()).isEqualTo(DEFAULT_SPCL_INSTRUCTION);
     }
 
     @Test

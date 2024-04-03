@@ -13,36 +13,9 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface RankMapper extends EntityMapper<RankDTO, Rank> {
-    @Mapping(target = "empServiceId", source = "empService.id")
-    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "empService", source = "empService", qualifiedByName = "empServiceId")
+    @Mapping(target = "user", source = "user", qualifiedByName = "userId")
     RankDTO toDto(Rank s);
-
-    @Mapping(target = "empService.id", source = "empServiceId")
-    @Mapping(target = "user.id", source = "userId")
-    default Rank toEntity(RankDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-
-        Rank rank = new Rank();
-        EmpService empService = new EmpService();
-        User user = new User();
-
-        empService.setId(dto.getEmpServiceId());
-        user.setId(dto.getUserId());
-
-        rank.setCreatedBy(dto.getCreatedBy());
-        rank.setCreatedDate(dto.getCreatedDate());
-        rank.setLastModifiedBy(dto.getLastModifiedBy());
-        rank.setLastModifiedDate(dto.getLastModifiedDate());
-        rank.setId(dto.getId());
-        rank.setName(dto.getName());
-        rank.empService(empService);
-        rank.user(user);
-        rank.setLogin(dto.getLogin());
-
-        return rank;
-    }
 
     @Named("empServiceId")
     @BeanMapping(ignoreByDefault = true)

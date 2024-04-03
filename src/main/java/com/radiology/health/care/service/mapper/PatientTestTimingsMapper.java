@@ -13,9 +13,10 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface PatientTestTimingsMapper extends EntityMapper<PatientTestTimingsDTO, PatientTestTimings> {
-    @Mapping(target = "patientInfoId", source = "patientInfo.id")
-    @Mapping(target = "testCategoriesId", source = "testCategories.id")
+    @Mapping(target = "patientInfo", source = "patientInfo", qualifiedByName = "patientInfoId")
+    @Mapping(target = "testCategories", source = "testCategories", qualifiedByName = "testCategoriesId")
     PatientTestTimingsDTO toDto(PatientTestTimings s);
+
 
     @Mapping(target = "patientInfo.id", source = "patientInfo.id")
     @Mapping(target = "testCategories.id", source = "testCategoriesId")
@@ -48,6 +49,7 @@ public interface PatientTestTimingsMapper extends EntityMapper<PatientTestTiming
 
         return patientTestTimings;
     }
+
 
     @Named("patientInfoId")
     @BeanMapping(ignoreByDefault = true)
