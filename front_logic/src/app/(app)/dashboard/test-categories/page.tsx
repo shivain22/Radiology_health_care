@@ -2,6 +2,7 @@ import Loading from "@/app/loading";
 import { getTestCategories } from "@/server_actions/(get-requests)/getTestCategories";
 import { Suspense } from "react";
 import { any } from "zod";
+import TestCategoryList from "./components/TestCategoryList";
 
 export default async function TestCategoryPage() {
   return (
@@ -24,7 +25,7 @@ const TestCategories = async () => {
   return (
     <Suspense fallback={<Loading />}>
       {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
-      <h1>Test Categories </h1>
+      <TestCategoryList testCategories={testcategories} />
     </Suspense>
   );
 };

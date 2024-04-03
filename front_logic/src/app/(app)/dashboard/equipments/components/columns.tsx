@@ -34,7 +34,7 @@ export const columns: ColumnDef<EquipmentsData>[] = [
   {
     //need to be change
     accessorKey: "roomId",
-    header: "Room Name",
+    header: "Room ID",
   }
   ,
   {

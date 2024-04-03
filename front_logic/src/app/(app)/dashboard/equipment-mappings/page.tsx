@@ -2,6 +2,7 @@ import Loading from '@/app/loading';
 
 import { getEquipmentMappings } from "@/server_actions/(get-requests)/getEquipmentMappings";
 import { Suspense } from 'react';
+import EquipmentsMappingList from './components/EquipmentsMappingList';
 
 export default async function ServicesPage() {
     return (
@@ -22,8 +23,9 @@ export default async function ServicesPage() {
     return (
       <Suspense fallback={<Loading />}>
   
-        {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
+        {/* getting the data and displaying for the technician Equipment Mappings */}
         <h1>Technician Equipment Mappings</h1>
+        <EquipmentsMappingList equipmentsMapping={equipmentMapping} />
        
        
        

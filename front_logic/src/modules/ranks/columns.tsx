@@ -18,21 +18,21 @@ export const columns: ColumnDef<TransformRankData>[] = [
     },
   },
   { accessorKey: "name", header: "Name" },
-  {
-    accessorKey: "id",
-    header: () => (
-      <div className="flex justify-center invisible md:visible">
-        <h1>Id</h1>
-      </div>
-    ),
-    cell: (info) => {
-      return <div className="flex justify-center invisible md:visible">{info.row.original.id}</div>;
-    },
-  },
-  {
-    accessorKey: "empServiceName",
-    header: "Rank Service",
-  },
+  // {
+  //   accessorKey: "id",
+  //   header: () => (
+  //     <div className="flex justify-center invisible md:visible">
+  //       <h1>Id</h1>
+  //     </div>
+  //   ),
+  //   cell: (info) => {
+  //     return <div className="flex justify-center invisible md:visible">{info.row.original.name}</div>;
+  //   },
+  // },
+  // {
+  //   accessorKey: "empServiceName",
+  //   header: "Rank Service",
+  // },
   {
     accessorKey: "actions",
     header: () => (
