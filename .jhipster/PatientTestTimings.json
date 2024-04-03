@@ -20,6 +20,10 @@
     {
       "fieldName": "spclInstruction",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
     }
   ],
   "jpaMetamodelFiltering": true,

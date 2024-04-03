@@ -51,6 +51,8 @@ class PatientTestTimingsResourceIT {
     private static final String DEFAULT_SPCL_INSTRUCTION = "AAAAAAAAAA";
     private static final String UPDATED_SPCL_INSTRUCTION = "BBBBBBBBBB";
 
+    private static final String DEFAULT_STATUS = "AAAAAAAAAA";
+    private static final String UPDATED_STATUS = "BBBBBBBBBB";
     private static final String ENTITY_API_URL = "/api/patient-test-timings";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -88,7 +90,8 @@ class PatientTestTimingsResourceIT {
             .testTimings(DEFAULT_TEST_TIMINGS)
             .priority(DEFAULT_PRIORITY)
             .clinicalNote(DEFAULT_CLINICAL_NOTE)
-            .spclInstruction(DEFAULT_SPCL_INSTRUCTION);
+            .spclInstruction(DEFAULT_SPCL_INSTRUCTION)
+            .status(DEFAULT_STATUS);
         // Add required entity
         PatientInfo patientInfo;
         if (TestUtil.findAll(em, PatientInfo.class).isEmpty()) {
@@ -123,7 +126,8 @@ class PatientTestTimingsResourceIT {
             .testTimings(UPDATED_TEST_TIMINGS)
             .priority(UPDATED_PRIORITY)
             .clinicalNote(UPDATED_CLINICAL_NOTE)
-            .spclInstruction(UPDATED_SPCL_INSTRUCTION);
+            .spclInstruction(UPDATED_SPCL_INSTRUCTION)
+            .status(UPDATED_STATUS);
         // Add required entity
         PatientInfo patientInfo;
         if (TestUtil.findAll(em, PatientInfo.class).isEmpty()) {
@@ -169,6 +173,7 @@ class PatientTestTimingsResourceIT {
         patientTestTimings.setPriority(DEFAULT_PRIORITY);
         patientTestTimings.setClinicalNote(DEFAULT_CLINICAL_NOTE);
         patientTestTimings.setSpclInstruction(DEFAULT_SPCL_INSTRUCTION);
+        patientTestTimings.setStatus(DEFAULT_STATUS);
         // Set other attributes as needed
 
         int databaseSizeBeforeCreate = patientTestTimingsRepository.findAll().size();
@@ -240,7 +245,8 @@ class PatientTestTimingsResourceIT {
             .andExpect(jsonPath("$.testTimings").value(DEFAULT_TEST_TIMINGS.toString()))
             .andExpect(jsonPath("$.priority").value(DEFAULT_PRIORITY))
             .andExpect(jsonPath("$.clinicalNote").value(DEFAULT_CLINICAL_NOTE))
-            .andExpect(jsonPath("$.spclInstruction").value(DEFAULT_SPCL_INSTRUCTION));
+            .andExpect(jsonPath("$.spclInstruction").value(DEFAULT_SPCL_INSTRUCTION))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS));
     }
 
     @Test
@@ -549,6 +555,71 @@ class PatientTestTimingsResourceIT {
 
     @Test
     @Transactional
+    void getAllPatientTestTimingsByStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where status equals to DEFAULT_STATUS
+        defaultPatientTestTimingsShouldBeFound("status.equals=" + DEFAULT_STATUS);
+
+        // Get all the patientTestTimingsList where status equals to UPDATED_STATUS
+        defaultPatientTestTimingsShouldNotBeFound("status.equals=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where status in DEFAULT_STATUS or UPDATED_STATUS
+        defaultPatientTestTimingsShouldBeFound("status.in=" + DEFAULT_STATUS + "," + UPDATED_STATUS);
+
+        // Get all the patientTestTimingsList where status equals to UPDATED_STATUS
+        defaultPatientTestTimingsShouldNotBeFound("status.in=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsBySStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where status is not null
+        defaultPatientTestTimingsShouldBeFound("status.specified=true");
+
+        // Get all the patientTestTimingsList where status is null
+        defaultPatientTestTimingsShouldNotBeFound("status.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByStatusContainsSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where status contains DEFAULT_STATUS
+        defaultPatientTestTimingsShouldBeFound("status.contains=" + DEFAULT_STATUS);
+
+        // Get all the patientTestTimingsList where status contains UPDATED_STATUS
+        defaultPatientTestTimingsShouldNotBeFound("status.contains=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByStatusNotContainsSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where status does not contain DEFAULT_STATUS
+        defaultPatientTestTimingsShouldNotBeFound("status.doesNotContain=" + DEFAULT_STATUS);
+
+        // Get all the patientTestTimingsList where status does not contain UPDATED_STATUS
+        defaultPatientTestTimingsShouldBeFound("status.doesNotContain=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
     void getAllPatientTestTimingsByPatientInfoIsEqualToSomething() throws Exception {
         PatientInfo patientInfo;
         if (TestUtil.findAll(em, PatientInfo.class).isEmpty()) {
@@ -603,7 +674,8 @@ class PatientTestTimingsResourceIT {
             .andExpect(jsonPath("$.[*].testTimings").value(hasItem(DEFAULT_TEST_TIMINGS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY)))
             .andExpect(jsonPath("$.[*].clinicalNote").value(hasItem(DEFAULT_CLINICAL_NOTE)))
-            .andExpect(jsonPath("$.[*].spclInstruction").value(hasItem(DEFAULT_SPCL_INSTRUCTION)));
+            .andExpect(jsonPath("$.[*].spclInstruction").value(hasItem(DEFAULT_SPCL_INSTRUCTION)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
 
         // Check, that the count call also returns 1
         restPatientTestTimingsMockMvc
@@ -655,7 +727,9 @@ class PatientTestTimingsResourceIT {
             .testTimings(UPDATED_TEST_TIMINGS)
             .priority(UPDATED_PRIORITY)
             .clinicalNote(UPDATED_CLINICAL_NOTE)
-            .spclInstruction(UPDATED_SPCL_INSTRUCTION);
+            .spclInstruction(UPDATED_SPCL_INSTRUCTION)
+            .status(UPDATED_STATUS);
+
         PatientTestTimingsDTO patientTestTimingsDTO = patientTestTimingsMapper.toDto(updatedPatientTestTimings);
 
         restPatientTestTimingsMockMvc
@@ -674,6 +748,7 @@ class PatientTestTimingsResourceIT {
         assertThat(testPatientTestTimings.getPriority()).isEqualTo(UPDATED_PRIORITY);
         assertThat(testPatientTestTimings.getClinicalNote()).isEqualTo(UPDATED_CLINICAL_NOTE);
         assertThat(testPatientTestTimings.getSpclInstruction()).isEqualTo(UPDATED_SPCL_INSTRUCTION);
+        assertThat(testPatientTestTimings.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test
@@ -775,6 +850,7 @@ class PatientTestTimingsResourceIT {
         assertThat(testPatientTestTimings.getPriority()).isEqualTo(DEFAULT_PRIORITY);
         assertThat(testPatientTestTimings.getClinicalNote()).isEqualTo(DEFAULT_CLINICAL_NOTE);
         assertThat(testPatientTestTimings.getSpclInstruction()).isEqualTo(UPDATED_SPCL_INSTRUCTION);
+        assertThat(testPatientTestTimings.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test
@@ -793,7 +869,8 @@ class PatientTestTimingsResourceIT {
             .testTimings(UPDATED_TEST_TIMINGS)
             .priority(UPDATED_PRIORITY)
             .clinicalNote(UPDATED_CLINICAL_NOTE)
-            .spclInstruction(UPDATED_SPCL_INSTRUCTION);
+            .spclInstruction(UPDATED_SPCL_INSTRUCTION)
+            .status(UPDATED_STATUS);
 
         restPatientTestTimingsMockMvc
             .perform(
@@ -811,6 +888,7 @@ class PatientTestTimingsResourceIT {
         assertThat(testPatientTestTimings.getPriority()).isEqualTo(UPDATED_PRIORITY);
         assertThat(testPatientTestTimings.getClinicalNote()).isEqualTo(UPDATED_CLINICAL_NOTE);
         assertThat(testPatientTestTimings.getSpclInstruction()).isEqualTo(UPDATED_SPCL_INSTRUCTION);
+        assertThat(testPatientTestTimings.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

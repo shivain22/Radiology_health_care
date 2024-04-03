@@ -37,6 +37,7 @@ public interface PatientTestTimingsMapper extends EntityMapper<PatientTestTiming
         patientTestTimings.setPriority(dto.getPriority());
         patientTestTimings.setClinicalNote(dto.getClinicalNote());
         patientTestTimings.setSpclInstruction(dto.getSpclInstruction());
+        patientTestTimings.setStatus(dto.getStatus());
         patientTestTimings.patientInfo(patientInfo);
         patientTestTimings.testCategories(testCategories);
         patientTestTimings.setLogin(dto.getLogin());

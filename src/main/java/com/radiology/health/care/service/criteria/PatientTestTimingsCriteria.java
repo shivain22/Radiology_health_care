@@ -31,6 +31,8 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     private StringFilter spclInstruction;
 
+    private StringFilter status;
+
     private LongFilter patientInfoId;
 
     private LongFilter testCategoriesId;
@@ -45,6 +47,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         this.priority = other.priority == null ? null : other.priority.copy();
         this.clinicalNote = other.clinicalNote == null ? null : other.clinicalNote.copy();
         this.spclInstruction = other.spclInstruction == null ? null : other.spclInstruction.copy();
+        this.status = other.status == null ? null : other.status.copy();
         this.patientInfoId = other.patientInfoId == null ? null : other.patientInfoId.copy();
         this.testCategoriesId = other.testCategoriesId == null ? null : other.testCategoriesId.copy();
         this.distinct = other.distinct;
@@ -134,6 +137,21 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         return patientInfoId;
     }
 
+    public StringFilter status() {
+        if (status == null) {
+            status = new StringFilter();
+        }
+        return status;
+    }
+
+    public StringFilter getStatus() {
+        return status;
+    }
+
+    public void setStatus(StringFilter status) {
+        this.status = status;
+    }
+
     public LongFilter patientInfoId() {
         if (patientInfoId == null) {
             patientInfoId = new LongFilter();
@@ -183,6 +201,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             Objects.equals(priority, that.priority) &&
             Objects.equals(clinicalNote, that.clinicalNote) &&
             Objects.equals(spclInstruction, that.spclInstruction) &&
+            Objects.equals(status, that.status) &&
             Objects.equals(patientInfoId, that.patientInfoId) &&
             Objects.equals(testCategoriesId, that.testCategoriesId) &&
             Objects.equals(distinct, that.distinct)
@@ -191,7 +210,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, testTimings, priority, clinicalNote, spclInstruction, patientInfoId, testCategoriesId, distinct);
+        return Objects.hash(id, testTimings, priority, clinicalNote, spclInstruction, status, patientInfoId, testCategoriesId, distinct);
     }
 
     // prettier-ignore
@@ -203,6 +222,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             (priority != null ? "priority=" + priority + ", " : "") +
             (clinicalNote != null ? "clinicalNote=" + clinicalNote + ", " : "") +
             (spclInstruction != null ? "spclInstruction=" + spclInstruction + ", " : "") +
+            (status != null ? "status=" + status + ", " : "") +
             (patientInfoId != null ? "patientInfoId=" + patientInfoId + ", " : "") +
             (testCategoriesId != null ? "testCategoriesId=" + testCategoriesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

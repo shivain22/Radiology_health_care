@@ -35,6 +35,22 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
     @Column(name = "spcl_instruction")
     private String spclInstruction;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Column(name = "status")
+    private String status;
+
+    public PatientTestTimings status(String status) {
+        this.status = status;
+        return this;
+    }
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "employeeId", "employeeHis", "employeeServiceNo", "patientTestTimings" }, allowSetters = true)
@@ -178,6 +194,7 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
             ", priority='" + getPriority() + "'" +
             ", clinicalNote='" + getClinicalNote() + "'" +
             ", spclInstruction='" + getSpclInstruction() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

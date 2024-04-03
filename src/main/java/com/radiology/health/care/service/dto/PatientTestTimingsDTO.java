@@ -22,6 +22,21 @@ public class PatientTestTimingsDTO implements Serializable {
 
     private String spclInstruction;
 
+    public PatientTestTimingsDTO status(String status) {
+        this.status = status;
+        return this;
+    }
+
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     private Long patientInfoId;
 
     private Long testCategoriesId;
@@ -161,6 +176,7 @@ public class PatientTestTimingsDTO implements Serializable {
             ", priority='" + getPriority() + "'" +
             ", clinicalNote='" + getClinicalNote() + "'" +
             ", spclInstruction='" + getSpclInstruction() + "'" +
+            ", status='" + getStatus() + "'" +
             ", patientInfoId=" + getPatientInfoId() +
             ", testCategoriesId=" + getTestCategoriesId() +
             "}";
