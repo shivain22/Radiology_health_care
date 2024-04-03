@@ -17,14 +17,16 @@ export const columns: ColumnDef<TransformUnitData>[] = [
       return <div className="flex justify-center">{info.row.index + 1}</div>;
     },
   },
-  { accessorKey: "name", header: "Name" ,},
+  { accessorKey: "name", header: "Name" ,cell:(info)=>{
+    return <div className="flex justify-center">{info.row.original.name}</div>
+  }},
   {accessorKey:"id",
-header:()=>(<div className="flex justify-center">
+header:()=>(<div className="flex justify-center invisible md:visible">
     <h1>Id</h1>
 </div>),
 cell :(info)=>{
     return(
-        <div className="flex justify-center">
+        <div className="flex justify-center invisible md:visible">
             {info.row.original.id}
         </div>
     )

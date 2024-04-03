@@ -21,12 +21,12 @@ export const columns: ColumnDef<TransformRankData>[] = [
   {
     accessorKey: "id",
     header: () => (
-      <div className="flex justify-center">
+      <div className="flex justify-center invisible md:visible">
         <h1>Id</h1>
       </div>
     ),
     cell: (info) => {
-      return <div className="flex justify-center">{info.row.original.id}</div>;
+      return <div className="flex justify-center invisible md:visible">{info.row.original.id}</div>;
     },
   },
   {
