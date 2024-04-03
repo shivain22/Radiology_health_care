@@ -2,7 +2,6 @@ package com.radiology.health.care.service.dto;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -16,56 +15,7 @@ public class RoomDTO implements Serializable {
     @NotNull
     private Integer roomNo;
 
-    private Long userId;
-
-    private String login;
-    private String createdBy;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    private Instant createdDate;
-
-    private String lastModifiedBy;
-
-    private Instant lastModifiedDate;
+    private UserDTO user;
 
     public Long getId() {
         return id;
@@ -83,12 +33,12 @@ public class RoomDTO implements Serializable {
         this.roomNo = roomNo;
     }
 
-    public Long getUserId() {
-        return userId;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     @Override
@@ -118,7 +68,7 @@ public class RoomDTO implements Serializable {
         return "RoomDTO{" +
             "id=" + getId() +
             ", roomNo=" + getRoomNo() +
-            ", userId=" + getUserId() +
+            ", user=" + getUser() +
             "}";
     }
 }

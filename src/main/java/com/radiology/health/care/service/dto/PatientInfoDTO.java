@@ -1,6 +1,5 @@
 package com.radiology.health.care.service.dto;
 
-import jakarta.persistence.Column;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -24,14 +23,11 @@ public class PatientInfoDTO implements Serializable {
 
     private String relation;
 
-    @Column(nullable = true)
-    private Long employeeIdId = 0L;
+    private EmployeeDTO employeeId;
 
-    @Column(nullable = true)
-    private String employeeHisNoId;
+    private EmployeeDTO employeeHis;
 
-    @Column(nullable = true)
-    private String employeeServiceNoId;
+    private EmployeeDTO employeeServiceNo;
 
     public Long getId() {
         return id;
@@ -69,30 +65,6 @@ public class PatientInfoDTO implements Serializable {
         return dateOfBirth;
     }
 
-    public Long getEmployeeIdId() {
-        return employeeIdId;
-    }
-
-    public void setEmployeeIdId(Long employeeIdId) {
-        this.employeeIdId = employeeIdId;
-    }
-
-    public String getEmployeeHisNoId() {
-        return employeeHisNoId;
-    }
-
-    public void setEmployeeHisNoId(String employeeHisNoId) {
-        this.employeeHisNoId = employeeHisNoId;
-    }
-
-    public String getEmployeeServiceNoId() {
-        return employeeServiceNoId;
-    }
-
-    public void setEmployeeServiceNoId(String employeeServiceNoId) {
-        this.employeeServiceNoId = employeeServiceNoId;
-    }
-
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
@@ -111,6 +83,30 @@ public class PatientInfoDTO implements Serializable {
 
     public void setRelation(String relation) {
         this.relation = relation;
+    }
+
+    public EmployeeDTO getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(EmployeeDTO employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public EmployeeDTO getEmployeeHis() {
+        return employeeHis;
+    }
+
+    public void setEmployeeHis(EmployeeDTO employeeHis) {
+        this.employeeHis = employeeHis;
+    }
+
+    public EmployeeDTO getEmployeeServiceNo() {
+        return employeeServiceNo;
+    }
+
+    public void setEmployeeServiceNo(EmployeeDTO employeeServiceNo) {
+        this.employeeServiceNo = employeeServiceNo;
     }
 
     @Override
@@ -145,9 +141,9 @@ public class PatientInfoDTO implements Serializable {
             ", dateOfBirth='" + getDateOfBirth() + "'" +
             ", mobile=" + getMobile() +
             ", relation='" + getRelation() + "'" +
-            ", employeeIdId=" + getEmployeeIdId() +
-            ", employeeHisNoId=" + getEmployeeHisNoId() +
-            ", employeeServiceNoId=" + getEmployeeServiceNoId() +
+            ", employeeId=" + getEmployeeId() +
+            ", employeeHis=" + getEmployeeHis() +
+            ", employeeServiceNo=" + getEmployeeServiceNo() +
             "}";
     }
 }

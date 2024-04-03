@@ -788,4 +788,5 @@
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="unit" constraintName="fk_unit__user_id" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
     </changeSet>
 
+
 </databaseChangeLog>

@@ -10,14 +10,14 @@ public class RankTestSamples {
     private static final AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     public static Rank getRankSample1() {
-        return new Rank().id(1L).name("name1");
+        return new Rank().id(1L).name("name1").shortName("shortName1");
     }
 
     public static Rank getRankSample2() {
-        return new Rank().id(2L).name("name2");
+        return new Rank().id(2L).name("name2").shortName("shortName2");
     }
 
     public static Rank getRankRandomSampleGenerator() {
-        return new Rank().id(longCount.incrementAndGet()).name(UUID.randomUUID().toString());
+        return new Rank().id(longCount.incrementAndGet()).name(UUID.randomUUID().toString()).shortName(UUID.randomUUID().toString());
     }
 }

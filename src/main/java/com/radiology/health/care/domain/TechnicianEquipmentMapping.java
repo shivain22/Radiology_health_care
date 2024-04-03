@@ -5,16 +5,14 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
-import org.hibernate.envers.Audited;
 
 /**
  * A TechnicianEquipmentMapping.
  */
 @Entity
 @Table(name = "technician_equipment_mapping")
-@Audited
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class TechnicianEquipmentMapping extends AbstractAuditingEntity<Long> implements Serializable {
+public class TechnicianEquipmentMapping implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,16 +29,6 @@ public class TechnicianEquipmentMapping extends AbstractAuditingEntity<Long> imp
     @NotNull
     @JsonIgnoreProperties(value = { "room", "user", "technicianEquipmentMappings", "testCategories" }, allowSetters = true)
     private Equipment equipment;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    private String login;
 
     @ManyToOne(optional = false)
     @NotNull
