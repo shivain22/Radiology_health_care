@@ -12,6 +12,7 @@ export const columns: ColumnDef<PatientData>[] = [
     {
         accessorKey: "age",
         header: "Age",
+        
     },
     {
         accessorKey: "gender",

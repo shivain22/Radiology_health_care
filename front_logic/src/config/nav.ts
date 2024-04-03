@@ -14,6 +14,7 @@ export const defaultLinks: SidebarLink[] = [
   { href: "/dashboard/ranks", title: "Ranks", icon: HomeIcon },
   { href: "/dashboard/units", title: "Units", icon: Cog },
   { href: "/dashboard/rooms", title: "Rooms", icon: Cog },
+  { href: "/dashboard/patient-tests", title: "Patient Tests", icon: Cog },
 
   // { href: "/dashboard/settings", title: "Settings", icon: Cog },
 ];
