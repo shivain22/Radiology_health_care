@@ -9,6 +9,15 @@
       "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "shortName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "division",
+      "fieldType": "rankDivisions",
+      "fieldValues": "OTHERS,COMMISSIONED,NON_COMMISSIONED"
     }
   ],
   "jpaMetamodelFiltering": true,

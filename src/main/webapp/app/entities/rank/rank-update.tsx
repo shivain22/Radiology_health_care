@@ -13,6 +13,7 @@ import { getEntities as getEmpServices } from 'app/entities/emp-service/emp-serv
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { IRank } from 'app/shared/model/rank.model';
+import { rankDivisions } from 'app/shared/model/enumerations/rank-divisions.model';
 import { getEntity, updateEntity, createEntity, reset } from './rank.reducer';
 
 export const RankUpdate = () => {
@@ -29,6 +30,7 @@ export const RankUpdate = () => {
   const loading = useAppSelector(state => state.rank.loading);
   const updating = useAppSelector(state => state.rank.updating);
   const updateSuccess = useAppSelector(state => state.rank.updateSuccess);
+  const rankDivisionsValues = Object.keys(rankDivisions);
 
   const handleClose = () => {
     navigate('/rank');
@@ -73,6 +75,7 @@ export const RankUpdate = () => {
     isNew
       ? {}
       : {
+          division: 'OTHERS',
           ...rankEntity,
           empService: rankEntity?.empService?.id,
           user: rankEntity?.user?.id,
@@ -104,6 +107,14 @@ export const RankUpdate = () => {
                   required: { value: true, message: 'This field is required.' },
                 }}
               />
+              <ValidatedField label="Short Name" id="rank-shortName" name="shortName" data-cy="shortName" type="text" />
+              <ValidatedField label="Division" id="rank-division" name="division" data-cy="division" type="select">
+                {rankDivisionsValues.map(rankDivisions => (
+                  <option value={rankDivisions} key={rankDivisions}>
+                    {rankDivisions}
+                  </option>
+                ))}
+              </ValidatedField>
               <ValidatedField id="rank-empService" name="empService" data-cy="empService" label="Emp Service" type="select" required>
                 <option value="" key="0" />
                 {empServices

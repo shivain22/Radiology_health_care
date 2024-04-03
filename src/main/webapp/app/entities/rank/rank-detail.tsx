@@ -31,6 +31,14 @@ export const RankDetail = () => {
             <span id="name">Name</span>
           </dt>
           <dd>{rankEntity.name}</dd>
+          <dt>
+            <span id="shortName">Short Name</span>
+          </dt>
+          <dd>{rankEntity.shortName}</dd>
+          <dt>
+            <span id="division">Division</span>
+          </dt>
+          <dd>{rankEntity.division}</dd>
           <dt>Emp Service</dt>
           <dd>{rankEntity.empService ? rankEntity.empService.id : ''}</dd>
           <dt>User</dt>

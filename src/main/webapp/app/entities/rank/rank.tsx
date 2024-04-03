@@ -131,6 +131,12 @@ export const Rank = () => {
                   <th className="hand" onClick={sort('name')}>
                     Name <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
                   </th>
+                  <th className="hand" onClick={sort('shortName')}>
+                    Short Name <FontAwesomeIcon icon={getSortIconByFieldName('shortName')} />
+                  </th>
+                  <th className="hand" onClick={sort('division')}>
+                    Division <FontAwesomeIcon icon={getSortIconByFieldName('division')} />
+                  </th>
                   <th>
                     Emp Service <FontAwesomeIcon icon="sort" />
                   </th>
@@ -149,6 +155,8 @@ export const Rank = () => {
                       </Button>
                     </td>
                     <td>{rank.name}</td>
+                    <td>{rank.shortName}</td>
+                    <td>{rank.division}</td>
                     <td>{rank.empService ? <Link to={`/emp-service/${rank.empService.id}`}>{rank.empService.id}</Link> : ''}</td>
                     <td>{rank.user ? rank.user.id : ''}</td>
                     <td className="text-end">
