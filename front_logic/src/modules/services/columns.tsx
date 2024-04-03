@@ -26,12 +26,12 @@ export const columns: ColumnDef<ServiceData>[] = [
   {
     accessorKey: "id",
     header: () => (
-      <div className="flex justify-center invisible md:visible">
+      <div className="flex md:w-32 justify-center invisible md:visible">
         <h1>Id</h1>
       </div>
     ),
     cell: (info) => {
-      return <div className="flex justify-center space-x-4 invisible md:visible">{info.row.original.id}</div>;
+      return <div className="flex md:w-32 justify-center space-x-4 invisible md:visible">{info.row.original.id}</div>;
     },
   },
   {

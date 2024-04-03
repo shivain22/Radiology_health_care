@@ -1,21 +1,6 @@
 import { z } from "zod";
 
 
-// {
-//     "id": 0,
-//     "testTimings": "2024-04-01",
-//     "priority": "string",
-//     "clinicalNote": "string",
-//     "spclInstruction": "string",
-//     "patientInfoId": 0,
-//     "testCategoriesId": 0,
-//     "login": "string",
-//     "createdBy": "string",
-//     "createdDate": "2024-04-01T07:35:56.289Z",
-//     "lastModifiedBy": "string",
-//     "lastModifiedDate": "2024-04-01T07:35:56.289Z"
-//   }
-
 const PatientTestsData = z.object({
     id: z.number(),
     testTimings: z.string(),

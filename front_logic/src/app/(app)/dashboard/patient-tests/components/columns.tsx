@@ -51,7 +51,7 @@ export const columns: ColumnDef<PatientTestsData>[] = [
   {
     accessorKey: "actions",
     header: () => (
-      <div className="flex justify-center">
+      <div className="flex justify-center ">
         <h1>Actions</h1>
       </div>
     ),

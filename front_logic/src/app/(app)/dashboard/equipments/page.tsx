@@ -1,5 +1,6 @@
 import { getEquipments } from '@/server_actions/(get-requests)/getEquiments';
 import React from 'react'
+import EquipmentsList from './components/EquipmentsList';
 
 export default async function EquipPage () {
   return (
@@ -19,7 +20,12 @@ const Equipment=async()=>{
     console.log(equipments);
 
     return(
-        <h1>Equipment</h1>
+      <div>
+
+        <h1>Equipments</h1>
+        <EquipmentsList equipments={equipments} />
+      </div>
+
     )
 }
 
