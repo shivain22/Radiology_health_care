@@ -1,7 +1,5 @@
 package com.radiology.health.care.domain;
 
-import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -10,14 +8,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
-import org.hibernate.envers.Audited;
 
 /**
  * An authority (a security role) used by Spring Security.
  */
 @Entity
 @Table(name = "jhi_authority")
-@Audited(targetAuditMode = NOT_AUDITED)
 public class Authority implements Serializable {
 
     private static final long serialVersionUID = 1L;

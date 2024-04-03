@@ -2,10 +2,7 @@ package com.radiology.health.care.service.impl;
 
 import com.radiology.health.care.domain.Room;
 import com.radiology.health.care.repository.RoomRepository;
-import com.radiology.health.care.repository.UserRepository;
-import com.radiology.health.care.security.SecurityUtils;
 import com.radiology.health.care.service.RoomService;
-import com.radiology.health.care.service.dto.AdminUserDTO;
 import com.radiology.health.care.service.dto.RoomDTO;
 import com.radiology.health.care.service.mapper.RoomMapper;
 import java.util.Optional;
@@ -29,24 +26,14 @@ public class RoomServiceImpl implements RoomService {
 
     private final RoomMapper roomMapper;
 
-    private final UserRepository userRepository;
-
-    public RoomServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper, UserRepository userRepository) {
+    public RoomServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper) {
         this.roomRepository = roomRepository;
         this.roomMapper = roomMapper;
-        this.userRepository = userRepository;
     }
 
     @Override
     public RoomDTO save(RoomDTO roomDTO) {
         log.debug("Request to save Room : {}", roomDTO);
-        AdminUserDTO adminUser = SecurityUtils
-            .getCurrentUserLogin()
-            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new RuntimeException("User could not be found"));
-        roomDTO.setUserId(adminUser.getId());
-        roomDTO.setLogin(adminUser.getLogin());
         Room room = roomMapper.toEntity(roomDTO);
         room = roomRepository.save(room);
         return roomMapper.toDto(room);
@@ -55,13 +42,6 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public RoomDTO update(RoomDTO roomDTO) {
         log.debug("Request to update Room : {}", roomDTO);
-        AdminUserDTO adminUser = SecurityUtils
-            .getCurrentUserLogin()
-            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new RuntimeException("User could not be found"));
-        roomDTO.setUserId(adminUser.getId());
-        roomDTO.setLogin(adminUser.getLogin());
         Room room = roomMapper.toEntity(roomDTO);
         room = roomRepository.save(room);
         return roomMapper.toDto(room);
@@ -70,13 +50,6 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Optional<RoomDTO> partialUpdate(RoomDTO roomDTO) {
         log.debug("Request to partially update Room : {}", roomDTO);
-        AdminUserDTO adminUser = SecurityUtils
-            .getCurrentUserLogin()
-            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new RuntimeException("User could not be found"));
-        roomDTO.setUserId(adminUser.getId());
-        roomDTO.setLogin(adminUser.getLogin());
 
         return roomRepository
             .findById(roomDTO.getId())
