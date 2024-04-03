@@ -31,7 +31,7 @@ public class PatientInfoCriteria implements Serializable, Criteria {
 
     private StringFilter dateOfBirth;
 
-    private IntegerFilter mobile;
+    private LongFilter mobile;
 
     private StringFilter relation;
 
@@ -142,18 +142,18 @@ public class PatientInfoCriteria implements Serializable, Criteria {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public IntegerFilter getMobile() {
+    public LongFilter getMobile() {
         return mobile;
     }
 
-    public IntegerFilter mobile() {
+    public LongFilter mobile() {
         if (mobile == null) {
-            mobile = new IntegerFilter();
+            mobile = new LongFilter();
         }
         return mobile;
     }
 
-    public void setMobile(IntegerFilter mobile) {
+    public void setMobile(LongFilter mobile) {
         this.mobile = mobile;
     }
 
