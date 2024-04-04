@@ -31,8 +31,6 @@ export const RoomDetail = () => {
             <span id="roomNo">Room No</span>
           </dt>
           <dd>{roomEntity.roomNo}</dd>
-          <dt>User</dt>
-          <dd>{roomEntity.user ? roomEntity.user.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/room" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

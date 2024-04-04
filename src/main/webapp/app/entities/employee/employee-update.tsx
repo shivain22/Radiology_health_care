@@ -14,8 +14,7 @@ import { IEmpService } from 'app/shared/model/emp-service.model';
 import { getEntities as getEmpServices } from 'app/entities/emp-service/emp-service.reducer';
 import { IUnit } from 'app/shared/model/unit.model';
 import { getEntities as getUnits } from 'app/entities/unit/unit.reducer';
-import { IUser } from 'app/shared/model/user.model';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+
 import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntity, updateEntity, createEntity, reset } from './employee.reducer';
 
@@ -30,7 +29,7 @@ export const EmployeeUpdate = () => {
   const ranks = useAppSelector(state => state.rank.entities);
   const empServices = useAppSelector(state => state.empService.entities);
   const units = useAppSelector(state => state.unit.entities);
-  const users = useAppSelector(state => state.userManagement.users);
+
   const employeeEntity = useAppSelector(state => state.employee.entity);
   const loading = useAppSelector(state => state.employee.loading);
   const updating = useAppSelector(state => state.employee.updating);
@@ -48,7 +47,6 @@ export const EmployeeUpdate = () => {
     dispatch(getRanks({}));
     dispatch(getEmpServices({}));
     dispatch(getUnits({}));
-    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -69,7 +67,6 @@ export const EmployeeUpdate = () => {
       rank: ranks.find(it => it.id.toString() === values.rank.toString()),
       empService: empServices.find(it => it.id.toString() === values.empService.toString()),
       unit: units.find(it => it.id.toString() === values.unit.toString()),
-      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -87,7 +84,6 @@ export const EmployeeUpdate = () => {
           rank: employeeEntity?.rank?.id,
           empService: employeeEntity?.empService?.id,
           unit: employeeEntity?.unit?.id,
-          user: employeeEntity?.user?.id,
         };
 
   return (
@@ -143,16 +139,6 @@ export const EmployeeUpdate = () => {
                   : null}
               </ValidatedField>
               <FormText>This field is required.</FormText>
-              <ValidatedField id="employee-user" name="user" data-cy="user" label="User" type="select" required>
-                <option value="" key="0" />
-                {users
-                  ? users.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <FormText>This field is required.</FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/employee" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

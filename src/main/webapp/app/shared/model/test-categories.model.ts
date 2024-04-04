@@ -7,7 +7,7 @@ export interface ITestCategories {
   testName?: string;
   equipment?: IEquipment;
   parentTestCategory?: ITestCategories | null;
-  user?: IUser;
+
   patientTestTimings?: IPatientTestTimings[] | null;
   testCategoryParents?: ITestCategories[] | null;
 }

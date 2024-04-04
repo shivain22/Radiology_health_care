@@ -12,8 +12,7 @@ import { IEquipment } from 'app/shared/model/equipment.model';
 import { getEntities as getEquipment } from 'app/entities/equipment/equipment.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
-import { IUser } from 'app/shared/model/user.model';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+
 import { ITechnicianEquipmentMapping } from 'app/shared/model/technician-equipment-mapping.model';
 import { getEntity, updateEntity, createEntity, reset } from './technician-equipment-mapping.reducer';
 
@@ -27,7 +26,7 @@ export const TechnicianEquipmentMappingUpdate = () => {
 
   const equipment = useAppSelector(state => state.equipment.entities);
   const employees = useAppSelector(state => state.employee.entities);
-  const users = useAppSelector(state => state.userManagement.users);
+
   const technicianEquipmentMappingEntity = useAppSelector(state => state.technicianEquipmentMapping.entity);
   const loading = useAppSelector(state => state.technicianEquipmentMapping.loading);
   const updating = useAppSelector(state => state.technicianEquipmentMapping.updating);
@@ -44,7 +43,6 @@ export const TechnicianEquipmentMappingUpdate = () => {
 
     dispatch(getEquipment({}));
     dispatch(getEmployees({}));
-    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -65,7 +63,6 @@ export const TechnicianEquipmentMappingUpdate = () => {
       ...values,
       equipment: equipment.find(it => it.id.toString() === values.equipment.toString()),
       employee: employees.find(it => it.id.toString() === values.employee.toString()),
-      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -85,7 +82,6 @@ export const TechnicianEquipmentMappingUpdate = () => {
           dateTime: convertDateTimeFromServer(technicianEquipmentMappingEntity.dateTime),
           equipment: technicianEquipmentMappingEntity?.equipment?.id,
           employee: technicianEquipmentMappingEntity?.employee?.id,
-          user: technicianEquipmentMappingEntity?.user?.id,
         };
 
   return (
@@ -156,16 +152,6 @@ export const TechnicianEquipmentMappingUpdate = () => {
                   : null}
               </ValidatedField>
               <FormText>This field is required.</FormText>
-              <ValidatedField id="technician-equipment-mapping-user" name="user" data-cy="user" label="User" type="select" required>
-                <option value="" key="0" />
-                {users
-                  ? users.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <FormText>This field is required.</FormText>
               <Button
                 tag={Link}

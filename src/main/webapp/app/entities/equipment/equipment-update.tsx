@@ -10,8 +10,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IRoom } from 'app/shared/model/room.model';
 import { getEntities as getRooms } from 'app/entities/room/room.reducer';
-import { IUser } from 'app/shared/model/user.model';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+
 import { IEquipment } from 'app/shared/model/equipment.model';
 import { getEntity, updateEntity, createEntity, reset } from './equipment.reducer';
 
@@ -24,7 +23,7 @@ export const EquipmentUpdate = () => {
   const isNew = id === undefined;
 
   const rooms = useAppSelector(state => state.room.entities);
-  const users = useAppSelector(state => state.userManagement.users);
+
   const equipmentEntity = useAppSelector(state => state.equipment.entity);
   const loading = useAppSelector(state => state.equipment.loading);
   const updating = useAppSelector(state => state.equipment.updating);
@@ -40,7 +39,6 @@ export const EquipmentUpdate = () => {
     }
 
     dispatch(getRooms({}));
-    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -59,7 +57,6 @@ export const EquipmentUpdate = () => {
       ...equipmentEntity,
       ...values,
       room: rooms.find(it => it.id.toString() === values.room.toString()),
-      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -75,7 +72,6 @@ export const EquipmentUpdate = () => {
       : {
           ...equipmentEntity,
           room: equipmentEntity?.room?.id,
-          user: equipmentEntity?.user?.id,
         };
 
   return (
@@ -108,16 +104,6 @@ export const EquipmentUpdate = () => {
                 <option value="" key="0" />
                 {rooms
                   ? rooms.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField id="equipment-user" name="user" data-cy="user" label="User" type="select" required>
-                <option value="" key="0" />
-                {users
-                  ? users.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

@@ -131,9 +131,7 @@ export const EmpService = () => {
                   <th className="hand" onClick={sort('name')}>
                     Name <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
                   </th>
-                  <th>
-                    User <FontAwesomeIcon icon="sort" />
-                  </th>
+
                   <th />
                 </tr>
               </thead>
@@ -146,7 +144,7 @@ export const EmpService = () => {
                       </Button>
                     </td>
                     <td>{empService.name}</td>
-                    <td>{empService.user ? empService.user.id : ''}</td>
+
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/emp-service/${empService.id}`} color="info" size="sm" data-cy="entityDetailsButton">

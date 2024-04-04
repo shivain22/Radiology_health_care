@@ -8,8 +8,6 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IUser } from 'app/shared/model/user.model';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { IRoom } from 'app/shared/model/room.model';
 import { getEntity, updateEntity, createEntity, reset } from './room.reducer';
 
@@ -21,7 +19,6 @@ export const RoomUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const users = useAppSelector(state => state.userManagement.users);
   const roomEntity = useAppSelector(state => state.room.entity);
   const loading = useAppSelector(state => state.room.loading);
   const updating = useAppSelector(state => state.room.updating);
@@ -35,8 +32,6 @@ export const RoomUpdate = () => {
     if (!isNew) {
       dispatch(getEntity(id));
     }
-
-    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -57,7 +52,6 @@ export const RoomUpdate = () => {
     const entity = {
       ...roomEntity,
       ...values,
-      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -72,7 +66,6 @@ export const RoomUpdate = () => {
       ? {}
       : {
           ...roomEntity,
-          user: roomEntity?.user?.id,
         };
 
   return (
@@ -102,16 +95,6 @@ export const RoomUpdate = () => {
                   validate: v => isNumber(v) || 'This field should be a number.',
                 }}
               />
-              <ValidatedField id="room-user" name="user" data-cy="user" label="User" type="select" required>
-                <option value="" key="0" />
-                {users
-                  ? users.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <FormText>This field is required.</FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/room" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

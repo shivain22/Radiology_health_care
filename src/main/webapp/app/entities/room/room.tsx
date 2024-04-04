@@ -131,9 +131,7 @@ export const Room = () => {
                   <th className="hand" onClick={sort('roomNo')}>
                     Room No <FontAwesomeIcon icon={getSortIconByFieldName('roomNo')} />
                   </th>
-                  <th>
-                    User <FontAwesomeIcon icon="sort" />
-                  </th>
+
                   <th />
                 </tr>
               </thead>
@@ -146,7 +144,7 @@ export const Room = () => {
                       </Button>
                     </td>
                     <td>{room.roomNo}</td>
-                    <td>{room.user ? room.user.id : ''}</td>
+
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/room/${room.id}`} color="info" size="sm" data-cy="entityDetailsButton">

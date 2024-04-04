@@ -140,9 +140,7 @@ export const Rank = () => {
                   <th>
                     Emp Service <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th>
-                    User <FontAwesomeIcon icon="sort" />
-                  </th>
+
                   <th />
                 </tr>
               </thead>

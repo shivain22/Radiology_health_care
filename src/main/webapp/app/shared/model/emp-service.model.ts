@@ -6,7 +6,7 @@ import { IEmployee } from 'app/shared/model/employee.model';
 export interface IEmpService {
   id?: number;
   name?: string;
-  user?: IUser;
+
   ranks?: IRank[] | null;
   units?: IUnit[] | null;
   employees?: IEmployee[] | null;
