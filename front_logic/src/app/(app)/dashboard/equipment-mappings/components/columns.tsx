@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { EquipmentsMappingData } from "@/schema/equipmentmapping";
 import { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
 
 export const columns: ColumnDef<EquipmentsMappingData>[] = [
 
@@ -40,16 +40,17 @@ export const columns: ColumnDef<EquipmentsMappingData>[] = [
           </div>
         ),
         cell: ({ row }) => {
-          const pathname = usePathname();
-          const basePath = pathname.includes("patient-tests")
-            ? pathname
-            : pathname + "/patient-tests/";
-            const patientTests = row.original;
+          // const pathname = usePathname();
+          // const basePath = pathname.includes("patient-tests")
+          //   ? pathname
+          //   : pathname + "/patient-tests/";
+            // const patientTests = row.original;
     
             return (
                 <div>
                     <Button variant={"link"} asChild>
-                        <Link href={basePath + "/" + patientTests.id}>Edit</Link> 
+                        {/* <Link href={basePath + "/" + patientTests.id}>Edit</Link>  */}
+                        Edit
                     </Button>
                     <Button 
                         // onClick={() => deletePatientTestsAction(patientTests.id)}

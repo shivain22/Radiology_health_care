@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { EmployeeData, TransformEmployeeData } from "@/schema/employees";
 import { deleteEmployeeAction } from "@/server_actions/actions/employee";
 import { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
 
 // type EmployeeData = {
 //     id: number;
@@ -77,16 +77,16 @@ export const columns: ColumnDef<TransformEmployeeData>[] = [
       </div>
     ),
     cell: ({ row }) => {
-      const pathname = usePathname();
-      const basePath = pathname.includes("employees")
-        ? pathname
-        : pathname + "/employees/";
+      // const pathname = usePathname();
+      // const basePath = pathname.includes("employees")
+      //   ? pathname
+      //   : pathname + "/employees/";
       const employee = row.original;
       return (
         <div className="flex gap-2 justify-center">
-          <Button variant={"link"} asChild>
+          {/* <Button variant={"link"} asChild>
             <Link href={basePath + "/" + employee.id}>Edit</Link>
-          </Button>
+          </Button> */}
           <Button
             onClick={() => deleteEmployeeAction(employee.id)}
             variant={"destructive"}

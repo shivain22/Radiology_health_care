@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { TransformUnitData } from "@/schema/units";
 import { deleteUnitAction } from "@/server_actions/actions/units";
 import { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
 
 export const columns: ColumnDef<TransformUnitData>[] = [
   {
@@ -40,16 +40,16 @@ header:()=>(<div className="flex justify-center">
     <h1>Actions</h1>
 </div>),
 cell:({row})=>{
-    const pathname=usePathname();
-    const basePath=pathname.includes("units")
-    ?pathname
-    :pathname+"/units/";
+    // const pathname=usePathname();
+    // const basePath=pathname.includes("units")
+    // ?pathname
+    // :pathname+"/units/";
     const unit=row.original;
     return(
         <div className="flex gap-2 justify-center">
-            <Button variant={"link"} asChild>
+            {/* <Button variant={"link"} asChild>
                 <Link href={basePath+"/"+unit.id}>Edit</Link>
-            </Button>
+            </Button> */}
             <Button 
             onClick={()=>deleteUnitAction(unit.id)}
             variant={"destructive"}

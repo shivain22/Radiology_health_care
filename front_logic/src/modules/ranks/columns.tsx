@@ -3,7 +3,7 @@ import { TransformRankData } from "@/schema/ranks";
 import { deleteRankAction } from "@/server_actions/actions/ranks";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 
 export const columns: ColumnDef<TransformRankData>[] = [
   {
@@ -42,15 +42,15 @@ export const columns: ColumnDef<TransformRankData>[] = [
     ),
 
     cell: ({ row }) => {
-      const pathname = usePathname();
-      const basePath = pathname.includes("ranks")
-        ? pathname
-        : pathname + "/ranks/";
+      // const pathname = usePathname();
+      // const basePath = pathname.includes("ranks")
+      //   ? pathname
+      //   : pathname + "/ranks/";
       const rank = row.original;
       return (
         <div className="flex gap-2 justify-center">
           <Button variant={"link"} asChild>
-            <Link href={basePath + "/" + rank.id}>Edit</Link>
+            {/* <Link href={basePath + "/" + rank.id}>Edit</Link> */}
           </Button>
           <Button
             onClick={() => deleteRankAction(rank.id)}
