@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { EquipmentsData } from "@/schema/equipments";
 import { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
 
 export const columns: ColumnDef<EquipmentsData>[] = [
   // (alias) type EquipmentsData = {
@@ -34,7 +34,7 @@ export const columns: ColumnDef<EquipmentsData>[] = [
   {
     //need to be change
     accessorKey: "roomId",
-    header: "Room Name",
+    header: "Room ID",
   }
   ,
   {
@@ -45,16 +45,16 @@ export const columns: ColumnDef<EquipmentsData>[] = [
       </div>
     ),
     cell: ({ row }) => {
-      const pathname = usePathname();
-      const basePath = pathname.includes("equipments")
-        ? pathname
-        : pathname + "/patient-tests/";
+      // const pathname = usePathname();
+      // const basePath = pathname.includes("equipments")
+      //   ? pathname
+      //   : pathname + "/patient-tests/";
         const equipment = row.original;
 
         return (
             <div>
                 <Button variant={"link"} asChild>
-                    <Link href={basePath + "/" + equipment.id}>Edit</Link> 
+                    {/* <Link href={basePath + "/" + equipment.id}>Edit</Link>  */}
                 </Button>
                 <Button 
                     // onClick={() => deleteEquipmentsAction(equipment.id)}

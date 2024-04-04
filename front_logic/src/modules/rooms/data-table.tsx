@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { RoomData } from "@/schema/rooms";
 import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
 import { PlusIcon } from "lucide-react";
-import { Button } from "react-day-picker";
+import { Button } from "@/components/ui/button";
 import { TOpenModal } from "./RoomList";
 import { DataTablePagination } from "../shared/data-table-pagination";
 

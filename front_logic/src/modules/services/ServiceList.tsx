@@ -1,24 +1,13 @@
 "use client";
 import { useState } from "react";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
 import Modal from "../shared/Modal";
-// import { useOptimisticservices } from "@/app/(app)/services/useOptimisticservices";
+
 import { Button } from "@/components/ui/button";
-// import serviceForm from "./serviceForm";
-import { PlusIcon } from "lucide-react";
+
 import { ServiceData } from "@/schema/services";
 import ServiceForm from "./ServiceForm";
-import { deleteServiceAction } from "@/server_actions/actions/services";
-import {
-  Table,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 
