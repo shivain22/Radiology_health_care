@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Modal from "../shared/Modal";
+
 // import { useOptimisticRooms } from "@/app/(app)/Rooms/useOptimisticRooms";
 import { Button } from "@/components/ui/button";
 // import RoomForm from "./RoomForm";
@@ -11,6 +11,7 @@ import { deleteRoomAction } from "@/server_actions/actions/rooms";
 import { Roomform } from "./RoomForm";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import Modal from "@/modules/shared/Modal";
 
 export type TOpenModal = (room?: RoomData) => void;
 export default function RoomList({ rooms }: { rooms: RoomData[] }) {

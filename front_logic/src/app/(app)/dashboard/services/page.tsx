@@ -1,7 +1,8 @@
 import Loading from '@/app/loading';
-import ServiceList from '@/modules/services/ServiceList';
+
 import { getServices } from '@/server_actions/(get-requests)/getServices'
 import React, { Suspense } from 'react'
+import ServiceList from './components/ServiceList';
 
 export default async function ServicesPage() {
   return (
