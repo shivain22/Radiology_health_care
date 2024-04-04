@@ -1,7 +1,8 @@
 import Loading from "@/app/loading";
-import RoomList from "@/modules/rooms/RoomList";
+
 import { getRooms } from "@/server_actions/(get-requests)/getRooms";
 import React, { Suspense } from "react";
+import RoomList from "./components/RoomList";
 
 const RoomsPage = () => {
   return (

@@ -1,30 +1,29 @@
 "use client";
-import { ServiceData } from "@/schema/services";
-import { TransformUnitData, UnitData} from "@/schema/units";
 import { useState } from "react";
-import Modal from "../shared/Modal";
-import { UnitForm } from "./UnitForm";
+
 import { Button } from "@/components/ui/button";
+import { ServiceData } from "@/schema/services";
+import RankForm from "./RankForm";
+import { RankData, TransformRankData } from "@/schema/ranks";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import Modal from "@/modules/shared/Modal";
 
-export type TOpenModal = (unit?: UnitData) => void;
-
-export default function UnitList({
-  units,
+export type TOpenModal = (rank?: RankData) => void;
+export default function RankList({
+  ranks,
   services,
   serviceId,
 }: {
-  units: TransformUnitData[];
+  ranks: TransformRankData[];
   services: ServiceData[];
   serviceId?: number;
 }) {
   const [open, setOpen] = useState(false);
-  const [activeUnit, setActiveUnit] = useState<UnitData | null>(null);
-
-  const openModal = (unit?: UnitData) => {
+  const [activeRank, setActiveRank] = useState<RankData | null>(null);
+  const openModal = (rank?: RankData) => {
     setOpen(true);
-    unit && setActiveUnit(unit);
+    rank && setActiveRank(rank);
   };
 
   const closeModal = () => {
@@ -36,11 +35,11 @@ export default function UnitList({
       <Modal
         open={open}
         setOpen={setOpen}
-        title={activeUnit ? "Edit Unit" : "Add Unit"}
+        title={activeRank ? "Edit Rank" : "Add Rank"}
       >
         <div>
-          <UnitForm
-            unit={activeUnit}
+          <RankForm
+            rank={activeRank}
             closeModal={closeModal}
             openModal={openModal}
             services={services}
@@ -48,12 +47,12 @@ export default function UnitList({
           />
         </div>
       </Modal>
-      <div className="absolute right-0 top-0">
+      <div className="absolute right-0 top-0 ">
         <Button onClick={() => openModal()} variant={"outline"}>
           +
         </Button>
       </div>
-      <DataTable columns={columns} data={units} openModal={() => openModal()} />
+      <DataTable columns={columns} data={ranks} openModal={()=>openModal()} />
     </div>
   );
 }

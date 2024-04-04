@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { ServiceData } from "@/schema/services";
 import { deleteServiceAction } from "@/server_actions/actions/services";
 import { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
 
 export const columns: ColumnDef<ServiceData>[] = [
   {
@@ -42,16 +42,16 @@ export const columns: ColumnDef<ServiceData>[] = [
       </div>
     ),
     cell: ({ row }) => {
-      const pathname = usePathname();
-      const basePath = pathname.includes("services")
-        ? pathname
-        : pathname + "/services/";
+      // const pathname = usePathname();
+      // const basePath = pathname.includes("services")
+      //   ? pathname
+      //   : pathname + "/services/";
       const service = row.original;
       return (
         <div className="flex gap-2 justify-center">
-          <Button variant={"link"} asChild>
+          {/* <Button variant={"link"} asChild>
             <Link href={basePath + "/" + service.id}>Edit</Link>
-          </Button>
+          </Button> */}
           <Button
             onClick={() => deleteServiceAction(service.id)}
             variant={"destructive"}

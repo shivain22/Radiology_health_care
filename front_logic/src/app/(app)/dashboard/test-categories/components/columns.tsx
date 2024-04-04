@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { PatientTestsData } from "@/schema/patient-tests";
 import { TestCategoryData } from "@/schema/testcategory";
 import { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
 
 
 export const columns: ColumnDef<TestCategoryData>[] = [
@@ -33,17 +33,17 @@ export const columns: ColumnDef<TestCategoryData>[] = [
         accessorKey: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            const pathname = usePathname();
-            const basePath = pathname.includes("patient-tests")
-              ? pathname
-              : pathname + "/patient-tests/";
+            // const pathname = usePathname();
+            // const basePath = pathname.includes("patient-tests")
+            //   ? pathname
+            //   : pathname + "/patient-tests/";
               const patientTests = row.original;
       
               return (
                   <div>
-                      <Button variant={"link"} asChild>
+                      {/* <Button variant={"link"} asChild>
                           <Link href={basePath + "/" + patientTests.id}>Edit</Link> 
-                      </Button>
+                      </Button> */}
                       <Button 
                           // onClick={() => deletePatientTestsAction(patientTests.id)}
                           variant={"destructive"}

@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { RoomData } from "@/schema/rooms";
 import { deleteRoomAction } from "@/server_actions/actions/rooms";
 import { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
 
 export const columns: ColumnDef<RoomData>[] = [
   {
@@ -41,16 +41,16 @@ export const columns: ColumnDef<RoomData>[] = [
       );
     },
     cell: ({ row }) => {
-      const pathname = usePathname();
-      const basePath = pathname.includes("rooms")
-        ? pathname
-        : pathname + "/rooms/";
+      // const pathname = usePathname();
+      // const basePath = pathname.includes("rooms")
+      //   ? pathname
+      //   : pathname + "/rooms/";
       const room = row.original;
       return (
         <div className="flex gap-2 justify-center">
-          <Button variant={"link"} asChild>
+          {/* <Button variant={"link"} asChild>
             <Link href={basePath + "/" + room.id}>Edit</Link>
-          </Button>
+          </Button> */}
           <Button
             onClick={() => deleteRoomAction(room.id)}
             variant={"destructive"}
@@ -62,3 +62,5 @@ export const columns: ColumnDef<RoomData>[] = [
     },
   },
 ];
+
+

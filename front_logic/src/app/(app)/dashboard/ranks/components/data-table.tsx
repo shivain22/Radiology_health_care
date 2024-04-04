@@ -17,7 +17,8 @@ import {
 import { TOpenModal } from "./RankList";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
-import { DataTablePagination } from "../shared/data-table-pagination";
+import { DataTablePagination } from "@/modules/shared/data-table-pagination";
+
 
 interface DataTableProps<TData, TValues> {
   columns: ColumnDef<TData, TValues>[];
