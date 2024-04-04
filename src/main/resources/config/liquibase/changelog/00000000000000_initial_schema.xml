@@ -260,6 +260,8 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="division" type="ENUM('OTHERS', 'COMMISSIONED', 'NON_COMMISSIONED')"/>
+            <column name="short_name" type="VARCHAR(255)"/>
             <column name="emp_service_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -286,6 +288,8 @@
             <column name="revtype" type="TINYINT(3)"/>
             <column name="login" type="VARCHAR(255)"/>
             <column name="name" type="VARCHAR(255)"/>
+            <column name="division" type="ENUM('OTHERS', 'COMMISSIONED', 'NON_COMMISSIONED')"/>
+            <column name="short_name" type="VARCHAR(255)"/>
             <column name="emp_service_id" type="BIGINT"/>
             <column name="user_id" type="BIGINT"/>
         </createTable>

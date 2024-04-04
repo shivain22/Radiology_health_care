@@ -7,14 +7,16 @@ import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import org.hibernate.envers.Audited;
 
 /**
  * A Rank.
  */
 @Entity
 @Table(name = "jhi_rank")
+@Audited
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Rank implements Serializable {
+public class Rank extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,9 +41,19 @@ public class Rank implements Serializable {
     @JsonIgnoreProperties(value = { "user", "ranks", "units", "employees" }, allowSetters = true)
     private EmpService empService;
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     @ManyToOne(optional = false)
     @NotNull
     private User user;
+
+    private String login;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "rank")
     @JsonIgnoreProperties(
