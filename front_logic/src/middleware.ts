@@ -6,16 +6,16 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   const isPublicPath = path === "/auth";
-  const isTokenPresent = request.cookies.has("authToken");
-  const token = request.cookies.get("authToken")?.value || "";
+  const tokenPresent = request.cookies.has("authToken");
 
-  if (isPublicPath && token) {
+
+  if (isPublicPath && tokenPresent) {
     //add the ranks path to show up after isPublic path and token is present
 
     return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
   }
 
-  if (!isPublicPath && !token) {
+  if (!isPublicPath && !tokenPresent) {
     return NextResponse.redirect(new URL("/auth", request.nextUrl));
   }
 }
