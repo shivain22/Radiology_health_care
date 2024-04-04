@@ -28,9 +28,9 @@ import { useRouter } from "next/navigation";
 import React, { useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
-import { useBackPath } from "../shared/BackButton";
 import { createRankAction } from "@/server_actions/actions/ranks";
 import { DialogClose } from "@/components/ui/dialog";
+import { useBackPath } from "@/modules/shared/BackButton";
 
 const RankForm = ({
   services,
@@ -54,7 +54,7 @@ const RankForm = ({
     resolver: zodResolver(formData),
     defaultValues: {
       name: rank?.name || "",
-      empServiceId: ""
+      empServiceId: "",
     },
   });
   const editing = !form.formState.isValid;

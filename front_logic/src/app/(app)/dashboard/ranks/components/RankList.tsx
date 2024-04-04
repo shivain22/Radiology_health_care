@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
-import Modal from "../shared/Modal";
+
 import { Button } from "@/components/ui/button";
 import { ServiceData } from "@/schema/services";
 import RankForm from "./RankForm";
 import { RankData, TransformRankData } from "@/schema/ranks";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import Modal from "@/modules/shared/Modal";
 
 export type TOpenModal = (rank?: RankData) => void;
 export default function RankList({

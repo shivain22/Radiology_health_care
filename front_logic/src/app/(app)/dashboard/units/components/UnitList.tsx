@@ -2,11 +2,11 @@
 import { ServiceData } from "@/schema/services";
 import { TransformUnitData, UnitData} from "@/schema/units";
 import { useState } from "react";
-import Modal from "../shared/Modal";
 import { UnitForm } from "./UnitForm";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import Modal from "@/modules/shared/Modal";
 
 export type TOpenModal = (unit?: UnitData) => void;
 

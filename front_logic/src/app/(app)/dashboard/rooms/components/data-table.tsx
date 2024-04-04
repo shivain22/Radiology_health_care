@@ -4,7 +4,8 @@ import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReact
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TOpenModal } from "./RoomList";
-import { DataTablePagination } from "../shared/data-table-pagination";
+import { DataTablePagination } from "@/modules/shared/data-table-pagination";
+
 
 
 interface DataTableProps<TData,TValues>{
