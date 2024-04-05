@@ -23,8 +23,6 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
-    private LocalDateFilter testTimings;
-
     private StringFilter priority;
 
     private StringFilter clinicalNote;
@@ -32,6 +30,10 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
     private StringFilter spclInstruction;
 
     private StringFilter status;
+
+    private ZonedDateTimeFilter startTiming;
+
+    private ZonedDateTimeFilter endTime;
 
     private LongFilter patientInfoId;
 
@@ -43,11 +45,12 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     public PatientTestTimingsCriteria(PatientTestTimingsCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
-        this.testTimings = other.testTimings == null ? null : other.testTimings.copy();
         this.priority = other.priority == null ? null : other.priority.copy();
         this.clinicalNote = other.clinicalNote == null ? null : other.clinicalNote.copy();
         this.spclInstruction = other.spclInstruction == null ? null : other.spclInstruction.copy();
         this.status = other.status == null ? null : other.status.copy();
+        this.startTiming = other.startTiming == null ? null : other.startTiming.copy();
+        this.endTime = other.endTime == null ? null : other.endTime.copy();
         this.patientInfoId = other.patientInfoId == null ? null : other.patientInfoId.copy();
         this.testCategoriesId = other.testCategoriesId == null ? null : other.testCategoriesId.copy();
         this.distinct = other.distinct;
@@ -71,21 +74,6 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     public void setId(LongFilter id) {
         this.id = id;
-    }
-
-    public LocalDateFilter getTestTimings() {
-        return testTimings;
-    }
-
-    public LocalDateFilter testTimings() {
-        if (testTimings == null) {
-            testTimings = new LocalDateFilter();
-        }
-        return testTimings;
-    }
-
-    public void setTestTimings(LocalDateFilter testTimings) {
-        this.testTimings = testTimings;
     }
 
     public StringFilter getPriority() {
@@ -133,8 +121,8 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         this.spclInstruction = spclInstruction;
     }
 
-    public LongFilter getPatientInfoId() {
-        return patientInfoId;
+    public StringFilter getStatus() {
+        return status;
     }
 
     public StringFilter status() {
@@ -144,12 +132,42 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         return status;
     }
 
-    public StringFilter getStatus() {
-        return status;
-    }
-
     public void setStatus(StringFilter status) {
         this.status = status;
+    }
+
+    public ZonedDateTimeFilter getStartTiming() {
+        return startTiming;
+    }
+
+    public ZonedDateTimeFilter startTiming() {
+        if (startTiming == null) {
+            startTiming = new ZonedDateTimeFilter();
+        }
+        return startTiming;
+    }
+
+    public void setStartTiming(ZonedDateTimeFilter startTiming) {
+        this.startTiming = startTiming;
+    }
+
+    public ZonedDateTimeFilter getEndTime() {
+        return endTime;
+    }
+
+    public ZonedDateTimeFilter endTime() {
+        if (endTime == null) {
+            endTime = new ZonedDateTimeFilter();
+        }
+        return endTime;
+    }
+
+    public void setEndTime(ZonedDateTimeFilter endTime) {
+        this.endTime = endTime;
+    }
+
+    public LongFilter getPatientInfoId() {
+        return patientInfoId;
     }
 
     public LongFilter patientInfoId() {
@@ -197,11 +215,12 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         final PatientTestTimingsCriteria that = (PatientTestTimingsCriteria) o;
         return (
             Objects.equals(id, that.id) &&
-            Objects.equals(testTimings, that.testTimings) &&
             Objects.equals(priority, that.priority) &&
             Objects.equals(clinicalNote, that.clinicalNote) &&
             Objects.equals(spclInstruction, that.spclInstruction) &&
             Objects.equals(status, that.status) &&
+            Objects.equals(startTiming, that.startTiming) &&
+            Objects.equals(endTime, that.endTime) &&
             Objects.equals(patientInfoId, that.patientInfoId) &&
             Objects.equals(testCategoriesId, that.testCategoriesId) &&
             Objects.equals(distinct, that.distinct)
@@ -210,7 +229,18 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, testTimings, priority, clinicalNote, spclInstruction, status, patientInfoId, testCategoriesId, distinct);
+        return Objects.hash(
+            id,
+            priority,
+            clinicalNote,
+            spclInstruction,
+            status,
+            startTiming,
+            endTime,
+            patientInfoId,
+            testCategoriesId,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -218,11 +248,12 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
     public String toString() {
         return "PatientTestTimingsCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
-            (testTimings != null ? "testTimings=" + testTimings + ", " : "") +
             (priority != null ? "priority=" + priority + ", " : "") +
             (clinicalNote != null ? "clinicalNote=" + clinicalNote + ", " : "") +
             (spclInstruction != null ? "spclInstruction=" + spclInstruction + ", " : "") +
             (status != null ? "status=" + status + ", " : "") +
+            (startTiming != null ? "startTiming=" + startTiming + ", " : "") +
+            (endTime != null ? "endTime=" + endTime + ", " : "") +
             (patientInfoId != null ? "patientInfoId=" + patientInfoId + ", " : "") +
             (testCategoriesId != null ? "testCategoriesId=" + testCategoriesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

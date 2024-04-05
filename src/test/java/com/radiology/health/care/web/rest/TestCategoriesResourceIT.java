@@ -38,6 +38,10 @@ class TestCategoriesResourceIT {
     private static final String DEFAULT_TEST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_TEST_NAME = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_TEST_DURATION = 1;
+    private static final Integer UPDATED_TEST_DURATION = 2;
+    private static final Integer SMALLER_TEST_DURATION = 1 - 1;
+
     private static final String ENTITY_API_URL = "/api/test-categories";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -65,7 +69,7 @@ class TestCategoriesResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static TestCategories createEntity(EntityManager em) {
-        TestCategories testCategories = new TestCategories().testName(DEFAULT_TEST_NAME);
+        TestCategories testCategories = new TestCategories().testName(DEFAULT_TEST_NAME).testDuration(DEFAULT_TEST_DURATION);
         // Add required entity
         Equipment equipment;
         if (TestUtil.findAll(em, Equipment.class).isEmpty()) {
@@ -91,7 +95,7 @@ class TestCategoriesResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static TestCategories createUpdatedEntity(EntityManager em) {
-        TestCategories testCategories = new TestCategories().testName(UPDATED_TEST_NAME);
+        TestCategories testCategories = new TestCategories().testName(UPDATED_TEST_NAME).testDuration(UPDATED_TEST_DURATION);
         // Add required entity
         Equipment equipment;
         if (TestUtil.findAll(em, Equipment.class).isEmpty()) {
@@ -132,6 +136,7 @@ class TestCategoriesResourceIT {
         assertThat(testCategoriesList).hasSize(databaseSizeBeforeCreate + 1);
         TestCategories testTestCategories = testCategoriesList.get(testCategoriesList.size() - 1);
         assertThat(testTestCategories.getTestName()).isEqualTo(DEFAULT_TEST_NAME);
+        assertThat(testTestCategories.getTestDuration()).isEqualTo(DEFAULT_TEST_DURATION);
     }
 
     @Test
@@ -187,7 +192,8 @@ class TestCategoriesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(testCategories.getId().intValue())))
-            .andExpect(jsonPath("$.[*].testName").value(hasItem(DEFAULT_TEST_NAME)));
+            .andExpect(jsonPath("$.[*].testName").value(hasItem(DEFAULT_TEST_NAME)))
+            .andExpect(jsonPath("$.[*].testDuration").value(hasItem(DEFAULT_TEST_DURATION)));
     }
 
     @Test
@@ -202,7 +208,8 @@ class TestCategoriesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(testCategories.getId().intValue()))
-            .andExpect(jsonPath("$.testName").value(DEFAULT_TEST_NAME));
+            .andExpect(jsonPath("$.testName").value(DEFAULT_TEST_NAME))
+            .andExpect(jsonPath("$.testDuration").value(DEFAULT_TEST_DURATION));
     }
 
     @Test
@@ -286,6 +293,97 @@ class TestCategoriesResourceIT {
 
         // Get all the testCategoriesList where testName does not contain UPDATED_TEST_NAME
         defaultTestCategoriesShouldBeFound("testName.doesNotContain=" + UPDATED_TEST_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByTestDurationIsEqualToSomething() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where testDuration equals to DEFAULT_TEST_DURATION
+        defaultTestCategoriesShouldBeFound("testDuration.equals=" + DEFAULT_TEST_DURATION);
+
+        // Get all the testCategoriesList where testDuration equals to UPDATED_TEST_DURATION
+        defaultTestCategoriesShouldNotBeFound("testDuration.equals=" + UPDATED_TEST_DURATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByTestDurationIsInShouldWork() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where testDuration in DEFAULT_TEST_DURATION or UPDATED_TEST_DURATION
+        defaultTestCategoriesShouldBeFound("testDuration.in=" + DEFAULT_TEST_DURATION + "," + UPDATED_TEST_DURATION);
+
+        // Get all the testCategoriesList where testDuration equals to UPDATED_TEST_DURATION
+        defaultTestCategoriesShouldNotBeFound("testDuration.in=" + UPDATED_TEST_DURATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByTestDurationIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where testDuration is not null
+        defaultTestCategoriesShouldBeFound("testDuration.specified=true");
+
+        // Get all the testCategoriesList where testDuration is null
+        defaultTestCategoriesShouldNotBeFound("testDuration.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByTestDurationIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where testDuration is greater than or equal to DEFAULT_TEST_DURATION
+        defaultTestCategoriesShouldBeFound("testDuration.greaterThanOrEqual=" + DEFAULT_TEST_DURATION);
+
+        // Get all the testCategoriesList where testDuration is greater than or equal to UPDATED_TEST_DURATION
+        defaultTestCategoriesShouldNotBeFound("testDuration.greaterThanOrEqual=" + UPDATED_TEST_DURATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByTestDurationIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where testDuration is less than or equal to DEFAULT_TEST_DURATION
+        defaultTestCategoriesShouldBeFound("testDuration.lessThanOrEqual=" + DEFAULT_TEST_DURATION);
+
+        // Get all the testCategoriesList where testDuration is less than or equal to SMALLER_TEST_DURATION
+        defaultTestCategoriesShouldNotBeFound("testDuration.lessThanOrEqual=" + SMALLER_TEST_DURATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByTestDurationIsLessThanSomething() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where testDuration is less than DEFAULT_TEST_DURATION
+        defaultTestCategoriesShouldNotBeFound("testDuration.lessThan=" + DEFAULT_TEST_DURATION);
+
+        // Get all the testCategoriesList where testDuration is less than UPDATED_TEST_DURATION
+        defaultTestCategoriesShouldBeFound("testDuration.lessThan=" + UPDATED_TEST_DURATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByTestDurationIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where testDuration is greater than DEFAULT_TEST_DURATION
+        defaultTestCategoriesShouldNotBeFound("testDuration.greaterThan=" + DEFAULT_TEST_DURATION);
+
+        // Get all the testCategoriesList where testDuration is greater than SMALLER_TEST_DURATION
+        defaultTestCategoriesShouldBeFound("testDuration.greaterThan=" + SMALLER_TEST_DURATION);
     }
 
     @Test
@@ -407,7 +505,8 @@ class TestCategoriesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(testCategories.getId().intValue())))
-            .andExpect(jsonPath("$.[*].testName").value(hasItem(DEFAULT_TEST_NAME)));
+            .andExpect(jsonPath("$.[*].testName").value(hasItem(DEFAULT_TEST_NAME)))
+            .andExpect(jsonPath("$.[*].testDuration").value(hasItem(DEFAULT_TEST_DURATION)));
 
         // Check, that the count call also returns 1
         restTestCategoriesMockMvc
@@ -455,7 +554,7 @@ class TestCategoriesResourceIT {
         TestCategories updatedTestCategories = testCategoriesRepository.findById(testCategories.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedTestCategories are not directly saved in db
         em.detach(updatedTestCategories);
-        updatedTestCategories.testName(UPDATED_TEST_NAME);
+        updatedTestCategories.testName(UPDATED_TEST_NAME).testDuration(UPDATED_TEST_DURATION);
         TestCategoriesDTO testCategoriesDTO = testCategoriesMapper.toDto(updatedTestCategories);
 
         restTestCategoriesMockMvc
@@ -471,6 +570,7 @@ class TestCategoriesResourceIT {
         assertThat(testCategoriesList).hasSize(databaseSizeBeforeUpdate);
         TestCategories testTestCategories = testCategoriesList.get(testCategoriesList.size() - 1);
         assertThat(testTestCategories.getTestName()).isEqualTo(UPDATED_TEST_NAME);
+        assertThat(testTestCategories.getTestDuration()).isEqualTo(UPDATED_TEST_DURATION);
     }
 
     @Test
@@ -552,6 +652,8 @@ class TestCategoriesResourceIT {
         TestCategories partialUpdatedTestCategories = new TestCategories();
         partialUpdatedTestCategories.setId(testCategories.getId());
 
+        partialUpdatedTestCategories.testDuration(UPDATED_TEST_DURATION);
+
         restTestCategoriesMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedTestCategories.getId())
@@ -565,6 +667,7 @@ class TestCategoriesResourceIT {
         assertThat(testCategoriesList).hasSize(databaseSizeBeforeUpdate);
         TestCategories testTestCategories = testCategoriesList.get(testCategoriesList.size() - 1);
         assertThat(testTestCategories.getTestName()).isEqualTo(DEFAULT_TEST_NAME);
+        assertThat(testTestCategories.getTestDuration()).isEqualTo(UPDATED_TEST_DURATION);
     }
 
     @Test
@@ -579,7 +682,7 @@ class TestCategoriesResourceIT {
         TestCategories partialUpdatedTestCategories = new TestCategories();
         partialUpdatedTestCategories.setId(testCategories.getId());
 
-        partialUpdatedTestCategories.testName(UPDATED_TEST_NAME);
+        partialUpdatedTestCategories.testName(UPDATED_TEST_NAME).testDuration(UPDATED_TEST_DURATION);
 
         restTestCategoriesMockMvc
             .perform(
@@ -594,6 +697,7 @@ class TestCategoriesResourceIT {
         assertThat(testCategoriesList).hasSize(databaseSizeBeforeUpdate);
         TestCategories testTestCategories = testCategoriesList.get(testCategoriesList.size() - 1);
         assertThat(testTestCategories.getTestName()).isEqualTo(UPDATED_TEST_NAME);
+        assertThat(testTestCategories.getTestDuration()).isEqualTo(UPDATED_TEST_DURATION);
     }
 
     @Test

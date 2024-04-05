@@ -5,9 +5,10 @@ import { IPatientTestTimings } from 'app/shared/model/patient-test-timings.model
 export interface ITestCategories {
   id?: number;
   testName?: string;
+  testDuration?: number | null;
   equipment?: IEquipment;
   parentTestCategory?: ITestCategories | null;
-
+  user?: IUser;
   patientTestTimings?: IPatientTestTimings[] | null;
   testCategoryParents?: ITestCategories[] | null;
 }

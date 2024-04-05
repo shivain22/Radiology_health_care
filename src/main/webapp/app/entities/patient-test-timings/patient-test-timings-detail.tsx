@@ -29,14 +29,6 @@ export const PatientTestTimingsDetail = () => {
           </dt>
           <dd>{patientTestTimingsEntity.id}</dd>
           <dt>
-            <span id="testTimings">Test Timings</span>
-          </dt>
-          <dd>
-            {patientTestTimingsEntity.testTimings ? (
-              <TextFormat value={patientTestTimingsEntity.testTimings} type="date" format={APP_LOCAL_DATE_FORMAT} />
-            ) : null}
-          </dd>
-          <dt>
             <span id="priority">Priority</span>
           </dt>
           <dd>{patientTestTimingsEntity.priority}</dd>
@@ -48,6 +40,26 @@ export const PatientTestTimingsDetail = () => {
             <span id="spclInstruction">Spcl Instruction</span>
           </dt>
           <dd>{patientTestTimingsEntity.spclInstruction}</dd>
+          <dt>
+            <span id="status">Status</span>
+          </dt>
+          <dd>{patientTestTimingsEntity.status}</dd>
+          <dt>
+            <span id="startTiming">Start Timing</span>
+          </dt>
+          <dd>
+            {patientTestTimingsEntity.startTiming ? (
+              <TextFormat value={patientTestTimingsEntity.startTiming} type="date" format={APP_DATE_FORMAT} />
+            ) : null}
+          </dd>
+          <dt>
+            <span id="endTime">End Time</span>
+          </dt>
+          <dd>
+            {patientTestTimingsEntity.endTime ? (
+              <TextFormat value={patientTestTimingsEntity.endTime} type="date" format={APP_DATE_FORMAT} />
+            ) : null}
+          </dd>
           <dt>Patient Info</dt>
           <dd>{patientTestTimingsEntity.patientInfo ? patientTestTimingsEntity.patientInfo.id : ''}</dd>
           <dt>Test Categories</dt>

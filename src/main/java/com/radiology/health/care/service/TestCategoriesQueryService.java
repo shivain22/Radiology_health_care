@@ -93,6 +93,9 @@ public class TestCategoriesQueryService extends QueryService<TestCategories> {
             if (criteria.getTestName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getTestName(), TestCategories_.testName));
             }
+            if (criteria.getTestDuration() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getTestDuration(), TestCategories_.testDuration));
+            }
             if (criteria.getEquipmentId() != null) {
                 specification =
                     specification.and(

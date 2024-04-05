@@ -11,7 +11,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IEquipment } from 'app/shared/model/equipment.model';
 import { getEntities as getEquipment } from 'app/entities/equipment/equipment.reducer';
 import { getEntities as getTestCategories } from 'app/entities/test-categories/test-categories.reducer';
-
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { ITestCategories } from 'app/shared/model/test-categories.model';
 import { getEntity, updateEntity, createEntity, reset } from './test-categories.reducer';
 
@@ -25,7 +26,7 @@ export const TestCategoriesUpdate = () => {
 
   const equipment = useAppSelector(state => state.equipment.entities);
   const testCategories = useAppSelector(state => state.testCategories.entities);
-
+  const users = useAppSelector(state => state.userManagement.users);
   const testCategoriesEntity = useAppSelector(state => state.testCategories.entity);
   const loading = useAppSelector(state => state.testCategories.loading);
   const updating = useAppSelector(state => state.testCategories.updating);
@@ -42,6 +43,7 @@ export const TestCategoriesUpdate = () => {
 
     dispatch(getEquipment({}));
     dispatch(getTestCategories({}));
+    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -55,12 +57,16 @@ export const TestCategoriesUpdate = () => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
     }
+    if (values.testDuration !== undefined && typeof values.testDuration !== 'number') {
+      values.testDuration = Number(values.testDuration);
+    }
 
     const entity = {
       ...testCategoriesEntity,
       ...values,
       equipment: equipment.find(it => it.id.toString() === values.equipment.toString()),
       parentTestCategory: testCategories.find(it => it.id.toString() === values.parentTestCategory.toString()),
+      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -77,6 +83,7 @@ export const TestCategoriesUpdate = () => {
           ...testCategoriesEntity,
           equipment: testCategoriesEntity?.equipment?.id,
           parentTestCategory: testCategoriesEntity?.parentTestCategory?.id,
+          user: testCategoriesEntity?.user?.id,
         };
 
   return (
@@ -107,6 +114,14 @@ export const TestCategoriesUpdate = () => {
                   required: { value: true, message: 'This field is required.' },
                 }}
               />
+              <ValidatedField
+                label="Test Duration"
+                id="test-categories-testDuration"
+                name="testDuration"
+                data-cy="testDuration"
+                type="text"
+                placeholder={'in hours'}
+              />
               <ValidatedField id="test-categories-equipment" name="equipment" data-cy="equipment" label="Equipment" type="select" required>
                 <option value="" key="0" />
                 {equipment
@@ -128,6 +143,16 @@ export const TestCategoriesUpdate = () => {
                 <option value="" key="0" />
                 {testCategories
                   ? testCategories.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField id="test-categories-user" name="user" data-cy="user" label="User" type="select" required>
+                <option value="" key="0" />
+                {users
+                  ? users.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

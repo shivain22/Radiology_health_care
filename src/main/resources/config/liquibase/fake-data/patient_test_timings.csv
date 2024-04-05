@@ -1,11 +1,11 @@
-id;test_timings;priority;clinical_note;spcl_instruction;patient_info_id
-1;2024-03-20;forenenst dredge rile;lest consequently worth;patiently ew merrily;1
-2;2024-03-20;uproot;glaring until whether;fair awesome;2
-3;2024-03-20;gosh bah gosh;stance;youthfully imaginary;3
-4;2024-03-19;for bah;considering;lessen phooey now;4
-5;2024-03-19;ouch gosh wallpaper;pin greatly recant;frenetically persimmon incense;5
-6;2024-03-20;mention back utterly;wan;emblazon crayon consequently;6
-7;2024-03-19;back fiber;worst um;hallmark vivacious chubby;7
-8;2024-03-20;yum;competent thoughtful following;versus aha;8
-9;2024-03-19;set;ensure inquisitively;and patent er;9
-10;2024-03-19;worse debtor haste;relent instead;scrambled;10
+id;priority;clinical_note;spcl_instruction;status;start_timing;end_time;patient_info_id
+1;jockey;dredge rile;lest consequently worth;patiently ew merrily;2024-03-20T01:00:56;2024-03-20T02:04:15;1
+2;strong;furthermore meh;positively inside conceptualize;gosh bah gosh;2024-03-20T05:13:05;2024-03-19T07:05:34;2
+3;gee runny questioningly;for bah;considering;lessen phooey now;2024-03-19T19:10:32;2024-03-19T08:28:33;3
+4;depersonalise;glorious;awkwardly pish aha;wise membrane rethinking;2024-03-20T05:49:58;2024-03-19T15:01:19;4
+5;yuck;given whereas meaningfully;even;rusty;2024-03-19T22:49:44;2024-03-19T20:45:42;5
+6;consequently;lunch;fiber;worst um;2024-03-19T12:30:01;2024-03-19T14:18:20;6
+7;nap;handsome seldom duh;nonconformist apt;incidentally how while;2024-03-20T01:35:40;2024-03-19T10:44:00;7
+8;opposite eek;deafening awkwardly old;er;straight enormously miserably;2024-03-19T20:01:55;2024-03-19T11:12:46;8
+9;phooey;powerful;mediocre;stance;2024-03-19T15:55:27;2024-03-20T05:18:37;9
+10;mmm;once easily;balloonist smoke from;straighten line failing;2024-03-20T06:38:18;2024-03-20T06:19:16;10

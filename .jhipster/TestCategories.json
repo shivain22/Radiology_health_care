@@ -9,6 +9,10 @@
       "fieldName": "testName",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "testDuration",
+      "fieldType": "Integer"
     }
   ],
   "jpaMetamodelFiltering": true,

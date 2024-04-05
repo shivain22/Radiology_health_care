@@ -25,6 +25,8 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
 
     private StringFilter testName;
 
+    private IntegerFilter testDuration;
+
     private LongFilter equipmentId;
 
     private LongFilter parentTestCategoryId;
@@ -42,6 +44,7 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
     public TestCategoriesCriteria(TestCategoriesCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.testName = other.testName == null ? null : other.testName.copy();
+        this.testDuration = other.testDuration == null ? null : other.testDuration.copy();
         this.equipmentId = other.equipmentId == null ? null : other.equipmentId.copy();
         this.parentTestCategoryId = other.parentTestCategoryId == null ? null : other.parentTestCategoryId.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
@@ -83,6 +86,21 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
 
     public void setTestName(StringFilter testName) {
         this.testName = testName;
+    }
+
+    public IntegerFilter getTestDuration() {
+        return testDuration;
+    }
+
+    public IntegerFilter testDuration() {
+        if (testDuration == null) {
+            testDuration = new IntegerFilter();
+        }
+        return testDuration;
+    }
+
+    public void setTestDuration(IntegerFilter testDuration) {
+        this.testDuration = testDuration;
     }
 
     public LongFilter getEquipmentId() {
@@ -180,6 +198,7 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(testName, that.testName) &&
+            Objects.equals(testDuration, that.testDuration) &&
             Objects.equals(equipmentId, that.equipmentId) &&
             Objects.equals(parentTestCategoryId, that.parentTestCategoryId) &&
             Objects.equals(userId, that.userId) &&
@@ -191,7 +210,17 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, testName, equipmentId, parentTestCategoryId, userId, patientTestTimingsId, testCategoryParentId, distinct);
+        return Objects.hash(
+            id,
+            testName,
+            testDuration,
+            equipmentId,
+            parentTestCategoryId,
+            userId,
+            patientTestTimingsId,
+            testCategoryParentId,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -200,6 +229,7 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
         return "TestCategoriesCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (testName != null ? "testName=" + testName + ", " : "") +
+            (testDuration != null ? "testDuration=" + testDuration + ", " : "") +
             (equipmentId != null ? "equipmentId=" + equipmentId + ", " : "") +
             (parentTestCategoryId != null ? "parentTestCategoryId=" + parentTestCategoryId + ", " : "") +
             (userId != null ? "userId=" + userId + ", " : "") +

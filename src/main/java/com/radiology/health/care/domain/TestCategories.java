@@ -13,9 +13,9 @@ import org.hibernate.envers.Audited;
  */
 @Entity
 @Table(name = "test_categories")
-@Audited
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class TestCategories extends AbstractAuditingEntity<Long> implements Serializable {
+@Audited
+public class TestCategories implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +27,9 @@ public class TestCategories extends AbstractAuditingEntity<Long> implements Seri
     @NotNull
     @Column(name = "test_name", nullable = false)
     private String testName;
+
+    @Column(name = "test_duration")
+    private Integer testDuration;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -43,16 +46,6 @@ public class TestCategories extends AbstractAuditingEntity<Long> implements Seri
     @ManyToOne(optional = false)
     @NotNull
     private User user;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    private String login;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "testCategories")
     @JsonIgnoreProperties(value = { "patientInfo", "testCategories" }, allowSetters = true)
@@ -91,6 +84,19 @@ public class TestCategories extends AbstractAuditingEntity<Long> implements Seri
 
     public void setTestName(String testName) {
         this.testName = testName;
+    }
+
+    public Integer getTestDuration() {
+        return this.testDuration;
+    }
+
+    public TestCategories testDuration(Integer testDuration) {
+        this.setTestDuration(testDuration);
+        return this;
+    }
+
+    public void setTestDuration(Integer testDuration) {
+        this.testDuration = testDuration;
     }
 
     public Equipment getEquipment() {
@@ -219,6 +225,7 @@ public class TestCategories extends AbstractAuditingEntity<Long> implements Seri
         return "TestCategories{" +
             "id=" + getId() +
             ", testName='" + getTestName() + "'" +
+            ", testDuration=" + getTestDuration() +
             "}";
     }
 }

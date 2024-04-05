@@ -6,10 +6,6 @@
   "entityTableName": "patient_test_timings",
   "fields": [
     {
-      "fieldName": "testTimings",
-      "fieldType": "LocalDate"
-    },
-    {
       "fieldName": "priority",
       "fieldType": "String"
     },
@@ -24,6 +20,14 @@
     {
       "fieldName": "status",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "startTiming",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "endTime",
+      "fieldType": "ZonedDateTime"
     }
   ],
   "jpaMetamodelFiltering": true,

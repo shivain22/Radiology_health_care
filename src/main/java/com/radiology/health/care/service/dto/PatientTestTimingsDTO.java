@@ -2,8 +2,7 @@ package com.radiology.health.care.service.dto;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -14,81 +13,21 @@ public class PatientTestTimingsDTO implements Serializable {
 
     private Long id;
 
-    private LocalDate testTimings;
-
     private String priority;
 
     private String clinicalNote;
 
     private String spclInstruction;
 
-    public PatientTestTimingsDTO status(String status) {
-        this.status = status;
-        return this;
-    }
-
     private String status;
 
-    public String getStatus() {
-        return status;
-    }
+    private ZonedDateTime startTiming;
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    private ZonedDateTime endTime;
 
-    private Long patientInfoId;
+    private PatientInfoDTO patientInfo;
 
-    private Long testCategoriesId;
-
-    private String login;
-    private String createdBy;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    private Instant createdDate;
-
-    private String lastModifiedBy;
-
-    private Instant lastModifiedDate;
+    private TestCategoriesDTO testCategories;
 
     public Long getId() {
         return id;
@@ -96,14 +35,6 @@ public class PatientTestTimingsDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDate getTestTimings() {
-        return testTimings;
-    }
-
-    public void setTestTimings(LocalDate testTimings) {
-        this.testTimings = testTimings;
     }
 
     public String getPriority() {
@@ -122,28 +53,52 @@ public class PatientTestTimingsDTO implements Serializable {
         this.clinicalNote = clinicalNote;
     }
 
-    public Long getPatientInfoId() {
-        return patientInfoId;
-    }
-
-    public void setPatientInfoId(Long patientInfoId) {
-        this.patientInfoId = patientInfoId;
-    }
-
-    public Long getTestCategoriesId() {
-        return testCategoriesId;
-    }
-
-    public void setTestCategoriesId(Long testCategoriesId) {
-        this.testCategoriesId = testCategoriesId;
-    }
-
     public String getSpclInstruction() {
         return spclInstruction;
     }
 
     public void setSpclInstruction(String spclInstruction) {
         this.spclInstruction = spclInstruction;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public ZonedDateTime getStartTiming() {
+        return startTiming;
+    }
+
+    public void setStartTiming(ZonedDateTime startTiming) {
+        this.startTiming = startTiming;
+    }
+
+    public ZonedDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(ZonedDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public PatientInfoDTO getPatientInfo() {
+        return patientInfo;
+    }
+
+    public void setPatientInfo(PatientInfoDTO patientInfo) {
+        this.patientInfo = patientInfo;
+    }
+
+    public TestCategoriesDTO getTestCategories() {
+        return testCategories;
+    }
+
+    public void setTestCategories(TestCategoriesDTO testCategories) {
+        this.testCategories = testCategories;
     }
 
     @Override
@@ -172,13 +127,14 @@ public class PatientTestTimingsDTO implements Serializable {
     public String toString() {
         return "PatientTestTimingsDTO{" +
             "id=" + getId() +
-            ", testTimings='" + getTestTimings() + "'" +
             ", priority='" + getPriority() + "'" +
             ", clinicalNote='" + getClinicalNote() + "'" +
             ", spclInstruction='" + getSpclInstruction() + "'" +
             ", status='" + getStatus() + "'" +
-            ", patientInfoId=" + getPatientInfoId() +
-            ", testCategoriesId=" + getTestCategoriesId() +
+            ", startTiming='" + getStartTiming() + "'" +
+            ", endTime='" + getEndTime() + "'" +
+            ", patientInfo=" + getPatientInfo() +
+            ", testCategories=" + getTestCategories() +
             "}";
     }
 }

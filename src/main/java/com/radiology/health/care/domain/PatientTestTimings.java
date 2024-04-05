@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import org.hibernate.envers.Audited;
 
 /**
@@ -14,7 +14,7 @@ import org.hibernate.envers.Audited;
 @Table(name = "patient_test_timings")
 @Audited
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class PatientTestTimings extends AbstractAuditingEntity<Long> implements Serializable {
+public class PatientTestTimings implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,9 +22,6 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "test_timings")
-    private LocalDate testTimings;
 
     @Column(name = "priority")
     private String priority;
@@ -35,36 +32,19 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
     @Column(name = "spcl_instruction")
     private String spclInstruction;
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Column(name = "status")
     private String status;
 
-    public PatientTestTimings status(String status) {
-        this.status = status;
-        return this;
-    }
+    @Column(name = "start_timing")
+    private ZonedDateTime startTiming;
+
+    @Column(name = "end_time")
+    private ZonedDateTime endTime;
 
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "employeeId", "employeeHis", "employeeServiceNo", "patientTestTimings" }, allowSetters = true)
     private PatientInfo patientInfo;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    private String login;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
@@ -86,19 +66,6 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDate getTestTimings() {
-        return this.testTimings;
-    }
-
-    public PatientTestTimings testTimings(LocalDate testTimings) {
-        this.setTestTimings(testTimings);
-        return this;
-    }
-
-    public void setTestTimings(LocalDate testTimings) {
-        this.testTimings = testTimings;
     }
 
     public String getPriority() {
@@ -138,6 +105,45 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
 
     public void setSpclInstruction(String spclInstruction) {
         this.spclInstruction = spclInstruction;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public PatientTestTimings status(String status) {
+        this.setStatus(status);
+        return this;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public ZonedDateTime getStartTiming() {
+        return this.startTiming;
+    }
+
+    public PatientTestTimings startTiming(ZonedDateTime startTiming) {
+        this.setStartTiming(startTiming);
+        return this;
+    }
+
+    public void setStartTiming(ZonedDateTime startTiming) {
+        this.startTiming = startTiming;
+    }
+
+    public ZonedDateTime getEndTime() {
+        return this.endTime;
+    }
+
+    public PatientTestTimings endTime(ZonedDateTime endTime) {
+        this.setEndTime(endTime);
+        return this;
+    }
+
+    public void setEndTime(ZonedDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public PatientInfo getPatientInfo() {
@@ -190,11 +196,12 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
     public String toString() {
         return "PatientTestTimings{" +
             "id=" + getId() +
-            ", testTimings='" + getTestTimings() + "'" +
             ", priority='" + getPriority() + "'" +
             ", clinicalNote='" + getClinicalNote() + "'" +
             ", spclInstruction='" + getSpclInstruction() + "'" +
             ", status='" + getStatus() + "'" +
+            ", startTiming='" + getStartTiming() + "'" +
+            ", endTime='" + getEndTime() + "'" +
             "}";
     }
 }

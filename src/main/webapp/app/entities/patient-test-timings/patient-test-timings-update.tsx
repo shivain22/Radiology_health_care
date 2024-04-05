@@ -54,6 +54,8 @@ export const PatientTestTimingsUpdate = () => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
     }
+    values.startTiming = convertDateTimeToServer(values.startTiming);
+    values.endTime = convertDateTimeToServer(values.endTime);
 
     const entity = {
       ...patientTestTimingsEntity,
@@ -71,9 +73,14 @@ export const PatientTestTimingsUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          startTiming: displayDefaultDateTime(),
+          endTime: displayDefaultDateTime(),
+        }
       : {
           ...patientTestTimingsEntity,
+          startTiming: convertDateTimeFromServer(patientTestTimingsEntity.startTiming),
+          endTime: convertDateTimeFromServer(patientTestTimingsEntity.endTime),
           patientInfo: patientTestTimingsEntity?.patientInfo?.id,
           testCategories: patientTestTimingsEntity?.testCategories?.id,
         };
@@ -96,13 +103,6 @@ export const PatientTestTimingsUpdate = () => {
               {!isNew ? (
                 <ValidatedField name="id" required readOnly id="patient-test-timings-id" label="ID" validate={{ required: true }} />
               ) : null}
-              <ValidatedField
-                label="Test Timings"
-                id="patient-test-timings-testTimings"
-                name="testTimings"
-                data-cy="testTimings"
-                type="date"
-              />
               <ValidatedField label="Priority" id="patient-test-timings-priority" name="priority" data-cy="priority" type="text" />
               <ValidatedField
                 label="Clinical Note"
@@ -117,6 +117,23 @@ export const PatientTestTimingsUpdate = () => {
                 name="spclInstruction"
                 data-cy="spclInstruction"
                 type="text"
+              />
+              <ValidatedField label="Status" id="patient-test-timings-status" name="status" data-cy="status" type="text" />
+              <ValidatedField
+                label="Start Timing"
+                id="patient-test-timings-startTiming"
+                name="startTiming"
+                data-cy="startTiming"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+              <ValidatedField
+                label="End Time"
+                id="patient-test-timings-endTime"
+                name="endTime"
+                data-cy="endTime"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
                 id="patient-test-timings-patientInfo"

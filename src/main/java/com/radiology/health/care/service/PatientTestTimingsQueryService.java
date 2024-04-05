@@ -93,9 +93,6 @@ public class PatientTestTimingsQueryService extends QueryService<PatientTestTimi
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), PatientTestTimings_.id));
             }
-            if (criteria.getTestTimings() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getTestTimings(), PatientTestTimings_.testTimings));
-            }
             if (criteria.getPriority() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getPriority(), PatientTestTimings_.priority));
             }
@@ -105,6 +102,15 @@ public class PatientTestTimingsQueryService extends QueryService<PatientTestTimi
             if (criteria.getSpclInstruction() != null) {
                 specification =
                     specification.and(buildStringSpecification(criteria.getSpclInstruction(), PatientTestTimings_.spclInstruction));
+            }
+            if (criteria.getStatus() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getStatus(), PatientTestTimings_.status));
+            }
+            if (criteria.getStartTiming() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getStartTiming(), PatientTestTimings_.startTiming));
+            }
+            if (criteria.getEndTime() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getEndTime(), PatientTestTimings_.endTime));
             }
             if (criteria.getPatientInfoId() != null) {
                 specification =

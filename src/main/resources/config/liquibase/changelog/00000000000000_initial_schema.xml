@@ -371,7 +371,12 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="test_timings" type="date"/>
+            <column name="start_timing" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="end_time" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
             <column name="priority" type="VARCHAR(255)"/>
             <column name="clinical_note" type="VARCHAR(255)"/>
             <column name="spcl_instruction" type="VARCHAR(255)"/>
@@ -403,7 +408,12 @@
             <column name="priority" type="VARCHAR(255)"/>
             <column name="spcl_instruction" type="VARCHAR(255)"/>
             <column name="status" type="VARCHAR(255)"/>
-            <column name="test_timings" type="date"/>
+            <column name="start_timing" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="end_time" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
             <column name="patient_info_id" type="BIGINT"/>
             <column name="test_categories_id" type="BIGINT"/>
         </createTable>
@@ -503,6 +513,9 @@
             <column name="equipment_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
+            <column name="test_duration" type="integer">
+                <constraints nullable="true" />
+            </column>
             <column name="parent_test_category_id" type="BIGINT"/>
             <column name="user_id" type="BIGINT">
                 <constraints nullable="false"/>
@@ -527,6 +540,9 @@
             <column name="revtype" type="TINYINT(3)"/>
             <column name="login" type="VARCHAR(255)"/>
             <column name="test_name" type="VARCHAR(255)"/>
+            <column name="test_duration" type="integer">
+                <constraints nullable="true" />
+            </column>
             <column name="equipment_id" type="BIGINT"/>
             <column name="parent_test_category_id" type="BIGINT"/>
             <column name="user_id" type="BIGINT"/>

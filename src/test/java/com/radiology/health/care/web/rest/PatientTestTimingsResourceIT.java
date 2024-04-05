@@ -1,5 +1,6 @@
 package com.radiology.health.care.web.rest;
 
+import static com.radiology.health.care.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -8,16 +9,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.radiology.health.care.IntegrationTest;
 import com.radiology.health.care.domain.PatientInfo;
 import com.radiology.health.care.domain.PatientTestTimings;
-import com.radiology.health.care.domain.Room;
 import com.radiology.health.care.domain.TestCategories;
-import com.radiology.health.care.repository.PatientInfoRepository;
 import com.radiology.health.care.repository.PatientTestTimingsRepository;
-import com.radiology.health.care.repository.TestCategoriesRepository;
 import com.radiology.health.care.service.dto.PatientTestTimingsDTO;
 import com.radiology.health.care.service.mapper.PatientTestTimingsMapper;
 import jakarta.persistence.EntityManager;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -38,10 +38,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class PatientTestTimingsResourceIT {
 
-    private static final LocalDate DEFAULT_TEST_TIMINGS = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_TEST_TIMINGS = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_TEST_TIMINGS = LocalDate.ofEpochDay(-1L);
-
     private static final String DEFAULT_PRIORITY = "AAAAAAAAAA";
     private static final String UPDATED_PRIORITY = "BBBBBBBBBB";
 
@@ -53,6 +49,15 @@ class PatientTestTimingsResourceIT {
 
     private static final String DEFAULT_STATUS = "AAAAAAAAAA";
     private static final String UPDATED_STATUS = "BBBBBBBBBB";
+
+    private static final ZonedDateTime DEFAULT_START_TIMING = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_START_TIMING = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final ZonedDateTime SMALLER_START_TIMING = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
+
+    private static final ZonedDateTime DEFAULT_END_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_END_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final ZonedDateTime SMALLER_END_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
+
     private static final String ENTITY_API_URL = "/api/patient-test-timings";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -73,12 +78,6 @@ class PatientTestTimingsResourceIT {
 
     private PatientTestTimings patientTestTimings;
 
-    @Autowired
-    private PatientInfoRepository patientInfoRepository;
-
-    @Autowired
-    private TestCategoriesRepository testCategoriesRepository;
-
     /**
      * Create an entity for this test.
      *
@@ -87,11 +86,12 @@ class PatientTestTimingsResourceIT {
      */
     public static PatientTestTimings createEntity(EntityManager em) {
         PatientTestTimings patientTestTimings = new PatientTestTimings()
-            .testTimings(DEFAULT_TEST_TIMINGS)
             .priority(DEFAULT_PRIORITY)
             .clinicalNote(DEFAULT_CLINICAL_NOTE)
             .spclInstruction(DEFAULT_SPCL_INSTRUCTION)
-            .status(DEFAULT_STATUS);
+            .status(DEFAULT_STATUS)
+            .startTiming(DEFAULT_START_TIMING)
+            .endTime(DEFAULT_END_TIME);
         // Add required entity
         PatientInfo patientInfo;
         if (TestUtil.findAll(em, PatientInfo.class).isEmpty()) {
@@ -101,17 +101,7 @@ class PatientTestTimingsResourceIT {
         } else {
             patientInfo = TestUtil.findAll(em, PatientInfo.class).get(0);
         }
-        // Add required entity
-        TestCategories testCategories;
-        if (TestUtil.findAll(em, TestCategories.class).isEmpty()) {
-            testCategories = TestCategoriesResourceIT.createEntity(em);
-            em.persist(testCategories);
-            em.flush();
-        } else {
-            testCategories = TestUtil.findAll(em, TestCategories.class).get(0);
-        }
         patientTestTimings.setPatientInfo(patientInfo);
-        patientTestTimings.setTestCategories(testCategories);
         return patientTestTimings;
     }
 
@@ -123,11 +113,12 @@ class PatientTestTimingsResourceIT {
      */
     public static PatientTestTimings createUpdatedEntity(EntityManager em) {
         PatientTestTimings patientTestTimings = new PatientTestTimings()
-            .testTimings(UPDATED_TEST_TIMINGS)
             .priority(UPDATED_PRIORITY)
             .clinicalNote(UPDATED_CLINICAL_NOTE)
             .spclInstruction(UPDATED_SPCL_INSTRUCTION)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .startTiming(UPDATED_START_TIMING)
+            .endTime(UPDATED_END_TIME);
         // Add required entity
         PatientInfo patientInfo;
         if (TestUtil.findAll(em, PatientInfo.class).isEmpty()) {
@@ -137,17 +128,7 @@ class PatientTestTimingsResourceIT {
         } else {
             patientInfo = TestUtil.findAll(em, PatientInfo.class).get(0);
         }
-        // Add required entity
-        TestCategories testCategories;
-        if (TestUtil.findAll(em, TestCategories.class).isEmpty()) {
-            testCategories = TestCategoriesResourceIT.createUpdatedEntity(em);
-            em.persist(testCategories);
-            em.flush();
-        } else {
-            testCategories = TestUtil.findAll(em, TestCategories.class).get(0);
-        }
         patientTestTimings.setPatientInfo(patientInfo);
-        patientTestTimings.setTestCategories(testCategories);
         return patientTestTimings;
     }
 
@@ -159,34 +140,27 @@ class PatientTestTimingsResourceIT {
     @Test
     @Transactional
     void createPatientTestTimings() throws Exception {
-        // Create a TestCategories entity and save it
-        PatientInfo patientInfo = PatientInfoResourceIT.createEntity(em);
-        patientInfo = patientInfoRepository.save(patientInfo);
-        TestCategories testCategories = TestCategoriesResourceIT.createEntity(em);
-        testCategories = testCategoriesRepository.save(testCategories);
-
-        // Create a PatientTestTimings entity and set its attributes
-        PatientTestTimings patientTestTimings = new PatientTestTimings();
-        patientTestTimings.setTestCategories(testCategories); // Set the TestCategories
-        patientTestTimings.setPatientInfo(patientInfo);
-        patientTestTimings.setTestTimings(DEFAULT_TEST_TIMINGS);
-        patientTestTimings.setPriority(DEFAULT_PRIORITY);
-        patientTestTimings.setClinicalNote(DEFAULT_CLINICAL_NOTE);
-        patientTestTimings.setSpclInstruction(DEFAULT_SPCL_INSTRUCTION);
-        patientTestTimings.setStatus(DEFAULT_STATUS);
-        // Set other attributes as needed
-
         int databaseSizeBeforeCreate = patientTestTimingsRepository.findAll().size();
+        // Create the PatientTestTimings
+        PatientTestTimingsDTO patientTestTimingsDTO = patientTestTimingsMapper.toDto(patientTestTimings);
+        restPatientTestTimingsMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(patientTestTimingsDTO))
+            )
+            .andExpect(status().isCreated());
 
-        // Save the PatientTestTimings entity
-        patientTestTimings = patientTestTimingsRepository.save(patientTestTimings);
-
-        // Validate the creation
-        assertThat(patientTestTimings.getId()).isNotNull();
-
-        // Validate the size of the database after creation
+        // Validate the PatientTestTimings in the database
         List<PatientTestTimings> patientTestTimingsList = patientTestTimingsRepository.findAll();
         assertThat(patientTestTimingsList).hasSize(databaseSizeBeforeCreate + 1);
+        PatientTestTimings testPatientTestTimings = patientTestTimingsList.get(patientTestTimingsList.size() - 1);
+        assertThat(testPatientTestTimings.getPriority()).isEqualTo(DEFAULT_PRIORITY);
+        assertThat(testPatientTestTimings.getClinicalNote()).isEqualTo(DEFAULT_CLINICAL_NOTE);
+        assertThat(testPatientTestTimings.getSpclInstruction()).isEqualTo(DEFAULT_SPCL_INSTRUCTION);
+        assertThat(testPatientTestTimings.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testPatientTestTimings.getStartTiming()).isEqualTo(DEFAULT_START_TIMING);
+        assertThat(testPatientTestTimings.getEndTime()).isEqualTo(DEFAULT_END_TIME);
     }
 
     @Test
@@ -224,10 +198,12 @@ class PatientTestTimingsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(patientTestTimings.getId().intValue())))
-            .andExpect(jsonPath("$.[*].testTimings").value(hasItem(DEFAULT_TEST_TIMINGS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY)))
             .andExpect(jsonPath("$.[*].clinicalNote").value(hasItem(DEFAULT_CLINICAL_NOTE)))
-            .andExpect(jsonPath("$.[*].spclInstruction").value(hasItem(DEFAULT_SPCL_INSTRUCTION)));
+            .andExpect(jsonPath("$.[*].spclInstruction").value(hasItem(DEFAULT_SPCL_INSTRUCTION)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
+            .andExpect(jsonPath("$.[*].startTiming").value(hasItem(sameInstant(DEFAULT_START_TIMING))))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(sameInstant(DEFAULT_END_TIME))));
     }
 
     @Test
@@ -242,11 +218,12 @@ class PatientTestTimingsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(patientTestTimings.getId().intValue()))
-            .andExpect(jsonPath("$.testTimings").value(DEFAULT_TEST_TIMINGS.toString()))
             .andExpect(jsonPath("$.priority").value(DEFAULT_PRIORITY))
             .andExpect(jsonPath("$.clinicalNote").value(DEFAULT_CLINICAL_NOTE))
             .andExpect(jsonPath("$.spclInstruction").value(DEFAULT_SPCL_INSTRUCTION))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
+            .andExpect(jsonPath("$.startTiming").value(sameInstant(DEFAULT_START_TIMING)))
+            .andExpect(jsonPath("$.endTime").value(sameInstant(DEFAULT_END_TIME)));
     }
 
     @Test
@@ -265,97 +242,6 @@ class PatientTestTimingsResourceIT {
 
         defaultPatientTestTimingsShouldBeFound("id.lessThanOrEqual=" + id);
         defaultPatientTestTimingsShouldNotBeFound("id.lessThan=" + id);
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientTestTimingsByTestTimingsIsEqualToSomething() throws Exception {
-        // Initialize the database
-        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
-
-        // Get all the patientTestTimingsList where testTimings equals to DEFAULT_TEST_TIMINGS
-        defaultPatientTestTimingsShouldBeFound("testTimings.equals=" + DEFAULT_TEST_TIMINGS);
-
-        // Get all the patientTestTimingsList where testTimings equals to UPDATED_TEST_TIMINGS
-        defaultPatientTestTimingsShouldNotBeFound("testTimings.equals=" + UPDATED_TEST_TIMINGS);
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientTestTimingsByTestTimingsIsInShouldWork() throws Exception {
-        // Initialize the database
-        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
-
-        // Get all the patientTestTimingsList where testTimings in DEFAULT_TEST_TIMINGS or UPDATED_TEST_TIMINGS
-        defaultPatientTestTimingsShouldBeFound("testTimings.in=" + DEFAULT_TEST_TIMINGS + "," + UPDATED_TEST_TIMINGS);
-
-        // Get all the patientTestTimingsList where testTimings equals to UPDATED_TEST_TIMINGS
-        defaultPatientTestTimingsShouldNotBeFound("testTimings.in=" + UPDATED_TEST_TIMINGS);
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientTestTimingsByTestTimingsIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
-
-        // Get all the patientTestTimingsList where testTimings is not null
-        defaultPatientTestTimingsShouldBeFound("testTimings.specified=true");
-
-        // Get all the patientTestTimingsList where testTimings is null
-        defaultPatientTestTimingsShouldNotBeFound("testTimings.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientTestTimingsByTestTimingsIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
-
-        // Get all the patientTestTimingsList where testTimings is greater than or equal to DEFAULT_TEST_TIMINGS
-        defaultPatientTestTimingsShouldBeFound("testTimings.greaterThanOrEqual=" + DEFAULT_TEST_TIMINGS);
-
-        // Get all the patientTestTimingsList where testTimings is greater than or equal to UPDATED_TEST_TIMINGS
-        defaultPatientTestTimingsShouldNotBeFound("testTimings.greaterThanOrEqual=" + UPDATED_TEST_TIMINGS);
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientTestTimingsByTestTimingsIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
-
-        // Get all the patientTestTimingsList where testTimings is less than or equal to DEFAULT_TEST_TIMINGS
-        defaultPatientTestTimingsShouldBeFound("testTimings.lessThanOrEqual=" + DEFAULT_TEST_TIMINGS);
-
-        // Get all the patientTestTimingsList where testTimings is less than or equal to SMALLER_TEST_TIMINGS
-        defaultPatientTestTimingsShouldNotBeFound("testTimings.lessThanOrEqual=" + SMALLER_TEST_TIMINGS);
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientTestTimingsByTestTimingsIsLessThanSomething() throws Exception {
-        // Initialize the database
-        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
-
-        // Get all the patientTestTimingsList where testTimings is less than DEFAULT_TEST_TIMINGS
-        defaultPatientTestTimingsShouldNotBeFound("testTimings.lessThan=" + DEFAULT_TEST_TIMINGS);
-
-        // Get all the patientTestTimingsList where testTimings is less than UPDATED_TEST_TIMINGS
-        defaultPatientTestTimingsShouldBeFound("testTimings.lessThan=" + UPDATED_TEST_TIMINGS);
-    }
-
-    @Test
-    @Transactional
-    void getAllPatientTestTimingsByTestTimingsIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
-
-        // Get all the patientTestTimingsList where testTimings is greater than DEFAULT_TEST_TIMINGS
-        defaultPatientTestTimingsShouldNotBeFound("testTimings.greaterThan=" + DEFAULT_TEST_TIMINGS);
-
-        // Get all the patientTestTimingsList where testTimings is greater than SMALLER_TEST_TIMINGS
-        defaultPatientTestTimingsShouldBeFound("testTimings.greaterThan=" + SMALLER_TEST_TIMINGS);
     }
 
     @Test
@@ -581,7 +467,7 @@ class PatientTestTimingsResourceIT {
 
     @Test
     @Transactional
-    void getAllPatientTestTimingsBySStatusIsNullOrNotNull() throws Exception {
+    void getAllPatientTestTimingsByStatusIsNullOrNotNull() throws Exception {
         // Initialize the database
         patientTestTimingsRepository.saveAndFlush(patientTestTimings);
 
@@ -616,6 +502,188 @@ class PatientTestTimingsResourceIT {
 
         // Get all the patientTestTimingsList where status does not contain UPDATED_STATUS
         defaultPatientTestTimingsShouldBeFound("status.doesNotContain=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByStartTimingIsEqualToSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where startTiming equals to DEFAULT_START_TIMING
+        defaultPatientTestTimingsShouldBeFound("startTiming.equals=" + DEFAULT_START_TIMING);
+
+        // Get all the patientTestTimingsList where startTiming equals to UPDATED_START_TIMING
+        defaultPatientTestTimingsShouldNotBeFound("startTiming.equals=" + UPDATED_START_TIMING);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByStartTimingIsInShouldWork() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where startTiming in DEFAULT_START_TIMING or UPDATED_START_TIMING
+        defaultPatientTestTimingsShouldBeFound("startTiming.in=" + DEFAULT_START_TIMING + "," + UPDATED_START_TIMING);
+
+        // Get all the patientTestTimingsList where startTiming equals to UPDATED_START_TIMING
+        defaultPatientTestTimingsShouldNotBeFound("startTiming.in=" + UPDATED_START_TIMING);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByStartTimingIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where startTiming is not null
+        defaultPatientTestTimingsShouldBeFound("startTiming.specified=true");
+
+        // Get all the patientTestTimingsList where startTiming is null
+        defaultPatientTestTimingsShouldNotBeFound("startTiming.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByStartTimingIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where startTiming is greater than or equal to DEFAULT_START_TIMING
+        defaultPatientTestTimingsShouldBeFound("startTiming.greaterThanOrEqual=" + DEFAULT_START_TIMING);
+
+        // Get all the patientTestTimingsList where startTiming is greater than or equal to UPDATED_START_TIMING
+        defaultPatientTestTimingsShouldNotBeFound("startTiming.greaterThanOrEqual=" + UPDATED_START_TIMING);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByStartTimingIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where startTiming is less than or equal to DEFAULT_START_TIMING
+        defaultPatientTestTimingsShouldBeFound("startTiming.lessThanOrEqual=" + DEFAULT_START_TIMING);
+
+        // Get all the patientTestTimingsList where startTiming is less than or equal to SMALLER_START_TIMING
+        defaultPatientTestTimingsShouldNotBeFound("startTiming.lessThanOrEqual=" + SMALLER_START_TIMING);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByStartTimingIsLessThanSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where startTiming is less than DEFAULT_START_TIMING
+        defaultPatientTestTimingsShouldNotBeFound("startTiming.lessThan=" + DEFAULT_START_TIMING);
+
+        // Get all the patientTestTimingsList where startTiming is less than UPDATED_START_TIMING
+        defaultPatientTestTimingsShouldBeFound("startTiming.lessThan=" + UPDATED_START_TIMING);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByStartTimingIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where startTiming is greater than DEFAULT_START_TIMING
+        defaultPatientTestTimingsShouldNotBeFound("startTiming.greaterThan=" + DEFAULT_START_TIMING);
+
+        // Get all the patientTestTimingsList where startTiming is greater than SMALLER_START_TIMING
+        defaultPatientTestTimingsShouldBeFound("startTiming.greaterThan=" + SMALLER_START_TIMING);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByEndTimeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where endTime equals to DEFAULT_END_TIME
+        defaultPatientTestTimingsShouldBeFound("endTime.equals=" + DEFAULT_END_TIME);
+
+        // Get all the patientTestTimingsList where endTime equals to UPDATED_END_TIME
+        defaultPatientTestTimingsShouldNotBeFound("endTime.equals=" + UPDATED_END_TIME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByEndTimeIsInShouldWork() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where endTime in DEFAULT_END_TIME or UPDATED_END_TIME
+        defaultPatientTestTimingsShouldBeFound("endTime.in=" + DEFAULT_END_TIME + "," + UPDATED_END_TIME);
+
+        // Get all the patientTestTimingsList where endTime equals to UPDATED_END_TIME
+        defaultPatientTestTimingsShouldNotBeFound("endTime.in=" + UPDATED_END_TIME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByEndTimeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where endTime is not null
+        defaultPatientTestTimingsShouldBeFound("endTime.specified=true");
+
+        // Get all the patientTestTimingsList where endTime is null
+        defaultPatientTestTimingsShouldNotBeFound("endTime.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByEndTimeIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where endTime is greater than or equal to DEFAULT_END_TIME
+        defaultPatientTestTimingsShouldBeFound("endTime.greaterThanOrEqual=" + DEFAULT_END_TIME);
+
+        // Get all the patientTestTimingsList where endTime is greater than or equal to UPDATED_END_TIME
+        defaultPatientTestTimingsShouldNotBeFound("endTime.greaterThanOrEqual=" + UPDATED_END_TIME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByEndTimeIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where endTime is less than or equal to DEFAULT_END_TIME
+        defaultPatientTestTimingsShouldBeFound("endTime.lessThanOrEqual=" + DEFAULT_END_TIME);
+
+        // Get all the patientTestTimingsList where endTime is less than or equal to SMALLER_END_TIME
+        defaultPatientTestTimingsShouldNotBeFound("endTime.lessThanOrEqual=" + SMALLER_END_TIME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByEndTimeIsLessThanSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where endTime is less than DEFAULT_END_TIME
+        defaultPatientTestTimingsShouldNotBeFound("endTime.lessThan=" + DEFAULT_END_TIME);
+
+        // Get all the patientTestTimingsList where endTime is less than UPDATED_END_TIME
+        defaultPatientTestTimingsShouldBeFound("endTime.lessThan=" + UPDATED_END_TIME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPatientTestTimingsByEndTimeIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        patientTestTimingsRepository.saveAndFlush(patientTestTimings);
+
+        // Get all the patientTestTimingsList where endTime is greater than DEFAULT_END_TIME
+        defaultPatientTestTimingsShouldNotBeFound("endTime.greaterThan=" + DEFAULT_END_TIME);
+
+        // Get all the patientTestTimingsList where endTime is greater than SMALLER_END_TIME
+        defaultPatientTestTimingsShouldBeFound("endTime.greaterThan=" + SMALLER_END_TIME);
     }
 
     @Test
@@ -671,11 +739,12 @@ class PatientTestTimingsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(patientTestTimings.getId().intValue())))
-            .andExpect(jsonPath("$.[*].testTimings").value(hasItem(DEFAULT_TEST_TIMINGS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY)))
             .andExpect(jsonPath("$.[*].clinicalNote").value(hasItem(DEFAULT_CLINICAL_NOTE)))
             .andExpect(jsonPath("$.[*].spclInstruction").value(hasItem(DEFAULT_SPCL_INSTRUCTION)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
+            .andExpect(jsonPath("$.[*].startTiming").value(hasItem(sameInstant(DEFAULT_START_TIMING))))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(sameInstant(DEFAULT_END_TIME))));
 
         // Check, that the count call also returns 1
         restPatientTestTimingsMockMvc
@@ -724,12 +793,12 @@ class PatientTestTimingsResourceIT {
         // Disconnect from session so that the updates on updatedPatientTestTimings are not directly saved in db
         em.detach(updatedPatientTestTimings);
         updatedPatientTestTimings
-            .testTimings(UPDATED_TEST_TIMINGS)
             .priority(UPDATED_PRIORITY)
             .clinicalNote(UPDATED_CLINICAL_NOTE)
             .spclInstruction(UPDATED_SPCL_INSTRUCTION)
-            .status(UPDATED_STATUS);
-
+            .status(UPDATED_STATUS)
+            .startTiming(UPDATED_START_TIMING)
+            .endTime(UPDATED_END_TIME);
         PatientTestTimingsDTO patientTestTimingsDTO = patientTestTimingsMapper.toDto(updatedPatientTestTimings);
 
         restPatientTestTimingsMockMvc
@@ -744,11 +813,12 @@ class PatientTestTimingsResourceIT {
         List<PatientTestTimings> patientTestTimingsList = patientTestTimingsRepository.findAll();
         assertThat(patientTestTimingsList).hasSize(databaseSizeBeforeUpdate);
         PatientTestTimings testPatientTestTimings = patientTestTimingsList.get(patientTestTimingsList.size() - 1);
-        assertThat(testPatientTestTimings.getTestTimings()).isEqualTo(UPDATED_TEST_TIMINGS);
         assertThat(testPatientTestTimings.getPriority()).isEqualTo(UPDATED_PRIORITY);
         assertThat(testPatientTestTimings.getClinicalNote()).isEqualTo(UPDATED_CLINICAL_NOTE);
         assertThat(testPatientTestTimings.getSpclInstruction()).isEqualTo(UPDATED_SPCL_INSTRUCTION);
         assertThat(testPatientTestTimings.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testPatientTestTimings.getStartTiming()).isEqualTo(UPDATED_START_TIMING);
+        assertThat(testPatientTestTimings.getEndTime()).isEqualTo(UPDATED_END_TIME);
     }
 
     @Test
@@ -832,7 +902,7 @@ class PatientTestTimingsResourceIT {
         PatientTestTimings partialUpdatedPatientTestTimings = new PatientTestTimings();
         partialUpdatedPatientTestTimings.setId(patientTestTimings.getId());
 
-        partialUpdatedPatientTestTimings.spclInstruction(UPDATED_SPCL_INSTRUCTION);
+        partialUpdatedPatientTestTimings.status(UPDATED_STATUS).startTiming(UPDATED_START_TIMING).endTime(UPDATED_END_TIME);
 
         restPatientTestTimingsMockMvc
             .perform(
@@ -846,11 +916,12 @@ class PatientTestTimingsResourceIT {
         List<PatientTestTimings> patientTestTimingsList = patientTestTimingsRepository.findAll();
         assertThat(patientTestTimingsList).hasSize(databaseSizeBeforeUpdate);
         PatientTestTimings testPatientTestTimings = patientTestTimingsList.get(patientTestTimingsList.size() - 1);
-        assertThat(testPatientTestTimings.getTestTimings()).isEqualTo(DEFAULT_TEST_TIMINGS);
         assertThat(testPatientTestTimings.getPriority()).isEqualTo(DEFAULT_PRIORITY);
         assertThat(testPatientTestTimings.getClinicalNote()).isEqualTo(DEFAULT_CLINICAL_NOTE);
-        assertThat(testPatientTestTimings.getSpclInstruction()).isEqualTo(UPDATED_SPCL_INSTRUCTION);
+        assertThat(testPatientTestTimings.getSpclInstruction()).isEqualTo(DEFAULT_SPCL_INSTRUCTION);
         assertThat(testPatientTestTimings.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testPatientTestTimings.getStartTiming()).isEqualTo(UPDATED_START_TIMING);
+        assertThat(testPatientTestTimings.getEndTime()).isEqualTo(UPDATED_END_TIME);
     }
 
     @Test
@@ -866,11 +937,12 @@ class PatientTestTimingsResourceIT {
         partialUpdatedPatientTestTimings.setId(patientTestTimings.getId());
 
         partialUpdatedPatientTestTimings
-            .testTimings(UPDATED_TEST_TIMINGS)
             .priority(UPDATED_PRIORITY)
             .clinicalNote(UPDATED_CLINICAL_NOTE)
             .spclInstruction(UPDATED_SPCL_INSTRUCTION)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .startTiming(UPDATED_START_TIMING)
+            .endTime(UPDATED_END_TIME);
 
         restPatientTestTimingsMockMvc
             .perform(
@@ -884,11 +956,12 @@ class PatientTestTimingsResourceIT {
         List<PatientTestTimings> patientTestTimingsList = patientTestTimingsRepository.findAll();
         assertThat(patientTestTimingsList).hasSize(databaseSizeBeforeUpdate);
         PatientTestTimings testPatientTestTimings = patientTestTimingsList.get(patientTestTimingsList.size() - 1);
-        assertThat(testPatientTestTimings.getTestTimings()).isEqualTo(UPDATED_TEST_TIMINGS);
         assertThat(testPatientTestTimings.getPriority()).isEqualTo(UPDATED_PRIORITY);
         assertThat(testPatientTestTimings.getClinicalNote()).isEqualTo(UPDATED_CLINICAL_NOTE);
         assertThat(testPatientTestTimings.getSpclInstruction()).isEqualTo(UPDATED_SPCL_INSTRUCTION);
         assertThat(testPatientTestTimings.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testPatientTestTimings.getStartTiming()).isEqualTo(UPDATED_START_TIMING);
+        assertThat(testPatientTestTimings.getEndTime()).isEqualTo(UPDATED_END_TIME);
     }
 
     @Test

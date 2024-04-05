@@ -134,9 +134,6 @@ export const PatientTestTimings = () => {
                   <th className="hand" onClick={sort('id')}>
                     ID <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
                   </th>
-                  <th className="hand" onClick={sort('testTimings')}>
-                    Test Timings <FontAwesomeIcon icon={getSortIconByFieldName('testTimings')} />
-                  </th>
                   <th className="hand" onClick={sort('priority')}>
                     Priority <FontAwesomeIcon icon={getSortIconByFieldName('priority')} />
                   </th>
@@ -145,6 +142,15 @@ export const PatientTestTimings = () => {
                   </th>
                   <th className="hand" onClick={sort('spclInstruction')}>
                     Spcl Instruction <FontAwesomeIcon icon={getSortIconByFieldName('spclInstruction')} />
+                  </th>
+                  <th className="hand" onClick={sort('status')}>
+                    Status <FontAwesomeIcon icon={getSortIconByFieldName('status')} />
+                  </th>
+                  <th className="hand" onClick={sort('startTiming')}>
+                    Start Timing <FontAwesomeIcon icon={getSortIconByFieldName('startTiming')} />
+                  </th>
+                  <th className="hand" onClick={sort('endTime')}>
+                    End Time <FontAwesomeIcon icon={getSortIconByFieldName('endTime')} />
                   </th>
                   <th>
                     Patient Info <FontAwesomeIcon icon="sort" />
@@ -163,14 +169,20 @@ export const PatientTestTimings = () => {
                         {patientTestTimings.id}
                       </Button>
                     </td>
-                    <td>
-                      {patientTestTimings.testTimings ? (
-                        <TextFormat type="date" value={patientTestTimings.testTimings} format={APP_LOCAL_DATE_FORMAT} />
-                      ) : null}
-                    </td>
                     <td>{patientTestTimings.priority}</td>
                     <td>{patientTestTimings.clinicalNote}</td>
                     <td>{patientTestTimings.spclInstruction}</td>
+                    <td>{patientTestTimings.status}</td>
+                    <td>
+                      {patientTestTimings.startTiming ? (
+                        <TextFormat type="date" value={patientTestTimings.startTiming} format={APP_DATE_FORMAT} />
+                      ) : null}
+                    </td>
+                    <td>
+                      {patientTestTimings.endTime ? (
+                        <TextFormat type="date" value={patientTestTimings.endTime} format={APP_DATE_FORMAT} />
+                      ) : null}
+                    </td>
                     <td>
                       {patientTestTimings.patientInfo ? (
                         <Link to={`/patient-info/${patientTestTimings.patientInfo.id}`}>{patientTestTimings.patientInfo.id}</Link>

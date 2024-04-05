@@ -17,6 +17,9 @@
             <column name="test_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="test_duration" type="integer">
+                <constraints nullable="true" />
+            </column>
             <column name="equipment_id" type="bigint">
                 <constraints nullable="false" />
             </column>
@@ -48,6 +51,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="test_name" type="string"/>
+            <column name="test_duration" type="numeric"/>
             <column name="equipment_id" type="numeric"/>
             <column name="user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
