@@ -2,7 +2,10 @@ package com.radiology.health.care.service.impl;
 
 import com.radiology.health.care.domain.TestCategories;
 import com.radiology.health.care.repository.TestCategoriesRepository;
+import com.radiology.health.care.repository.UserRepository;
+import com.radiology.health.care.security.SecurityUtils;
 import com.radiology.health.care.service.TestCategoriesService;
+import com.radiology.health.care.service.dto.AdminUserDTO;
 import com.radiology.health.care.service.dto.TestCategoriesDTO;
 import com.radiology.health.care.service.mapper.TestCategoriesMapper;
 import java.util.Optional;
@@ -26,14 +29,28 @@ public class TestCategoriesServiceImpl implements TestCategoriesService {
 
     private final TestCategoriesMapper testCategoriesMapper;
 
-    public TestCategoriesServiceImpl(TestCategoriesRepository testCategoriesRepository, TestCategoriesMapper testCategoriesMapper) {
+    private final UserRepository userRepository;
+
+    public TestCategoriesServiceImpl(
+        TestCategoriesRepository testCategoriesRepository,
+        TestCategoriesMapper testCategoriesMapper,
+        UserRepository userRepository
+    ) {
         this.testCategoriesRepository = testCategoriesRepository;
         this.testCategoriesMapper = testCategoriesMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
     public TestCategoriesDTO save(TestCategoriesDTO testCategoriesDTO) {
         log.debug("Request to save TestCategories : {}", testCategoriesDTO);
+        AdminUserDTO adminUser = SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new RuntimeException("User could not be found"));
+        testCategoriesDTO.setUserId(adminUser.getId());
+        testCategoriesDTO.setLogin(adminUser.getLogin());
         TestCategories testCategories = testCategoriesMapper.toEntity(testCategoriesDTO);
         testCategories = testCategoriesRepository.save(testCategories);
         return testCategoriesMapper.toDto(testCategories);
@@ -42,6 +59,13 @@ public class TestCategoriesServiceImpl implements TestCategoriesService {
     @Override
     public TestCategoriesDTO update(TestCategoriesDTO testCategoriesDTO) {
         log.debug("Request to update TestCategories : {}", testCategoriesDTO);
+        AdminUserDTO adminUser = SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new RuntimeException("User could not be found"));
+        testCategoriesDTO.setUserId(adminUser.getId());
+        testCategoriesDTO.setLogin(adminUser.getLogin());
         TestCategories testCategories = testCategoriesMapper.toEntity(testCategoriesDTO);
         testCategories = testCategoriesRepository.save(testCategories);
         return testCategoriesMapper.toDto(testCategories);
@@ -50,6 +74,13 @@ public class TestCategoriesServiceImpl implements TestCategoriesService {
     @Override
     public Optional<TestCategoriesDTO> partialUpdate(TestCategoriesDTO testCategoriesDTO) {
         log.debug("Request to partially update TestCategories : {}", testCategoriesDTO);
+        AdminUserDTO adminUser = SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new RuntimeException("User could not be found"));
+        testCategoriesDTO.setUserId(adminUser.getId());
+        testCategoriesDTO.setLogin(adminUser.getLogin());
 
         return testCategoriesRepository
             .findById(testCategoriesDTO.getId())

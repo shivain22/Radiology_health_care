@@ -31,7 +31,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     private StringFilter status;
 
-    private ZonedDateTimeFilter startTiming;
+    private ZonedDateTimeFilter startTime;
 
     private ZonedDateTimeFilter endTime;
 
@@ -49,7 +49,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         this.clinicalNote = other.clinicalNote == null ? null : other.clinicalNote.copy();
         this.spclInstruction = other.spclInstruction == null ? null : other.spclInstruction.copy();
         this.status = other.status == null ? null : other.status.copy();
-        this.startTiming = other.startTiming == null ? null : other.startTiming.copy();
+        this.startTime = other.startTime == null ? null : other.startTime.copy();
         this.endTime = other.endTime == null ? null : other.endTime.copy();
         this.patientInfoId = other.patientInfoId == null ? null : other.patientInfoId.copy();
         this.testCategoriesId = other.testCategoriesId == null ? null : other.testCategoriesId.copy();
@@ -136,19 +136,19 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         this.status = status;
     }
 
-    public ZonedDateTimeFilter getStartTiming() {
-        return startTiming;
+    public ZonedDateTimeFilter getStartTime() {
+        return startTime;
     }
 
-    public ZonedDateTimeFilter startTiming() {
-        if (startTiming == null) {
-            startTiming = new ZonedDateTimeFilter();
+    public ZonedDateTimeFilter startTime() {
+        if (startTime == null) {
+            startTime = new ZonedDateTimeFilter();
         }
-        return startTiming;
+        return startTime;
     }
 
-    public void setStartTiming(ZonedDateTimeFilter startTiming) {
-        this.startTiming = startTiming;
+    public void setStartTime(ZonedDateTimeFilter startTime) {
+        this.startTime = startTime;
     }
 
     public ZonedDateTimeFilter getEndTime() {
@@ -219,7 +219,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             Objects.equals(clinicalNote, that.clinicalNote) &&
             Objects.equals(spclInstruction, that.spclInstruction) &&
             Objects.equals(status, that.status) &&
-            Objects.equals(startTiming, that.startTiming) &&
+            Objects.equals(startTime, that.startTime) &&
             Objects.equals(endTime, that.endTime) &&
             Objects.equals(patientInfoId, that.patientInfoId) &&
             Objects.equals(testCategoriesId, that.testCategoriesId) &&
@@ -235,7 +235,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             clinicalNote,
             spclInstruction,
             status,
-            startTiming,
+            startTime,
             endTime,
             patientInfoId,
             testCategoriesId,
@@ -252,7 +252,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             (clinicalNote != null ? "clinicalNote=" + clinicalNote + ", " : "") +
             (spclInstruction != null ? "spclInstruction=" + spclInstruction + ", " : "") +
             (status != null ? "status=" + status + ", " : "") +
-            (startTiming != null ? "startTiming=" + startTiming + ", " : "") +
+            (startTime != null ? "startTime=" + startTime + ", " : "") +
             (endTime != null ? "endTime=" + endTime + ", " : "") +
             (patientInfoId != null ? "patientInfoId=" + patientInfoId + ", " : "") +
             (testCategoriesId != null ? "testCategoriesId=" + testCategoriesId + ", " : "") +

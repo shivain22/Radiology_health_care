@@ -22,11 +22,11 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "startTiming",
+      "fieldName": "endTime",
       "fieldType": "ZonedDateTime"
     },
     {
-      "fieldName": "endTime",
+      "fieldName": "startTime",
       "fieldType": "ZonedDateTime"
     }
   ],

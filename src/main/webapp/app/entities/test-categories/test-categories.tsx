@@ -140,9 +140,7 @@ export const TestCategories = () => {
                   <th>
                     Parent Test Category <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th>
-                    User <FontAwesomeIcon icon="sort" />
-                  </th>
+
                   <th />
                 </tr>
               </thead>
@@ -170,7 +168,7 @@ export const TestCategories = () => {
                         ''
                       )}
                     </td>
-                    <td>{testCategories.user ? testCategories.user.id : ''}</td>
+
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button

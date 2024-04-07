@@ -12,9 +12,9 @@ import org.hibernate.envers.Audited;
  */
 @Entity
 @Table(name = "patient_test_timings")
-@Audited
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class PatientTestTimings implements Serializable {
+@Audited
+public class PatientTestTimings extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,11 +35,11 @@ public class PatientTestTimings implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "start_timing")
-    private ZonedDateTime startTiming;
-
     @Column(name = "end_time")
     private ZonedDateTime endTime;
+
+    @Column(name = "start_time")
+    private ZonedDateTime startTime;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -52,6 +52,16 @@ public class PatientTestTimings implements Serializable {
         allowSetters = true
     )
     private TestCategories testCategories;
+
+    private String login;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -120,19 +130,6 @@ public class PatientTestTimings implements Serializable {
         this.status = status;
     }
 
-    public ZonedDateTime getStartTiming() {
-        return this.startTiming;
-    }
-
-    public PatientTestTimings startTiming(ZonedDateTime startTiming) {
-        this.setStartTiming(startTiming);
-        return this;
-    }
-
-    public void setStartTiming(ZonedDateTime startTiming) {
-        this.startTiming = startTiming;
-    }
-
     public ZonedDateTime getEndTime() {
         return this.endTime;
     }
@@ -144,6 +141,19 @@ public class PatientTestTimings implements Serializable {
 
     public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public ZonedDateTime getStartTime() {
+        return this.startTime;
+    }
+
+    public PatientTestTimings startTime(ZonedDateTime startTime) {
+        this.setStartTime(startTime);
+        return this;
+    }
+
+    public void setStartTime(ZonedDateTime startTime) {
+        this.startTime = startTime;
     }
 
     public PatientInfo getPatientInfo() {
@@ -200,8 +210,8 @@ public class PatientTestTimings implements Serializable {
             ", clinicalNote='" + getClinicalNote() + "'" +
             ", spclInstruction='" + getSpclInstruction() + "'" +
             ", status='" + getStatus() + "'" +
-            ", startTiming='" + getStartTiming() + "'" +
             ", endTime='" + getEndTime() + "'" +
+            ", startTime='" + getStartTime() + "'" +
             "}";
     }
 }
