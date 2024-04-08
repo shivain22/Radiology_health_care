@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { EditButton } from "@/modules/shared/EditButton";
+import { Pathname } from "@/modules/shared/Pathname";
 import { TransformUnitData } from "@/schema/units";
 import { deleteUnitAction } from "@/server_actions/actions/units";
 import { ColumnDef } from "@tanstack/react-table";
@@ -44,12 +46,16 @@ cell:({row})=>{
     // const basePath=pathname.includes("units")
     // ?pathname
     // :pathname+"/units/";
+    const basepath=Pathname({prop:"units"});
+
     const unit=row.original;
     return(
         <div className="flex gap-2 justify-center">
             {/* <Button variant={"link"} asChild>
                 <Link href={basePath+"/"+unit.id}>Edit</Link>
             </Button> */}
+            <EditButton prop={{id:unit.id}} basePath={basepath}/>
+            
             <Button 
             onClick={()=>deleteUnitAction(unit.id)}
             variant={"destructive"}

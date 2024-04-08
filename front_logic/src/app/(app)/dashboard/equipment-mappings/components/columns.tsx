@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { EditButton } from "@/modules/shared/EditButton";
+import { Pathname } from "@/modules/shared/Pathname";
 import { EquipmentsMappingData } from "@/schema/equipmentmapping";
 import { ColumnDef } from "@tanstack/react-table";
 // import Link from "next/link";
@@ -44,14 +46,12 @@ export const columns: ColumnDef<EquipmentsMappingData>[] = [
           // const basePath = pathname.includes("patient-tests")
           //   ? pathname
           //   : pathname + "/patient-tests/";
-            // const patientTests = row.original;
+          const basepath=Pathname({prop:"equipment-mappings"});
+          const equipmentMappings=row.original;
     
             return (
                 <div>
-                    <Button variant={"link"} asChild>
-                        {/* <Link href={basePath + "/" + patientTests.id}>Edit</Link>  */}
-                        Edit
-                    </Button>
+                    <EditButton prop={{id:equipmentMappings.id}} basePath={basepath}/>
                     <Button 
                         // onClick={() => deletePatientTestsAction(patientTests.id)}
                         variant={"destructive"}

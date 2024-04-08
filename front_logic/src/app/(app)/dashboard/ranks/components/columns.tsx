@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { EditButton } from "@/modules/shared/EditButton";
+import { Pathname } from "@/modules/shared/Pathname";
 import { TransformRankData } from "@/schema/ranks";
 import { deleteRankAction } from "@/server_actions/actions/ranks";
 import { ColumnDef } from "@tanstack/react-table";
@@ -46,12 +48,12 @@ export const columns: ColumnDef<TransformRankData>[] = [
       // const basePath = pathname.includes("ranks")
       //   ? pathname
       //   : pathname + "/ranks/";
+      const basepath=Pathname({prop:"ranks"});
+
       const rank = row.original;
       return (
         <div className="flex gap-2 justify-center">
-          <Button variant={"link"} asChild>
-            {/* <Link href={basePath + "/" + rank.id}>Edit</Link> */}
-          </Button>
+          <EditButton prop={{id:rank.id}} basePath={basepath}/>
           <Button
             onClick={() => deleteRankAction(rank.id)}
             variant={"destructive"}
