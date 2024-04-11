@@ -8,7 +8,7 @@ const PatientTestsPage = () => {
     <main>
       <div className="relative">
         <div className="flex justify-between">
-          <h1 className="font-semibold text-2xl my-2">Employees</h1>
+          <h1 className="font-semibold text-2xl my-2">Patient Tests</h1>
         </div>
         <PatientTests />
       </div>
@@ -23,7 +23,7 @@ const PatientTests = async () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <h1>Patient Tests</h1>
+      
       <PatientTestsList patientTests={patientTests} />
     </Suspense>
   );

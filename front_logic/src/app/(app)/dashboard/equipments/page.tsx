@@ -21,8 +21,6 @@ const Equipment=async()=>{
 
     return(
       <div>
-
-        <h1>Equipments</h1>
         <EquipmentsList equipments={equipments} />
       </div>
 

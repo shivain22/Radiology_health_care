@@ -21,7 +21,14 @@ export const columns: ColumnDef<RoomData>[] = [
       <div className="flex justify-center">{info.row.index + 1}</div>
     ),
   },
-  { accessorKey: "roomNo", header: "Room No" },
+  { accessorKey: "roomNo", header: () => (
+    <div className="flex justify-center">
+      <h1>Room No.</h1>
+    </div>
+  ),
+cell:(info)=>(
+  <div className="flex justify-center">{info.row.original.roomNo}</div>
+) },
   {
     accessorKey: "id",
     header: () => (

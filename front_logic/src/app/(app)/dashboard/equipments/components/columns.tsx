@@ -27,16 +27,37 @@ export const columns: ColumnDef<EquipmentsData>[] = [
   },
   {
     accessorKey: "id",
-    header: "Id",
+    header: () => (
+      <div className="flex justify-center">
+        <h1>Id</h1>
+      </div>
+    ),
+    cell: (info) => {
+      return <div className="flex justify-center">{info.row.original.id}</div>;
+    },
   },
   {
     accessorKey : "name",
-    header: "Name"
+    header: () => (
+      <div className="flex justify-center">
+        <h1>Name</h1>
+      </div>
+    ),
+    cell: (info) => {
+      return <div className="flex justify-center">{info.row.original.name}</div>;
+    },
   },
   {
     //need to be change
     accessorKey: "roomId",
-    header: "Room ID",
+    header: () => (
+      <div className="flex justify-center">
+        <h1>Room Id</h1>
+      </div>
+    ),
+    cell: (info) => {
+      return <div className="flex justify-center">{info.row.original.roomId}</div>;
+    },
   }
   ,
   {
@@ -56,7 +77,7 @@ export const columns: ColumnDef<EquipmentsData>[] = [
         const equipment = row.original;
 
         return (
-            <div>
+            <div className="flex flex-row justify-center">
                 <EditButton prop={{id:equipment.id}} basePath={basepath}/>
                 <Button 
                     // onClick={() => deleteEquipmentsAction(equipment.id)}

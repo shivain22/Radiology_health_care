@@ -46,7 +46,6 @@ const Units = async () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <h1>Services and Units</h1>
       <UnitList units={transformedUnits} services={services} />
     </Suspense>
   );

@@ -19,7 +19,11 @@ export const columns: ColumnDef<TransformUnitData>[] = [
       return <div className="flex justify-center">{info.row.index + 1}</div>;
     },
   },
-  { accessorKey: "name", header: "Name" ,cell:(info)=>{
+  { accessorKey: "name", header: () => (
+    <div className="flex justify-center">
+      <h1>Name</h1>
+    </div>
+  ) ,cell:(info)=>{
     return <div className="flex justify-center">{info.row.original.name}</div>
   }},
   {accessorKey:"id",

@@ -24,7 +24,7 @@ const Rooms = async () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <h1>Rooms</h1>
+      
       <RoomList rooms={rooms} />
     </Suspense>
   );
