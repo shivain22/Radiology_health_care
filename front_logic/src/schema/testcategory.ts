@@ -9,6 +9,7 @@ const TestCategoryData = z.object({
    id: z.number(),
    testName : z.string(),
    equipmentId: z.number(),
+   
    parentTestCategoryId: z.number(),
 });
 

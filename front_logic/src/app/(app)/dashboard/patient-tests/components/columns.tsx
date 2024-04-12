@@ -32,10 +32,17 @@ export const columns: ColumnDef<PatientTestsData>[] = [
     accessorKey: "clinicalNote",
     header: "Clinical Note",
   },
-  //   {
-  //     accessorKey: "status",
-  //     header: "Status",
-  //   },
+    {
+      accessorKey: "status",
+      header: "Status",
+    },
+    {
+      accessorKey : "startTime",
+      header: "Start Time"
+    }, {
+        accessorKey: "endTime",
+        header: "End Time"
+    },
   {
     accessorKey: "spclInstruction",
     header: "Special Instruction",
