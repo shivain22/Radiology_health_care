@@ -54,7 +54,7 @@ export const PatientTestTimingsUpdate = () => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
     }
-    values.startTiming = convertDateTimeToServer(values.startTiming);
+    values.startTime = convertDateTimeToServer(values.startTime);
     values.endTime = convertDateTimeToServer(values.endTime);
 
     const entity = {
@@ -74,12 +74,12 @@ export const PatientTestTimingsUpdate = () => {
   const defaultValues = () =>
     isNew
       ? {
-          startTiming: displayDefaultDateTime(),
+          startTime: displayDefaultDateTime(),
           endTime: displayDefaultDateTime(),
         }
       : {
           ...patientTestTimingsEntity,
-          startTiming: convertDateTimeFromServer(patientTestTimingsEntity.startTiming),
+          startTime: convertDateTimeFromServer(patientTestTimingsEntity.startTime),
           endTime: convertDateTimeFromServer(patientTestTimingsEntity.endTime),
           patientInfo: patientTestTimingsEntity?.patientInfo?.id,
           testCategories: patientTestTimingsEntity?.testCategories?.id,
@@ -121,9 +121,9 @@ export const PatientTestTimingsUpdate = () => {
               <ValidatedField label="Status" id="patient-test-timings-status" name="status" data-cy="status" type="text" />
               <ValidatedField
                 label="Start Timing"
-                id="patient-test-timings-startTiming"
-                name="startTiming"
-                data-cy="startTiming"
+                id="patient-test-timings-startTime"
+                name="startTime"
+                data-cy="startTime"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />

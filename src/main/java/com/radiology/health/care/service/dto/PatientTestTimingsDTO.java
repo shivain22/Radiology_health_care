@@ -22,7 +22,7 @@ public class PatientTestTimingsDTO implements Serializable {
 
     private String status;
 
-    private ZonedDateTime startTiming;
+    private ZonedDateTime startTime;
 
     private ZonedDateTime endTime;
 
@@ -119,12 +119,12 @@ public class PatientTestTimingsDTO implements Serializable {
         this.status = status;
     }
 
-    public ZonedDateTime getStartTiming() {
-        return startTiming;
+    public ZonedDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setStartTiming(ZonedDateTime startTiming) {
-        this.startTiming = startTiming;
+    public void setStartTime(ZonedDateTime startTime) {
+        this.startTime = startTime;
     }
 
     public ZonedDateTime getEndTime() {
@@ -181,7 +181,7 @@ public class PatientTestTimingsDTO implements Serializable {
             ", clinicalNote='" + getClinicalNote() + "'" +
             ", spclInstruction='" + getSpclInstruction() + "'" +
             ", status='" + getStatus() + "'" +
-            ", startTiming='" + getStartTiming() + "'" +
+            ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", patientInfoId=" + getPatientInfoId() +
             ", testCategoriesId=" + getTestCategoriesId() +
