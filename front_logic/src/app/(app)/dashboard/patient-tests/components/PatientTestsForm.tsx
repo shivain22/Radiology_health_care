@@ -30,15 +30,27 @@ import {
   PatientTestsform,
 } from "@/schema/patient-tests";
 import { Textarea } from "@/components/ui/textarea";
+import { TestCategoryData } from "@/schema/testcategory";
+import { PatientData } from "@/schema/patients";
+import {
+  getAllPatientsData,
+  getChildTestCategories,
+} from "@/server_actions/(get-requests)/client/clientside";
+import { RefreshCcwDot } from "lucide-react";
 
-const PatientTestsForm = () => {
+const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
   const { errors, hasErrors, handleChange, setErrors } =
     useValidatedForm<PatientTestsData>(formData);
+
+  const [getData, setGetData] = useState<boolean>(false);
+  const [gotChildrenCategory, setGotChildrenCategory] = useState<
+    TestCategoryData[]
+  >([]);
+  const [gotPatients, setGotPatients] = useState<PatientData[]>([]);
 
   const form = useForm<PatientTestsform>({
     resolver: zodResolver(formData),
     defaultValues: {
-      
       testTimings: "",
       priority: "",
       clinicalNote: "",
@@ -68,8 +80,23 @@ const PatientTestsForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (getData === true) {
+      const fetchPatients = async () => {
+        const patients = await getAllPatientsData(authtoken);
+        setGotPatients(patients);
+      };
+      const fetchCategories = async () => {
+        const categories = await getChildTestCategories(authtoken);
+        setGotChildrenCategory(categories);
+      };
+      fetchPatients();
+      fetchCategories();
+    }
+  });
+
   return (
-    <div className="h-[700px] overflow-y-scroll p-5">
+    <div className="h-[700px] overflow-y-scroll p-5 ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <FormField
@@ -79,7 +106,11 @@ const PatientTestsForm = () => {
               <FormItem>
                 <FormLabel>Test Timings</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Test Timings" type="datetime-local" {...field} />
+                  <Input
+                    placeholder="Enter Test Timings"
+                    type="datetime-local"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -111,7 +142,7 @@ const PatientTestsForm = () => {
             )}
           />
 
-<FormField
+          <FormField
             control={form.control}
             name="priority"
             render={({ field }) => (
@@ -142,9 +173,13 @@ const PatientTestsForm = () => {
             name="startTime"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Test Timings</FormLabel>
+                <FormLabel>Select the Start Date</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Test Timings" type="datetime-local" {...field} />
+                  <Input
+                    placeholder="Enter Test Timings"
+                    type="datetime-local"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -157,7 +192,11 @@ const PatientTestsForm = () => {
               <FormItem>
                 <FormLabel>Test Timings</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Test Timings" type="datetime-local" {...field} />
+                  <Input
+                    placeholder="Enter Test Timings"
+                    type="datetime-local"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -189,6 +228,14 @@ const PatientTestsForm = () => {
               </FormItem>
             )}
           />
+          <div className="flex items-end ">
+              <Button
+                onClick={() => setGetData(true)}
+                className="rounded-full p-4"
+              >
+                <RefreshCcwDot className="w-4 h-4" />
+              </Button>
+            </div>
           <FormField
             control={form.control}
             name="patientInfoId"
@@ -196,7 +243,11 @@ const PatientTestsForm = () => {
               <FormItem>
                 <FormLabel>Patient Info</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Patient Info" {...field} />
+                <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Test Category"></SelectValue>
+                    </SelectTrigger>
+                  </Select>
                 </FormControl>
               </FormItem>
             )}
@@ -206,9 +257,13 @@ const PatientTestsForm = () => {
             name="testCategoriesId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Test Category</FormLabel>
+                <FormLabel>Please select the test category</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Test Category" {...field} />
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Test Category"></SelectValue>
+                    </SelectTrigger>
+                  </Select>
                 </FormControl>
               </FormItem>
             )}
