@@ -69,12 +69,12 @@ const PatientTestsForm = () => {
   };
 
   return (
-    <div className="mx-auto">
+    <div className="h-[700px] overflow-y-scroll p-5">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <FormField
             control={form.control}
-            name="testTimings"
+            name="startTime"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Test Timings</FormLabel>
@@ -105,6 +105,59 @@ const PatientTestsForm = () => {
                       <SelectItem value="Low">Low</SelectItem>
                     </SelectContent>
                   </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+<FormField
+            control={form.control}
+            name="priority"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Status</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="appointed">Appointed</SelectItem>
+                      <SelectItem value="rejected">Rejected</SelectItem>
+                      <SelectItem value="done">Done</SelectItem>
+                      <SelectItem value="progressing">In Progress</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="startTime"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Test Timings</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Test Timings" type="datetime-local" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="startTime"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Test Timings</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Test Timings" type="datetime-local" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
