@@ -25,8 +25,8 @@ const PatientTestsData = z.object({
   spclInstruction: z.string(),
   patientInfoId: z.number(),
   testCategoriesId: z.number(),
-  startTime: z.string(),
-  endTime: z.string(),
+  startTime: z.date(),
+  endTime: z.date(),
 });
 
 export const formData = z.object({
