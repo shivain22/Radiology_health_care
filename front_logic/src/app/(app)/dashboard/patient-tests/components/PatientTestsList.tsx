@@ -30,7 +30,7 @@ export default function PatientTestsList({
   const closeModal = () => setOpen(false);
 
   return (
-    <div>
+    <div className="">
       <Modal
         open={open}
         setOpen={setOpen}
