@@ -43,13 +43,14 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
   const [gotParentsCategory, setGotParentsCategory] = useState<
     TestCategoryData[]
   >([]);
-
+  const durations=[15,30,45,60,75,90];
   const form = useForm<TestCategoryform>({
     resolver: zodResolver(formData),
     defaultValues: {
       testName: "",
       equipmentId: "null",
       parentTestCategoryId: "",
+      testDuration: "",
     },
   });
   const editing = !form.formState.isValid;
@@ -60,6 +61,7 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
         testName: values.testName,
         equipmentId: Number(values.equipmentId),
         parentTestCategoryId: Number(values.parentTestCategoryId),
+        testDuration:Number(values.testDuration),
       };
       await createTestCategoryAction(payload);
     } catch (e) {
@@ -164,6 +166,34 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}  
+            name="testDuration"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Please provide the duration of the test in hours
+                </FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select the duration"></SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {durations.map((duration) => (
+                        <SelectItem
+                          key={duration}
+                          value={duration.toString()}
+                        >
+                          {duration}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+              </FormItem>
+            )}
+            />
           <SaveButton errors={hasErrors} editing={editing} />
         </form>
       </Form>

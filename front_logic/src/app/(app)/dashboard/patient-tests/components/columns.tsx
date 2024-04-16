@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/modules/shared/data-table-header-columnn";
+import DropDown from "@/modules/shared/DropDown";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { PatientTestsData } from "@/schema/patient-tests";
@@ -74,13 +75,7 @@ export const columns: ColumnDef<PatientTestsData>[] = [
                 {/* <Button variant={"link"} asChild>
                     <Link href={basePath + "/" + patientTests.id}>Edit</Link> 
                 </Button> */}
-                <EditButton prop={{id:patientTests.id}} basePath={basepath}/>
-                <Button 
-                    onClick={() => deletePatientTestsAction(patientTests.id)}
-                    variant={"destructive"}
-                >
-                    Delete
-                </Button>
+                <DropDown name={{id:patientTests.id}} deletefunc={deletePatientTestsAction} basepath={basepath}/>
             </div>
         )
     },

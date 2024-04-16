@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import DropDown from "@/modules/shared/DropDown";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { TransformRankData } from "@/schema/ranks";
@@ -52,14 +53,15 @@ export const columns: ColumnDef<TransformRankData>[] = [
 
       const rank = row.original;
       return (
-        <div className="flex gap-2 justify-center">
-          <EditButton prop={{id:rank.id}} basePath={basepath}/>
+        <div className="flex flex-col items-center">
+          <DropDown name={{id:rank.id}} deletefunc={deleteRankAction} basepath={basepath}/>
+          {/* <EditButton prop={{id:rank.id}} basePath={basepath}/>
           <Button
             onClick={() => deleteRankAction(rank.id)}
             variant={"destructive"}
           >
             Delete
-          </Button>
+          </Button> */}
         </div>
       );
     },
