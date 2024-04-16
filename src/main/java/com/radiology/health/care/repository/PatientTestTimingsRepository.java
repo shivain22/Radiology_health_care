@@ -24,7 +24,7 @@ public interface PatientTestTimingsRepository
         TestCategoriesDTO categoriesDTO = testCategories.orElseThrow(() -> new IllegalArgumentException("TestCategoriesDTO is empty"));
         Integer testDuration = categoriesDTO.getTestDuration(); // Assuming testDuration is in hours
 
-        ZonedDateTime endTime = startTime.plusHours(testDuration);
+        ZonedDateTime endTime = startTime.plusMinutes(testDuration);
         patientTestTimingsDTO.setEndTime(endTime);
 
         return patientTestTimingsDTO;

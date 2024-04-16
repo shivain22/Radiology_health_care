@@ -116,7 +116,7 @@ export const TestCategoriesUpdate = () => {
                 name="testDuration"
                 data-cy="testDuration"
                 type="text"
-                placeholder={'in hours'}
+                placeholder={'in minutes'}
               />
               <ValidatedField id="test-categories-equipment" name="equipment" data-cy="equipment" label="Equipment" type="select" required>
                 <option value="" key="0" />
