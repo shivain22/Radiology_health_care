@@ -1,12 +1,16 @@
 package com.radiology.health.care.service.impl;
 
 import com.radiology.health.care.domain.PatientTestTimings;
+import com.radiology.health.care.domain.TestCategories;
 import com.radiology.health.care.repository.PatientTestTimingsRepository;
+import com.radiology.health.care.repository.TestCategoriesRepository;
 import com.radiology.health.care.repository.UserRepository;
 import com.radiology.health.care.security.SecurityUtils;
 import com.radiology.health.care.service.PatientTestTimingsService;
+import com.radiology.health.care.service.TestCategoriesService;
 import com.radiology.health.care.service.dto.AdminUserDTO;
 import com.radiology.health.care.service.dto.PatientTestTimingsDTO;
+import com.radiology.health.care.service.dto.TestCategoriesDTO;
 import com.radiology.health.care.service.mapper.PatientTestTimingsMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -31,14 +35,20 @@ public class PatientTestTimingsServiceImpl implements PatientTestTimingsService 
 
     private final UserRepository userRepository;
 
+    private final TestCategoriesService testCategoriesService;
+
     public PatientTestTimingsServiceImpl(
         PatientTestTimingsRepository patientTestTimingsRepository,
         PatientTestTimingsMapper patientTestTimingsMapper,
-        UserRepository userRepository
+        UserRepository userRepository,
+        TestCategoriesRepository testCategoriesRepository,
+        TestCategoriesService testCategoriesService
     ) {
         this.patientTestTimingsRepository = patientTestTimingsRepository;
         this.patientTestTimingsMapper = patientTestTimingsMapper;
         this.userRepository = userRepository;
+
+        this.testCategoriesService = testCategoriesService;
     }
 
     @Override
@@ -49,6 +59,9 @@ public class PatientTestTimingsServiceImpl implements PatientTestTimingsService 
             .flatMap(userRepository::findOneWithAuthoritiesByLogin)
             .map(AdminUserDTO::new)
             .orElseThrow(() -> new RuntimeException("User could not be found"));
+        Optional<TestCategoriesDTO> testCategories = testCategoriesService.findOne(patientTestTimingsDTO.getTestCategoriesId());
+        patientTestTimingsDTO = patientTestTimingsRepository.setEndTiming(patientTestTimingsDTO, testCategories);
+        log.debug("After PatientTestTimings  Endtime set : {}", patientTestTimingsDTO);
         patientTestTimingsDTO.setLogin(adminUser.getLogin());
         PatientTestTimings patientTestTimings = patientTestTimingsMapper.toEntity(patientTestTimingsDTO);
         patientTestTimings = patientTestTimingsRepository.save(patientTestTimings);

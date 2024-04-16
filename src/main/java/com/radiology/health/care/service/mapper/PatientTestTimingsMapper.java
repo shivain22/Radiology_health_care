@@ -6,6 +6,9 @@ import com.radiology.health.care.domain.TestCategories;
 import com.radiology.health.care.service.dto.PatientInfoDTO;
 import com.radiology.health.care.service.dto.PatientTestTimingsDTO;
 import com.radiology.health.care.service.dto.TestCategoriesDTO;
+import com.radiology.health.care.web.rest.TestCategoriesResource;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import org.mapstruct.*;
 
 /**

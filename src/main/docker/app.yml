@@ -2,7 +2,7 @@
 name: radiologyhealthcare
 services:
   app:
-    image: shivain22/radiology_health_care:backend9
+    image: shivain22/radiology_health_care:backend10
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,api-docs
