@@ -20,7 +20,6 @@ export const priorities = [
   
 
 export const statuses = [
-
     {
         label: "Pending",
         value: "pending",

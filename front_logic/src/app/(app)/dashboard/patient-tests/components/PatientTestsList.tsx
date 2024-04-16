@@ -4,7 +4,7 @@ import { useState } from "react";
 import Modal from "../../../../../modules/shared/Modal";
 
 import { Button } from "@/components/ui/button";
-import { PatientTestsData } from "@/schema/patient-tests";
+import { PatientTestsData, TransformPatientTestsData } from "@/schema/patient-tests";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import PatientTestsForm from "./PatientTestsForm";
@@ -15,7 +15,7 @@ export default function PatientTestsList({
   patientTests,
   token
 }: {
-  patientTests: PatientTestsData[];
+  patientTests: TransformPatientTestsData[];
   token? : string
 }) {
   const [open, setOpen] = useState(false);
