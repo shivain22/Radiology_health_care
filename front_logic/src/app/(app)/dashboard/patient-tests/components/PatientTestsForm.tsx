@@ -161,9 +161,9 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                           <SelectValue placeholder="Select Priority" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="High">High</SelectItem>
-                          <SelectItem value="Medium">Medium</SelectItem>
-                          <SelectItem value="Low">Low</SelectItem>
+                          <SelectItem value="high">High</SelectItem>
+                          <SelectItem value="medium">Medium</SelectItem>
+                          <SelectItem value="low">Low</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -218,11 +218,12 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                           <SelectValue placeholder="Select Status" />
                         </SelectTrigger>
                         <SelectContent>
+                          <SelectItem value="pending">Pending</SelectItem>
                           <SelectItem value="appointed">Appointed</SelectItem>
-                          <SelectItem value="rejected">Rejected</SelectItem>
+                          <SelectItem value="cancelled">Cancelled</SelectItem>
                           <SelectItem value="done">Done</SelectItem>
                           <SelectItem value="progressing">
-                            In Progress
+                           Test In Progress
                           </SelectItem>
                         </SelectContent>
                       </Select>

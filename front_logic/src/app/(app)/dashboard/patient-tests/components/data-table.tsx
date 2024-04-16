@@ -21,6 +21,7 @@ import { PlusIcon } from "lucide-react";
 import { DataTablePagination } from "@/modules/shared/data-table-pagination";
 import { PatientTestsData } from "@/schema/patient-tests";
 import { TOpenModal } from "./PatientTestsList";
+import { DataTableToolbar } from "./data-table-toolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -41,7 +42,8 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className="space-y-4">
+      <DataTableToolbar table={table}/>
       <div className="rounded-md border">
         <Table>
           <TableHeader>

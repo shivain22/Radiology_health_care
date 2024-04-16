@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { DataTableColumnHeader } from "@/modules/shared/data-table-header-columnn";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { PatientTestsData } from "@/schema/patient-tests";
@@ -12,14 +13,12 @@ import { ColumnDef } from "@tanstack/react-table";
 export const columns: ColumnDef<PatientTestsData>[] = [
   {
     accessorKey: "Index",
-    header: () => (
-      <div className="flex justify-center">
-        <h1>Index</h1>
-      </div>
+    header: ({column}) => (
+      <DataTableColumnHeader column={column} title="Index"/>
     ),
-    cell: (info) => {
-      return <div className="flex justfy-center">{info.row.index + 1}</div>;
-    },
+    cell: ({row}) => <div className="w-[80px]">{row.index + 1}</div>,
+    enableSorting: true,
+    enableHiding: false
   },
   {
     accessorKey: "priority",
