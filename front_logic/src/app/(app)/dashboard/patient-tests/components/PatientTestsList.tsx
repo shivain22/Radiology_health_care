@@ -4,7 +4,7 @@ import { useState } from "react";
 import Modal from "../../../../../modules/shared/Modal";
 
 import { Button } from "@/components/ui/button";
-import { PatientTestsData, TransformPatientTestsData } from "@/schema/patient-tests";
+import { PatientTestsData, TransformPatientTestsData,  } from "@/schema/patient-tests";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import PatientTestsForm from "./PatientTestsForm";
@@ -13,10 +13,9 @@ export type TOpenModal = (patientTests?: PatientTestsData) => void;
 
 export default function PatientTestsList({
   patientTests,
-  token
 }: {
   patientTests: TransformPatientTestsData[];
-  token? : string | undefined
+
 }) {
   const [open, setOpen] = useState(false);
   const [activePatientTests, setActivePatientTests] =
@@ -40,7 +39,7 @@ export default function PatientTestsList({
         className="sm:max-w-[425px] min-w-[1200px] min-h-[500px] "
       
       >
-        <PatientTestsForm authtoken={token}/>
+        <PatientTestsForm />
       </Modal>
       <div className="absolute right-0 top-0">
         <Button onClick={() => openModal()} variant={"outline"}>

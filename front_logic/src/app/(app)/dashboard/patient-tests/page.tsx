@@ -2,7 +2,6 @@ import Loading from "@/app/loading";
 import { getPatientTests } from "@/server_actions/(get-requests)/getPatientTests";
 import React, { Suspense } from "react";
 import PatientTestsList from "./components/PatientTestsList";
-import { userAuthToken } from "@/server_actions/utils/getcookies";
 import { getPatients } from "@/server_actions/(get-requests)/getPatients";
 import { getTestCategories } from "@/server_actions/(get-requests)/getTestCategories";
 import { TestCategoryData } from "@/schema/testcategory";
@@ -67,7 +66,7 @@ const PatientTests = async () => {
     );
   return (
     <Suspense fallback={<Loading />}>
-      <PatientTestsList patientTests={transformedPatientTests} token={userAuthToken} />
+      <PatientTestsList patientTests={transformedPatientTests}  />
     </Suspense>
   );
 };

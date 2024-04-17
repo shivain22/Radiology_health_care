@@ -34,12 +34,13 @@ import { TestCategoryData } from "@/schema/testcategory";
 import { PatientData } from "@/schema/patients";
 import {
   getAllPatientsData,
+  getAuthToken,
   getChildTestCategories,
 } from "@/server_actions/(get-requests)/client/clientside";
 import { RefreshCcwDot } from "lucide-react";
 import { createPatientTestsAction } from "@/server_actions/actions/patient-tests";
 
-const PatientTestsForm = ({ authtoken }: { authtoken?:  Promise<string | undefined>;}) => {
+const PatientTestsForm = () => {
   const { errors, hasErrors, handleChange, setErrors } =
     useValidatedForm<PatientTestsData>(formData);
 
@@ -49,6 +50,7 @@ const PatientTestsForm = ({ authtoken }: { authtoken?:  Promise<string | undefin
   >([]);
   const [gotPatients, setGotPatients] = useState<PatientData[]>([]);
   const [selectedDate, setSelectedDate] = useState("");
+  const [token, setToken] = useState("");
 
   const form = useForm<PatientTestsform>({
     resolver: zodResolver(formData),
@@ -82,8 +84,6 @@ const PatientTestsForm = ({ authtoken }: { authtoken?:  Promise<string | undefin
       payload.startTime = `${selectedDate}T${payload.startTime}:00.000Z`;
       payload.endTime = `${selectedDate}T${payload.endTime}:00.000Z`;
 
-      console.log(payload);
-
       await createPatientTestsAction(payload);
     } catch (e) {
       console.log(e);
@@ -92,33 +92,54 @@ const PatientTestsForm = ({ authtoken }: { authtoken?:  Promise<string | undefin
 
   useEffect(() => {
     const storedDate = localStorage.getItem("selectedDate");
+    const user = localStorage.getItem("username");
+    const pass = localStorage.getItem("password");
+
     if (storedDate) {
       setSelectedDate(storedDate);
     }
     if (getData === true) {
-      const fetchPatients = async () => {
-        const patients = await getAllPatientsData(authtoken);
-        setGotPatients(patients);
+      const fetchToken = async () => {
+        const token = await getAuthToken(user, pass);
+        const tokenGet = token.id_token;
+        setToken(tokenGet);
       };
-      const fetchCategories = async () => {
-        const categories = await getChildTestCategories(authtoken);
-        setGotChildrenCategory(categories);
-      };
-      fetchPatients();
-      fetchCategories();
+      if (!!token) {
+        const fetchPatients = async () => {
+          const patients = await getAllPatientsData(token);
+          setGotPatients(patients);
+        };
+        const fetchCategories = async () => {
+          const categories = await getChildTestCategories(token);
+          setGotChildrenCategory(categories);
+        };
+        fetchPatients();
+        fetchCategories();
+      }
+
+      fetchToken();
+      setGetData(false);
     }
-  });
+  }, [token, getData]);
+
 
   return (
     <div className=" mr-10 ml-5">
-      <div className=" mt-5  rounded-md font-bold text-xl">{selectedDate}</div>
+      <div className=" mt-5 rounded-md font-bold text-xl">
+        Date{selectedDate}
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <div className="flex justify-end absolute right-10 top-10">
-            <Button onClick={() => setGetData(true)} className="">
+            <div
+              onClick={() => setGetData(true)}
+              className={`bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-6 rounded-lg hover:cursor-pointer ${
+                token && "bg-red-500"
+              }`}
+            >
+              {" "}
               Get Data
-              <RefreshCcwDot className="w-4 h-4 ml-3" />
-            </Button>
+            </div>
           </div>
           <div className="flex gap-5">
             <div className="flex-1">
@@ -255,7 +276,7 @@ const PatientTestsForm = ({ authtoken }: { authtoken?:  Promise<string | undefin
                         placeholder="Enter Start Time"
                         type="time"
                         {...field}
-                         // Use the stored date
+                        // Use the stored date
                       />
                     </FormControl>
                     <FormMessage />

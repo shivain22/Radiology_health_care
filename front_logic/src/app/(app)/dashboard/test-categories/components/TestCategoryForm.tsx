@@ -23,6 +23,7 @@ import {
   TestCategoryform,
 } from "@/schema/testcategory";
 import {
+  getAuthToken,
   getEquipmentsByClient,
   getParentTestCategories,
 } from "@/server_actions/(get-requests)/client/clientside";
@@ -34,7 +35,7 @@ import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 
-const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
+const TestCategoryForm = () => {
   const { errors, hasErrors, setErrors, handleChange } =
     useValidatedForm<TestCategoryData>(formData);
 
@@ -43,7 +44,9 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
   const [gotParentsCategory, setGotParentsCategory] = useState<
     TestCategoryData[]
   >([]);
-  const durations=[15,30,45,60,75,90];
+  const [token, setToken] = useState("");
+
+  const durations = [15, 30, 45, 60, 75, 90];
   const form = useForm<TestCategoryform>({
     resolver: zodResolver(formData),
     defaultValues: {
@@ -61,7 +64,7 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
         testName: values.testName,
         equipmentId: Number(values.equipmentId),
         parentTestCategoryId: Number(values.parentTestCategoryId),
-        testDuration:Number(values.testDuration),
+        testDuration: Number(values.testDuration),
       };
       await createTestCategoryAction(payload);
     } catch (e) {
@@ -71,19 +74,31 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
   };
 
   useEffect(() => {
+    const user = localStorage.getItem("username");
+    const pass = localStorage.getItem("password");
+
     if (getData == true) {
-      const fetchEquipments = async () => {
-        const equipments = await getEquipmentsByClient(authtoken);
-        setGotEquipments(equipments);
+      const fetchToken = async () => {
+        const token = await getAuthToken(user, pass);
+        const tokenGet = token.id_token;
+        setToken(tokenGet);
       };
-      const fetchParentTestCategories = async () => {
-        const parentTestCategories = await getParentTestCategories(authtoken);
-        setGotParentsCategory(parentTestCategories);
-      };
-      fetchEquipments();
-      fetchParentTestCategories();
+      if (!!token) {
+        const fetchEquipments = async () => {
+          const equipments = await getEquipmentsByClient(token);
+          setGotEquipments(equipments);
+        };
+        const fetchParentTestCategories = async () => {
+          const parentTestCategories = await getParentTestCategories(token);
+          setGotParentsCategory(parentTestCategories);
+        };
+        fetchEquipments();
+        fetchParentTestCategories();
+      }
+      fetchToken();
+      setGetData(false);
     }
-  }, [getData, authtoken]);
+  }, [getData, token]);
 
   return (
     <div className="mx-auto px-5">
@@ -129,12 +144,12 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
               )}
             />
             <div className="flex items-end ">
-              <Button
+              <div
                 onClick={() => setGetData(true)}
-                className="rounded-full p-4"
+                className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-6 rounded-lg hover:cursor-pointer"
               >
                 <RefreshCcwDot className="w-4 h-4" />
-              </Button>
+              </div>
             </div>
           </div>
           <FormField
@@ -167,7 +182,7 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
             )}
           />
           <FormField
-            control={form.control}  
+            control={form.control}
             name="testDuration"
             render={({ field }) => (
               <FormItem>
@@ -181,10 +196,7 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
                     </SelectTrigger>
                     <SelectContent>
                       {durations.map((duration) => (
-                        <SelectItem
-                          key={duration}
-                          value={duration.toString()}
-                        >
+                        <SelectItem key={duration} value={duration.toString()}>
                           {duration}
                         </SelectItem>
                       ))}
@@ -193,7 +205,7 @@ const TestCategoryForm = ({ authtoken }: { authtoken?: string }) => {
                 </FormControl>
               </FormItem>
             )}
-            />
+          />
           <SaveButton errors={hasErrors} editing={editing} />
         </form>
       </Form>

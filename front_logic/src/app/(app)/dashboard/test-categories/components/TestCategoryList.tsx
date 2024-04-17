@@ -12,9 +12,8 @@ export type TOpenModal = (testCategories?: TestCategoryData) => void;
 
 export default function TestCategoryList({
   testCategories,
-  token
+
 }: {
-  token?: string;
   testCategories: TestCategoryData[];
 }) {
   const [open, setOpen] = useState(false);
@@ -36,7 +35,7 @@ export default function TestCategoryList({
           activeTestCategory ? "Edit Tests" : "Create Tests"
         }
       >
-        <TestCategoryForm authtoken={token} />
+        <TestCategoryForm  />
       </Modal>
       <div className="absolute right-0 top-0">
         <Button onClick={() => openModal()} variant={"outline"}>
