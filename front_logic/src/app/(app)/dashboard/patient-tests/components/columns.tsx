@@ -91,12 +91,13 @@ export const columns: ColumnDef<PatientTestsData>[] = [
     cell: ({ row }) => {
       const value:string = row.getValue("startTime");
       const valueDate = new Date(value);
+      const formattedDate = valueDate.toLocaleString('en-IN', {day: '2-digit',month:"short", hour: '2-digit', minute: '2-digit', hour12: true })
       if (!value) {
         return null;
       }
       return (
         <div>
-          <span>{valueDate.getHours()}:{valueDate.getMinutes()}</span>
+          <span>{formattedDate}</span>
         </div>
       )
     }
@@ -107,12 +108,13 @@ export const columns: ColumnDef<PatientTestsData>[] = [
     cell: ({ row }) => {
       const value:string = row.getValue("endTime");
       const valueDate = new Date(value);
-      if (!value) {
+      const formattedDate = valueDate.toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true })
+    if (!value) {
         return null;
       }
       return (
-        <div>
-          <span>{valueDate.getHours()}:{valueDate.getMinutes()}</span>
+        <div> 
+          <span>{formattedDate} </span>
         </div>
       )
     }

@@ -39,7 +39,7 @@ import {
 import { RefreshCcwDot } from "lucide-react";
 import { createPatientTestsAction } from "@/server_actions/actions/patient-tests";
 
-const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
+const PatientTestsForm = ({ authtoken }: { authtoken?:  Promise<string | undefined>;}) => {
   const { errors, hasErrors, handleChange, setErrors } =
     useValidatedForm<PatientTestsData>(formData);
 
@@ -48,6 +48,7 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
     TestCategoryData[]
   >([]);
   const [gotPatients, setGotPatients] = useState<PatientData[]>([]);
+  const [selectedDate, setSelectedDate] = useState("");
 
   const form = useForm<PatientTestsform>({
     resolver: zodResolver(formData),
@@ -77,20 +78,23 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
         patientInfoId: Number(data.patientInfoId),
         testCategoriesId: Number(data.testCategoriesId),
       };
-      
-    payload.startTime = `${payload.startTime}:00.000Z`
-    payload.endTime = `${payload.endTime}:00.000Z`
 
-    console.log(payload)
-     
+      payload.startTime = `${selectedDate}T${payload.startTime}:00.000Z`;
+      payload.endTime = `${selectedDate}T${payload.endTime}:00.000Z`;
 
-        await createPatientTestsAction(payload);
+      console.log(payload);
+
+      await createPatientTestsAction(payload);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
+    const storedDate = localStorage.getItem("selectedDate");
+    if (storedDate) {
+      setSelectedDate(storedDate);
+    }
     if (getData === true) {
       const fetchPatients = async () => {
         const patients = await getAllPatientsData(authtoken);
@@ -107,6 +111,7 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
 
   return (
     <div className=" mr-10 ml-5">
+      <div className=" mt-5  rounded-md font-bold text-xl">{selectedDate}</div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <div className="flex justify-end absolute right-10 top-10">
@@ -223,7 +228,7 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                           <SelectItem value="cancelled">Cancelled</SelectItem>
                           <SelectItem value="done">Done</SelectItem>
                           <SelectItem value="progressing">
-                           Test In Progress
+                            Test In Progress
                           </SelectItem>
                         </SelectContent>
                       </Select>
@@ -248,8 +253,9 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                     <FormControl>
                       <Input
                         placeholder="Enter Start Time"
-                        type="datetime-local"
+                        type="time"
                         {...field}
+                         // Use the stored date
                       />
                     </FormControl>
                     <FormMessage />
@@ -267,7 +273,7 @@ const PatientTestsForm = ({ authtoken }: { authtoken?: string }) => {
                     <FormControl>
                       <Input
                         placeholder="Enter End Time"
-                        type="datetime-local"
+                        type="time"
                         {...field}
                       />
                     </FormControl>

@@ -38,7 +38,7 @@ const EmployeeForm = ({
   employee,
   services,
 }: {
-  authtoken?: string;
+  authtoken?: Promise<string | undefined>;
   employee?: EmployeeData | null;
   services: ServiceData[];
   ranks: RankData[];

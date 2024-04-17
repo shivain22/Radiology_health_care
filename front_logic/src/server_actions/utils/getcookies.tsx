@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-const TokenReturn = () => {
+const TokenReturn = async () => {
     const tokenreturn = cookies().get("authToken")?.value;
     return tokenreturn
 

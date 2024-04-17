@@ -16,7 +16,7 @@ export default function PatientTestsList({
   token
 }: {
   patientTests: TransformPatientTestsData[];
-  token? : string
+  token? : string | undefined
 }) {
   const [open, setOpen] = useState(false);
   const [activePatientTests, setActivePatientTests] =

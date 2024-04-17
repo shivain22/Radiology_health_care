@@ -10,6 +10,9 @@ import { DataTableViewOptions } from "./data-table-view-options";
 import { priorities, statuses } from "../data/data";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { Calendar } from "@/components/ui/calendar";
+import { useEffect, useState } from "react";
+import { getChildTestCategories } from "@/server_actions/(get-requests)/client/clientside";
+import { TestCategoryData } from "@/schema/testcategory";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -19,6 +22,25 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  //   const [getData, setGetData] = useState<boolean>(false);
+  //   const [gotChildrenCategory, setGotChildrenCategory] = useState<
+  //   TestCategoryData[]
+  // >([]);
+
+  // useEffect(() => {
+  //   if (getData === true) {
+
+  //     const fetchCategories = async () => {
+  //       const categories = await getChildTestCategories(authtoken);
+  //       setGotChildrenCategory(categories);
+  //     };
+  //     fetchCategories();
+  //   }
+  // });
+  // const formattedOptions :any = gotChildrenCategory.map((category) => ({
+  //   label: category.testName,
+  //   value: category.id,
+  // }));
 
   return (
     <div className="flex items-center justify-between">
@@ -30,12 +52,12 @@ export function DataTableToolbar<TData>({
           value={
             (table.getColumn("startTime")?.getFilterValue() as string) ?? ""
           }
-          onChange={(event) =>
-            table.getColumn("startTime")?.setFilterValue(event.target.value)
-          }
+          onChange={(event) => {
+            table.getColumn("startTime")?.setFilterValue(event.target.value);
+            localStorage.setItem("selectedDate", event.target.value);
+          }}
           className="h-8 w-[150px] lg:w-[250px]"
         />
-
         {table.getColumn("status") && (
           <div>
             <DataTableFacetedFilter
@@ -52,6 +74,15 @@ export function DataTableToolbar<TData>({
             options={priorities}
           />
         )}
+        {/* {
+          table.getColumn("testCategory") && (
+            <DataTableFacetedFilter
+              column={table.getColumn("testCategory")}
+              title="Category"
+              options={formattedOptions}
+            />
+          )
+        } */}
         {isFiltered && (
           <Button
             variant="ghost"
