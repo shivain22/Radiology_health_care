@@ -45,6 +45,7 @@ export const createTestCategoryAction = async (
         testName: values.testName,
         equipmentId: values.equipmentId,
         parentTestCategoryId: values.parentTestCategoryId,
+        testDuration:values.testDuration,
       },
       {
         headers: {

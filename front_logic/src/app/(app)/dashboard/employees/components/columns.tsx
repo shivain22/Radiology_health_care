@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import DropDown from "@/modules/shared/DropDown";
 import { EditButton } from "@/modules/shared/EditButton";
 import { Pathname } from "@/modules/shared/Pathname";
 import { EmployeeData, TransformEmployeeData } from "@/schema/employees";
@@ -86,17 +87,18 @@ export const columns: ColumnDef<TransformEmployeeData>[] = [
       const basepath=Pathname({prop:"employees"});
       const employee = row.original;
       return (
-        <div className="flex gap-2 justify-center">
+        <div className="flex flex-col items-center">
           {/* <Button variant={"link"} asChild>
             <Link href={basePath + "/" + employee.id}>Edit</Link>
           </Button> */}
-          <EditButton prop={{id:employee.id}} basePath={basepath}/>
+          <DropDown name={{id:employee.id}} deletefunc={deleteEmployeeAction} basepath={basepath}/>
+          {/* <EditButton prop={{id:employee.id}} basePath={basepath}/>
           <Button
             onClick={() => deleteEmployeeAction(employee.id)}
             variant={"destructive"}
           >
             Delete
-          </Button>
+          </Button> */}
         </div>
       );
     },
