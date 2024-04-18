@@ -1,12 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  Activity,
   ChevronLeft,
   ChevronRight,
   Copy,
   CreditCard,
   File,
   Home,
+  Hospital,
   LineChart,
   ListFilter,
   MoreHorizontal,
@@ -14,6 +16,7 @@ import {
   Package,
   Package2,
   PanelLeft,
+  Plus,
   PlusCircle,
   Search,
   Settings,
@@ -65,20 +68,19 @@ function Dashboard() {
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">
-                <CardTitle>Your Orders</CardTitle>
+                <CardTitle>Add New Patients</CardTitle>
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
-                  Introducing Our Dynamic Orders Dashboard for Seamless
-                  Management and Insightful Analysis.
+                  To add patients ,click on the button
                 </CardDescription>
               </CardHeader>
               <CardFooter>
-                <Button>Create New Order</Button>
+                <Button>Add Patient</Button>
               </CardFooter>
             </Card>
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
-                <CardDescription>This Week</CardDescription>
-                <CardTitle className="text-4xl">$1,329</CardTitle>
+                <CardDescription>This Week Patients Appointed</CardDescription>
+                <CardTitle className="text-4xl">257</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">
@@ -91,8 +93,8 @@ function Dashboard() {
             </Card>
             <Card x-chunk="dashboard-05-chunk-2">
               <CardHeader className="pb-2">
-                <CardDescription>This Month</CardDescription>
-                <CardTitle className="text-4xl">$5,329</CardTitle>
+                <CardDescription>This Month Patients Appointed</CardDescription>
+                <CardTitle className="text-4xl">1126</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">
@@ -345,7 +347,7 @@ function Dashboard() {
             <CardHeader className="flex flex-row items-start bg-muted/50">
               <div className="grid gap-0.5">
                 <CardTitle className="group flex items-center gap-2 text-lg">
-                  Order Oe31b70H
+                 Metrics
                   <Button
                     size="icon"
                     variant="outline"
@@ -359,9 +361,9 @@ function Dashboard() {
               </div>
               <div className="ml-auto flex items-center gap-1">
                 <Button size="sm" variant="outline" className="h-8 gap-1">
-                  <Truck className="h-3.5 w-3.5" />
+                  <Activity className="h-3.5 w-3.5" />
                   <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-                    Track Order
+                    Track Metrics
                   </span>
                 </Button>
                 <DropdownMenu>
@@ -382,76 +384,80 @@ function Dashboard() {
             </CardHeader>
             <CardContent className="p-6 text-sm">
               <div className="grid gap-3">
-                <div className="font-semibold">Order Details</div>
+                <div className="font-semibold">Patient Metrics</div>
                 <ul className="grid gap-3">
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">
-                      Glimmer Lamps x <span>2</span>
+                     Number of admissions 
                     </span>
-                    <span>$250.00</span>
+                    <span>130</span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">
-                      Aqua Filters x <span>1</span>
+                       <span>Number of discharges</span>
                     </span>
-                    <span>$49.00</span>
+                    <span>10</span>
                   </li>
                 </ul>
                 <Separator className="my-2" />
                 <ul className="grid gap-3">
                   <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Subtotal</span>
-                    <span>$299.00</span>
+                  <div className="font-semibold">Operation Metrics</div>
                   </li>
                   <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Shipping</span>
-                    <span>$5.00</span>
+                    <span className="text-muted-foreground">Average length of stay</span>
+                    <span>3.5 days</span>
                   </li>
                   <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Tax</span>
-                    <span>$25.00</span>
+                    <span className="text-muted-foreground">Average wait time in the emergency</span>
+                    <span>12mins</span>
                   </li>
-                  <li className="flex items-center justify-between font-semibold">
-                    <span className="text-muted-foreground">Total</span>
-                    <span>$329.00</span>
+                  <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Bed occupancy</span>
+                    <span>120</span>
                   </li>
                 </ul>
               </div>
               <Separator className="my-4" />
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-3">
-                  <div className="font-semibold">Shipping Information</div>
-                  <address className="grid gap-0.5 not-italic text-muted-foreground">
-                    <span>Liam Johnson</span>
-                    <span>1234 Main St.</span>
-                    <span>Anytown, CA 12345</span>
-                  </address>
-                </div>
-                <div className="grid auto-rows-max gap-3">
-                  <div className="font-semibold">Billing Information</div>
-                  <div className="text-muted-foreground">
-                    Same as shipping address
-                  </div>
-                </div>
-              </div>
-              <Separator className="my-4" />
               <div className="grid gap-3">
-                <div className="font-semibold">Customer Information</div>
+                <div className="font-semibold">Staffing Information</div>
                 <dl className="grid gap-3">
                   <div className="flex items-center justify-between">
-                    <dt className="text-muted-foreground">Customer</dt>
-                    <dd>Liam Johnson</dd>
+                    <dt className="text-muted-foreground">Physcian/Doctors</dt>
+                    <dd>23</dd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <dt className="text-muted-foreground">Email</dt>
+                    <dt className="text-muted-foreground">Nurses</dt>
                     <dd>
-                      <a href="mailto:">liam@acme.com</a>
+                      37
                     </dd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <dt className="text-muted-foreground">Phone</dt>
+                    <dt className="text-muted-foreground">Support Staff</dt>
                     <dd>
-                      <a href="tel:">+1 234 567 890</a>
+                      12
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+              <Separator className="my-4" />
+              <div className="grid gap-3">
+                <div className="font-semibold">Medication Information</div>
+                <dl className="grid gap-3">
+                  <div className="flex items-center justify-between">
+                    <dt className="text-muted-foreground">Medication Usage</dt>
+                    <dd>23%</dd>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <dt className="text-muted-foreground">Medication Dispensed</dt>
+                    <dd>
+                      13%
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <dt className="text-muted-foreground">Pharmacy Staff</dt>
+                    <dd>
+                      4
                     </dd>
                   </div>
                 </dl>
