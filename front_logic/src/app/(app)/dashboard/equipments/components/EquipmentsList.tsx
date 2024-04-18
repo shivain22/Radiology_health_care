@@ -7,13 +7,16 @@ import { useState } from "react";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import EquipmentsForm from "./EquipmentsForm";
+import { RoomData } from "@/schema/rooms";
 
 export type TOpenModal = (equipmentsData?: EquipmentsData) => void;
 
 export default function EquipmentsList({
   equipments,
+  rooms
 }: {
   equipments: EquipmentsData[];
+  rooms: RoomData[]
 }) {
   const [open, setOpen] = useState(false);
   const [activeEquipments, setActiveEquipments] =
@@ -32,7 +35,7 @@ export default function EquipmentsList({
         setOpen={setOpen}
         title={activeEquipments ? "Edit Equipments" : "Create Equipments"}
       >
-        <EquipmentsForm />
+        <EquipmentsForm rooms={rooms}/>
       </Modal>
 
       <div className="absolute right-0 top-0">

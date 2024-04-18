@@ -23,7 +23,6 @@ const Services = async() => {
     <Suspense fallback={<Loading />}>
 
       {/* getting the data for the services and ranks for and displaying it in the form a table for the ranks */}
-      <h1>Services </h1>
       <ServiceList services={services} />
      
      

@@ -1,7 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import DropDown from "@/modules/shared/DropDown";
+import { EditButton } from "@/modules/shared/EditButton";
+import { Pathname } from "@/modules/shared/Pathname";
 import { EquipmentsData } from "@/schema/equipments";
+import { deleteEquipmentAction } from "@/server_actions/actions/equipments";
 import { ColumnDef } from "@tanstack/react-table";
 // import Link from "next/link";
 // import { usePathname } from "next/navigation";
@@ -25,16 +29,37 @@ export const columns: ColumnDef<EquipmentsData>[] = [
   },
   {
     accessorKey: "id",
-    header: "Id",
+    header: () => (
+      <div className="flex justify-center">
+        <h1>Id</h1>
+      </div>
+    ),
+    cell: (info) => {
+      return <div className="flex justify-center">{info.row.original.id}</div>;
+    },
   },
   {
     accessorKey : "name",
-    header: "Name"
+    header: () => (
+      <div className="flex justify-center">
+        <h1>Name</h1>
+      </div>
+    ),
+    cell: (info) => {
+      return <div className="flex justify-center">{info.row.original.name}</div>;
+    },
   },
   {
     //need to be change
     accessorKey: "roomId",
-    header: "Room ID",
+    header: () => (
+      <div className="flex justify-center">
+        <h1>Room Id</h1>
+      </div>
+    ),
+    cell: (info) => {
+      return <div className="flex justify-center">{info.row.original.roomId}</div>;
+    },
   }
   ,
   {
@@ -49,19 +74,14 @@ export const columns: ColumnDef<EquipmentsData>[] = [
       // const basePath = pathname.includes("equipments")
       //   ? pathname
       //   : pathname + "/patient-tests/";
+        const basepath=Pathname({prop:"equipments"});
+
         const equipment = row.original;
 
         return (
-            <div>
-                <Button variant={"link"} asChild>
-                    {/* <Link href={basePath + "/" + equipment.id}>Edit</Link>  */}
-                </Button>
-                <Button 
-                    // onClick={() => deleteEquipmentsAction(equipment.id)}
-                    variant={"destructive"}
-                >
-                    Delete
-                </Button>
+            <div className="flex flex-row justify-center">
+                <DropDown name={{id:equipment.id}} deletefunc={deleteEquipmentAction} basepath={basepath}/>
+            
             </div>
         )
     },

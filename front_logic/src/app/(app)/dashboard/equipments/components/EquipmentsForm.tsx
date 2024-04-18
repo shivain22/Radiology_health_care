@@ -25,8 +25,11 @@ import { useForm } from "react-hook-form";
 import { useBackPath } from "../../../../../modules/shared/BackButton";
 import { DialogClose } from "@/components/ui/dialog";
 import { EquipmentsData, Equipmentsform, formData } from "@/schema/equipments";
+import { RoomData } from "@/schema/rooms";
+import { createEquipmentAction } from "@/server_actions/actions/equipments";
 
-const EquipmentsForm = () => {
+const EquipmentsForm = ({ rooms }: { rooms: RoomData[] }) => {
+
   const { errors, hasErrors, handleChange, setErrors } =
     useValidatedForm<EquipmentsData>(formData);
   const form = useForm<Equipmentsform>({
@@ -36,6 +39,8 @@ const EquipmentsForm = () => {
       roomId: "",
     },
   });
+
+
   const editing = !form.formState.isValid;
   const handleSubmit = async (data: Equipmentsform) => {
     try {
@@ -45,6 +50,7 @@ const EquipmentsForm = () => {
       };
 
       console.log(payload);
+      await createEquipmentAction(payload);
     } catch (e) {
       console.log(editing);
     }
@@ -79,12 +85,19 @@ const EquipmentsForm = () => {
                   >
                     {/* Hard coded */}
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Room hard coded" />
+                      <SelectValue placeholder="Select Room Number" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">Room 1</SelectItem>
-                      <SelectItem value="2">Room 2</SelectItem>
-                      <SelectItem value="3">Room 3</SelectItem>
+                   {
+                    rooms?.map((room) => ( 
+                      <SelectItem 
+                      key={room.id}
+                      value={room.id.toString()}
+                      >
+                        {room.roomNo}
+                      </SelectItem>
+                    ))
+                   }
                     </SelectContent>
                   </Select>
                 </FormControl>

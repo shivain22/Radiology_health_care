@@ -24,7 +24,7 @@ export default async function ServicesPage() {
       <Suspense fallback={<Loading />}>
   
         {/* getting the data and displaying for the technician Equipment Mappings */}
-        <h1>Technician Equipment Mappings</h1>
+        
         <EquipmentsMappingList equipmentsMapping={equipmentMapping} />
        
        

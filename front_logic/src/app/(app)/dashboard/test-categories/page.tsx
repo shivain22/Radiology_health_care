@@ -1,7 +1,6 @@
 import Loading from "@/app/loading";
 import { getTestCategories } from "@/server_actions/(get-requests)/getTestCategories";
 import { Suspense } from "react";
-import { any } from "zod";
 import TestCategoryList from "./components/TestCategoryList";
 
 export default async function TestCategoryPage() {
@@ -19,8 +18,6 @@ export default async function TestCategoryPage() {
 
 const TestCategories = async () => {
   const testcategories = await getTestCategories();
-
-  console.log(testcategories);
 
   return (
     <Suspense fallback={<Loading />}>

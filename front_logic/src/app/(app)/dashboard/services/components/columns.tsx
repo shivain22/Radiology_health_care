@@ -1,6 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import DropDown from "@/modules/shared/DropDown";
+import { EditButton } from "@/modules/shared/EditButton";
+import { Pathname } from "@/modules/shared/Pathname";
 import { ServiceData } from "@/schema/services";
 import { deleteServiceAction } from "@/server_actions/actions/services";
 import { ColumnDef } from "@tanstack/react-table";
@@ -46,18 +49,22 @@ export const columns: ColumnDef<ServiceData>[] = [
       // const basePath = pathname.includes("services")
       //   ? pathname
       //   : pathname + "/services/";
+      const basepath=Pathname({prop:"services"});
+
       const service = row.original;
       return (
         <div className="flex gap-2 justify-center">
           {/* <Button variant={"link"} asChild>
             <Link href={basePath + "/" + service.id}>Edit</Link>
           </Button> */}
+          <DropDown name={{id:service.id}} deletefunc={deleteServiceAction} basepath={basepath}/>
+          {/* <EditButton prop={{id:service.id}} basePath={basepath}/>
           <Button
             onClick={() => deleteServiceAction(service.id)}
             variant={"destructive"}
           >
             Delete
-          </Button>
+          </Button> */}
         </div>
       );
     },

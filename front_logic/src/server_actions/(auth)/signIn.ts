@@ -15,6 +15,10 @@ export const SignedInUser = async (values: signInForm) => {
     });
     await cookieLogin(response.data);
 
+    const request = response.data
+
+    localStorage.setItem("token", request.id_token);
+
     const userAuthToken = cookies().get("authToken")?.value;
     return userAuthToken;
   } catch (error) {
