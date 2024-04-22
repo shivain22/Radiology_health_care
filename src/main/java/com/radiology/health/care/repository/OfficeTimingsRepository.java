@@ -15,4 +15,6 @@ import org.springframework.stereotype.Repository;
 public interface OfficeTimingsRepository extends JpaRepository<OfficeTimings, Long>, JpaSpecificationExecutor<OfficeTimings> {
     @Query("select officeTimings from OfficeTimings officeTimings where officeTimings.user.login = ?#{authentication.name}")
     List<OfficeTimings> findByUserIsCurrentUser();
+
+    void deleteByDateIsNull();
 }

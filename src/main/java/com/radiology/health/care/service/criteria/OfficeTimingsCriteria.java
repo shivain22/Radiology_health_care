@@ -1,8 +1,11 @@
 package com.radiology.health.care.service.criteria;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Objects;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
 
@@ -25,9 +28,9 @@ public class OfficeTimingsCriteria implements Serializable, Criteria {
 
     private LocalDateFilter date;
 
-    private ZonedDateTimeFilter shiftStart;
+    private LocalTime shiftStart;
 
-    private ZonedDateTimeFilter shiftEnd;
+    private LocalTime shiftEnd;
 
     private BooleanFilter defaultTimings;
 
@@ -40,8 +43,8 @@ public class OfficeTimingsCriteria implements Serializable, Criteria {
     public OfficeTimingsCriteria(OfficeTimingsCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.date = other.date == null ? null : other.date.copy();
-        this.shiftStart = other.shiftStart == null ? null : other.shiftStart.copy();
-        this.shiftEnd = other.shiftEnd == null ? null : other.shiftEnd.copy();
+        this.shiftStart = other.shiftStart == null ? null : other.shiftStart;
+        this.shiftEnd = other.shiftEnd == null ? null : other.shiftEnd;
         this.defaultTimings = other.defaultTimings == null ? null : other.defaultTimings.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
         this.distinct = other.distinct;
@@ -82,33 +85,33 @@ public class OfficeTimingsCriteria implements Serializable, Criteria {
         this.date = date;
     }
 
-    public ZonedDateTimeFilter getShiftStart() {
+    public LocalTime getShiftStart() {
         return shiftStart;
     }
 
-    public ZonedDateTimeFilter shiftStart() {
+    public LocalTime shiftStart() {
         if (shiftStart == null) {
-            shiftStart = new ZonedDateTimeFilter();
+            shiftStart = LocalTime.of(7, 0);
         }
         return shiftStart;
     }
 
-    public void setShiftStart(ZonedDateTimeFilter shiftStart) {
+    public void setShiftStart(LocalTime shiftStart) {
         this.shiftStart = shiftStart;
     }
 
-    public ZonedDateTimeFilter getShiftEnd() {
+    public LocalTime getShiftEnd() {
         return shiftEnd;
     }
 
-    public ZonedDateTimeFilter shiftEnd() {
+    public LocalTime shiftEnd() {
         if (shiftEnd == null) {
-            shiftEnd = new ZonedDateTimeFilter();
+            shiftEnd = LocalTime.of(18, 0);
         }
         return shiftEnd;
     }
 
-    public void setShiftEnd(ZonedDateTimeFilter shiftEnd) {
+    public void setShiftEnd(LocalTime shiftEnd) {
         this.shiftEnd = shiftEnd;
     }
 

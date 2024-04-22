@@ -7,6 +7,8 @@ import com.radiology.health.care.service.criteria.OfficeTimingsCriteria;
 import com.radiology.health.care.service.dto.OfficeTimingsDTO;
 import com.radiology.health.care.service.mapper.OfficeTimingsMapper;
 import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.metamodel.SingularAttribute;
+import java.time.LocalTime;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,5 +112,12 @@ public class OfficeTimingsQueryService extends QueryService<OfficeTimings> {
             }
         }
         return specification;
+    }
+
+    private Specification<OfficeTimings> buildRangeSpecification(
+        LocalTime shiftStart,
+        SingularAttribute<OfficeTimings, LocalTime> shiftStart1
+    ) {
+        return null;
     }
 }

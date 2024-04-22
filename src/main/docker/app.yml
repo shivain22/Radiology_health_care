@@ -9,8 +9,8 @@ services:
       - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/radiologyhealthcare?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
       - SPRING_LIQUIBASE_URL=jdbc:mysql://mysql:3306/radiologyhealthcare?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
-    #      - SPRING_JPA_HIBERNATE_DDL-AUTO=update
-    #      - SPRING_JPA_SHOW-SQL=true
+        - SPRING_JPA_HIBERNATE_DDL-AUTO=update
+        - SPRING_JPA_SHOW-SQL=true
     #      - SPRING_DATASOURCE_USER=root
     #      - SPRING_DATASOURCE_PASSWORD=mysql
     ports:

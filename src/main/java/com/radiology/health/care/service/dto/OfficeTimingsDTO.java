@@ -19,10 +19,10 @@ public class OfficeTimingsDTO implements Serializable {
     private LocalDate date;
 
     @NotNull
-    private LocalTime shiftStart;
+    private String shiftStart;
 
     @NotNull
-    private LocalTime shiftEnd;
+    private String shiftEnd;
 
     private Boolean defaultTimings;
 
@@ -44,19 +44,19 @@ public class OfficeTimingsDTO implements Serializable {
         this.date = date;
     }
 
-    public LocalTime getShiftStart() {
+    public String getShiftStart() {
         return shiftStart;
     }
 
-    public void setShiftStart(LocalTime shiftStart) {
+    public void setShiftStart(String shiftStart) {
         this.shiftStart = shiftStart;
     }
 
-    public LocalTime getShiftEnd() {
+    public String getShiftEnd() {
         return shiftEnd;
     }
 
-    public void setShiftEnd(LocalTime shiftEnd) {
+    public void setShiftEnd(String shiftEnd) {
         this.shiftEnd = shiftEnd;
     }
 

@@ -5,23 +5,23 @@ import java.time.ZonedDateTime;
 
 public class ShiftTimings {
 
-    private LocalTime startTime;
+    private String startTime;
 
-    public LocalTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
-    private LocalTime endTime;
+    private String endTime;
 }

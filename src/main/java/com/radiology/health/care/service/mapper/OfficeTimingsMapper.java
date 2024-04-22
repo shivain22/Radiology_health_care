@@ -4,6 +4,7 @@ import com.radiology.health.care.domain.OfficeTimings;
 import com.radiology.health.care.domain.User;
 import com.radiology.health.care.service.dto.OfficeTimingsDTO;
 import com.radiology.health.care.service.dto.UserDTO;
+import java.time.LocalTime;
 import org.mapstruct.*;
 
 /**
@@ -27,8 +28,8 @@ public interface OfficeTimingsMapper extends EntityMapper<OfficeTimingsDTO, Offi
 
         officeTimings.setId(dto.getId());
         officeTimings.setDate(dto.getDate());
-        officeTimings.setShiftStart(dto.getShiftStart());
-        officeTimings.setShiftEnd(dto.getShiftEnd());
+        officeTimings.setShiftStart(LocalTime.parse(dto.getShiftStart()));
+        officeTimings.setShiftEnd(LocalTime.parse(dto.getShiftEnd()));
         officeTimings.setDefaultTimings(dto.getDefaultTimings());
         officeTimings.user(user);
 

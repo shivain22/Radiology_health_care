@@ -52,6 +52,7 @@ public class OfficeTimingsServiceImpl implements OfficeTimingsService {
             .orElseThrow(() -> new RuntimeException("User could not be found"));
         officeTimingsDTO.setUserId(adminUser.getId());
         OfficeTimings officeTimings = officeTimingsMapper.toEntity(officeTimingsDTO);
+        officeTimingsRepository.deleteByDateIsNull();
         officeTimings = officeTimingsRepository.save(officeTimings);
         return officeTimingsMapper.toDto(officeTimings);
     }

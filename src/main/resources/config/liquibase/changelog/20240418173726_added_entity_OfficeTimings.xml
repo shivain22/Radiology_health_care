@@ -17,10 +17,10 @@
             <column name="date" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="shift_start" type="${datetimeType}">
+            <column name="shift_start" type="time">
                 <constraints nullable="false" />
             </column>
-            <column name="shift_end" type="${datetimeType}">
+            <column name="shift_end" type="time">
                 <constraints nullable="false" />
             </column>
             <column name="default_timings" type="boolean">
@@ -31,8 +31,8 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="office_timings" columnName="shift_start" columnDataType="${datetimeType}"/>
-        <dropDefaultValue tableName="office_timings" columnName="shift_end" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="office_timings" columnName="shift_start" columnDataType="time"/>
+        <dropDefaultValue tableName="office_timings" columnName="shift_end" columnDataType="time"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

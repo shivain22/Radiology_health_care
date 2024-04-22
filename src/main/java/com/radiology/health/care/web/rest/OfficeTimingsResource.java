@@ -112,6 +112,7 @@ public class OfficeTimingsResource {
         if (defaultOfficeTimingsDTO.getId() != null) {
             throw new BadRequestAlertException("A new officeTimings cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
         List<ShiftTimings> shiftTimings = defaultOfficeTimingsDTO.getShiftTimes();
         OfficeTimingsDTO officeTimingsDTO = new OfficeTimingsDTO();
         OfficeTimingsDTO result = new OfficeTimingsDTO();
