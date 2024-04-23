@@ -1,7 +1,7 @@
 name: radiologyhealthcare
 services:
   app:
-    image: shivain22/radiology_health_care:backend6
+    image: shivain22/radiology_health_care:backend12
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=dev,api-docs
@@ -9,7 +9,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/radiologyhealthcare?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
       - SPRING_LIQUIBASE_URL=jdbc:mysql://mysql:3306/radiologyhealthcare?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
     ports:
-      - 127.0.0.1:8080:8080
+      - 127.0.0.1:8084:8080
     healthcheck:
       test:
         - CMD
@@ -26,6 +26,7 @@ services:
     image: mysql:8.2.0
     volumes:
       - ./config/mysql:/etc/mysql/conf.d
+      - ./MysqlData:/var/lib/mysql/
     #   - ~/volumes/jhipster/radiologyHealthCare/mysql/:/var/lib/mysql/
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
