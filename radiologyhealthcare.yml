@@ -22,6 +22,10 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+  frontend:
+    image: shivain22/run:v3
+    environment:
+
   mysql:
     image: mysql:8.2.0
     volumes:
