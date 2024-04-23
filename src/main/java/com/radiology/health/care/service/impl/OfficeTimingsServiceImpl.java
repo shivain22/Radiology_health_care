@@ -52,7 +52,7 @@ public class OfficeTimingsServiceImpl implements OfficeTimingsService {
             .orElseThrow(() -> new RuntimeException("User could not be found"));
         officeTimingsDTO.setUserId(adminUser.getId());
         OfficeTimings officeTimings = officeTimingsMapper.toEntity(officeTimingsDTO);
-        officeTimingsRepository.deleteByDateIsNull();
+
         officeTimings = officeTimingsRepository.save(officeTimings);
         return officeTimingsMapper.toDto(officeTimings);
     }
@@ -60,6 +60,12 @@ public class OfficeTimingsServiceImpl implements OfficeTimingsService {
     @Override
     public OfficeTimingsDTO update(OfficeTimingsDTO officeTimingsDTO) {
         log.debug("Request to update OfficeTimings : {}", officeTimingsDTO);
+        AdminUserDTO adminUser = SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new RuntimeException("User could not be found"));
+        officeTimingsDTO.setUserId(adminUser.getId());
         OfficeTimings officeTimings = officeTimingsMapper.toEntity(officeTimingsDTO);
         officeTimings = officeTimingsRepository.save(officeTimings);
         return officeTimingsMapper.toDto(officeTimings);
@@ -68,7 +74,12 @@ public class OfficeTimingsServiceImpl implements OfficeTimingsService {
     @Override
     public Optional<OfficeTimingsDTO> partialUpdate(OfficeTimingsDTO officeTimingsDTO) {
         log.debug("Request to partially update OfficeTimings : {}", officeTimingsDTO);
-
+        AdminUserDTO adminUser = SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new RuntimeException("User could not be found"));
+        officeTimingsDTO.setUserId(adminUser.getId());
         return officeTimingsRepository
             .findById(officeTimingsDTO.getId())
             .map(existingOfficeTimings -> {

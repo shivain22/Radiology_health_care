@@ -9,13 +9,18 @@ import com.radiology.health.care.service.dto.DefaultOfficeTimingsDTO;
 import com.radiology.health.care.service.dto.OfficeTimesDTO;
 import com.radiology.health.care.service.dto.OfficeTimingsDTO;
 import com.radiology.health.care.web.rest.errors.BadRequestAlertException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.xml.crypto.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -74,27 +79,45 @@ public class OfficeTimingsResource {
             throw new BadRequestAlertException("A new officeTimings cannot already have an ID", ENTITY_NAME, "idexists");
         }
         List<ShiftTimings> shiftTimings = officeTimesDTO.getShiftTimes();
+        boolean validShiftTimes = true;
+        for (int i = 0; i < shiftTimings.size(); i++) {
+            String shiftStartTime = shiftTimings.get(i).getStartTime();
+            String shiftEndTime = shiftTimings.get(i).getEndTime();
+            try {
+                LocalTime shiftStartTiming = LocalTime.parse(shiftStartTime);
+                LocalTime shiftEndTiming = LocalTime.parse(shiftEndTime);
+            } catch (Exception e) {
+                validShiftTimes = false;
+                return ResponseEntity.internalServerError().body("Invalid Time Format. Give valid times.");
+            }
+        }
         OfficeTimingsDTO officeTimingsDTO = new OfficeTimingsDTO();
         OfficeTimingsDTO result = new OfficeTimingsDTO();
-        for (int i = 0; i < shiftTimings.size(); i++) {
-            officeTimingsDTO.setDate(officeTimesDTO.getDate());
-            officeTimingsDTO.setShiftStart(shiftTimings.get(i).getStartTime());
-            officeTimingsDTO.setShiftEnd(shiftTimings.get(i).getEndTime());
-            officeTimingsDTO.setDefaultTimings(false);
-            result = officeTimingsService.save(officeTimingsDTO);
-        }
+        if (officeTimingsRepository.findByDate(officeTimesDTO.getDate()).isEmpty() && validShiftTimes) {
+            for (int i = 0; i < shiftTimings.size(); i++) {
+                officeTimingsDTO.setDate(officeTimesDTO.getDate());
+                officeTimingsDTO.setShiftStart(shiftTimings.get(i).getStartTime());
+                officeTimingsDTO.setShiftEnd(shiftTimings.get(i).getEndTime());
+                officeTimingsDTO.setDefaultTimings(false);
+                result = officeTimingsService.save(officeTimingsDTO);
+            }
 
-        return ResponseEntity
-            .created(new URI("/api/office-timings/"))
-            .headers(
-                HeaderUtil.createEntityCreationAlert(
-                    applicationName,
-                    false,
-                    ENTITY_NAME,
-                    "Office Timings got updated for the " + officeTimesDTO.getDate()
+            return ResponseEntity
+                .created(new URI("/api/office-timings/"))
+                .headers(
+                    HeaderUtil.createEntityCreationAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "Office Timings got updated for the " + officeTimesDTO.getDate()
+                    )
                 )
-            )
-            .body("Office Timings got updated for the " + officeTimesDTO.getDate());
+                .body("Office Timings got updated for the " + officeTimesDTO.getDate());
+        } else {
+            return ResponseEntity
+                .internalServerError()
+                .body("the given date is might be invalid or already exist with shift times. You can update it.");
+        }
     }
 
     /**
@@ -104,7 +127,7 @@ public class OfficeTimingsResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new officeTimingsDTO, or with status {@code 400 (Bad Request)} if the officeTimings has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-
+    @Transactional
     @PostMapping("/default-office-timings")
     public ResponseEntity<String> createDefaultOfficeTimings(@Valid @RequestBody DefaultOfficeTimingsDTO defaultOfficeTimingsDTO)
         throws URISyntaxException {
@@ -114,7 +137,24 @@ public class OfficeTimingsResource {
         }
 
         List<ShiftTimings> shiftTimings = defaultOfficeTimingsDTO.getShiftTimes();
+
         OfficeTimingsDTO officeTimingsDTO = new OfficeTimingsDTO();
+        boolean validShiftTimes = true;
+        for (int i = 0; i < shiftTimings.size(); i++) {
+            String shiftStartTime = shiftTimings.get(i).getStartTime();
+            String shiftEndTime = shiftTimings.get(i).getEndTime();
+            try {
+                LocalTime shiftStartTiming = LocalTime.parse(shiftStartTime);
+                LocalTime shiftEndTiming = LocalTime.parse(shiftEndTime);
+            } catch (Exception e) {
+                validShiftTimes = false;
+                return ResponseEntity.internalServerError().body("Invalid Time Format. Give valid times.");
+            }
+        }
+        if (validShiftTimes) {
+            officeTimingsRepository.deleteByDateIsNull();
+        }
+
         OfficeTimingsDTO result = new OfficeTimingsDTO();
         for (int i = 0; i < shiftTimings.size(); i++) {
             officeTimingsDTO.setDate(null);

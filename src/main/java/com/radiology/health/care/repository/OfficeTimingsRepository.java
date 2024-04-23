@@ -3,6 +3,8 @@ package com.radiology.health.care.repository;
 import com.radiology.health.care.domain.OfficeTimings;
 import com.radiology.health.care.service.dto.DefaultOfficeTimingsDTO;
 import com.radiology.health.care.service.dto.OfficeTimingsDTO;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
@@ -17,4 +19,6 @@ public interface OfficeTimingsRepository extends JpaRepository<OfficeTimings, Lo
     List<OfficeTimings> findByUserIsCurrentUser();
 
     void deleteByDateIsNull();
+
+    List<OfficeTimings> findByDate(LocalDate date);
 }
