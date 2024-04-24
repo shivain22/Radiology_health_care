@@ -25,7 +25,10 @@ services:
   frontend:
     image: shivain22/run:v3
     environment:
-
+      - NEXT_PUBLIC_BACKEND_URL= http://app:8080
+      - BACKEND_URL= http://app:8080
+    ports:
+      - 9061:9060
   mysql:
     image: mysql:8.2.0
     volumes:
