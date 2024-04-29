@@ -163,7 +163,7 @@ public class TechnicianEquipmentMappingResource {
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get TechnicianEquipmentMappings by criteria: {}", criteria);
-
+        pageable = Pageable.unpaged();
         Page<TechnicianEquipmentMappingDTO> page = technicianEquipmentMappingQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

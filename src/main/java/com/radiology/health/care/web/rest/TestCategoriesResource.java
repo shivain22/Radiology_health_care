@@ -160,7 +160,7 @@ public class TestCategoriesResource {
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get TestCategories by criteria: {}", criteria);
-
+        pageable = Pageable.unpaged();
         Page<TestCategoriesDTO> page = testCategoriesQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

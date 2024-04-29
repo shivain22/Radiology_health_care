@@ -155,7 +155,7 @@ public class RankResource {
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get Ranks by criteria: {}", criteria);
-
+        pageable = Pageable.unpaged();
         Page<RankDTO> page = rankQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

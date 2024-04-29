@@ -167,7 +167,7 @@ public class PatientInfoResource {
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get PatientInfos by criteria: {}", criteria);
-
+        pageable = Pageable.unpaged();
         Page<PatientInfoDTO> page = patientInfoQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

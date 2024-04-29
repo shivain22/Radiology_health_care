@@ -8,7 +8,10 @@ import com.radiology.health.care.service.dto.PatientTestTimingsDTO;
 import com.radiology.health.care.service.dto.TestCategoriesDTO;
 import com.radiology.health.care.web.rest.TestCategoriesResource;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import org.mapstruct.*;
 
 /**
@@ -34,14 +37,16 @@ public interface PatientTestTimingsMapper extends EntityMapper<PatientTestTiming
 
         patientInfo.setId(dto.getPatientInfoId());
         testCategories.setId(dto.getTestCategoriesId());
+        ZonedDateTime startTime = dto.getStartTime();
+        ZonedDateTime endTime = dto.getEndTime();
 
         patientTestTimings.setId(dto.getId());
         patientTestTimings.setPriority(dto.getPriority());
         patientTestTimings.setClinicalNote(dto.getClinicalNote());
         patientTestTimings.setSpclInstruction(dto.getSpclInstruction());
         patientTestTimings.setStatus(dto.getStatus());
-        patientTestTimings.setStartTime(dto.getStartTime());
-        patientTestTimings.setEndTime(dto.getEndTime());
+        patientTestTimings.setStartTime(startTime);
+        patientTestTimings.setEndTime(endTime);
         patientTestTimings.setLogin(dto.getLogin());
         patientTestTimings.setCreatedBy(dto.getCreatedBy());
         patientTestTimings.setCreatedDate(dto.getCreatedDate());
@@ -52,6 +57,48 @@ public interface PatientTestTimingsMapper extends EntityMapper<PatientTestTiming
         patientTestTimings.testCategories(testCategories);
 
         return patientTestTimings;
+    }
+
+    default void partialUpdate(PatientTestTimings entity, PatientTestTimingsDTO dto) {
+        if (dto == null) {
+            return;
+        }
+
+        if (dto.getCreatedBy() != null) {
+            entity.setCreatedBy(dto.getCreatedBy());
+        }
+        if (dto.getCreatedDate() != null) {
+            entity.setCreatedDate(dto.getCreatedDate());
+        }
+        if (dto.getLastModifiedBy() != null) {
+            entity.setLastModifiedBy(dto.getLastModifiedBy());
+        }
+        if (dto.getLastModifiedDate() != null) {
+            entity.setLastModifiedDate(dto.getLastModifiedDate());
+        }
+        if (dto.getLogin() != null) {
+            entity.setLogin(dto.getLogin());
+        }
+        if (dto.getId() != null) {
+            entity.setId(dto.getId());
+        }
+        if (dto.getPriority() != null) {
+            entity.setPriority(dto.getPriority());
+        }
+        if (dto.getClinicalNote() != null) {
+            entity.setClinicalNote(dto.getClinicalNote());
+        }
+        if (dto.getSpclInstruction() != null) {
+            entity.setSpclInstruction(dto.getSpclInstruction());
+        }
+        if (dto.getStatus() != null) {
+            entity.setStatus(dto.getStatus());
+        }
+
+        if (dto.getStartTime() != null) {
+            ZonedDateTime startTime = dto.getStartTime();
+            entity.setStartTime(startTime);
+        }
     }
 
     @Named("patientInfoId")

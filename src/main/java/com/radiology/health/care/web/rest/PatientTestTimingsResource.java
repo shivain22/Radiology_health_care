@@ -160,7 +160,7 @@ public class PatientTestTimingsResource {
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get PatientTestTimings by criteria: {}", criteria);
-
+        pageable = Pageable.unpaged();
         Page<PatientTestTimingsDTO> page = patientTestTimingsQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

@@ -159,7 +159,7 @@ public class EmpServiceResource {
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get EmpServices by criteria: {}", criteria);
-
+        pageable = Pageable.unpaged();
         Page<EmpServiceDTO> page = empServiceQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

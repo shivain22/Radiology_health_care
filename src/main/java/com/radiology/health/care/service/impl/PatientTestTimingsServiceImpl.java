@@ -60,10 +60,10 @@ public class PatientTestTimingsServiceImpl implements PatientTestTimingsService 
             .map(AdminUserDTO::new)
             .orElseThrow(() -> new RuntimeException("User could not be found"));
         Optional<TestCategoriesDTO> testCategories = testCategoriesService.findOne(patientTestTimingsDTO.getTestCategoriesId());
-        patientTestTimingsDTO = patientTestTimingsRepository.setEndTiming(patientTestTimingsDTO, testCategories);
         log.debug("After PatientTestTimings  Endtime set : {}", patientTestTimingsDTO);
         patientTestTimingsDTO.setLogin(adminUser.getLogin());
         PatientTestTimings patientTestTimings = patientTestTimingsMapper.toEntity(patientTestTimingsDTO);
+        patientTestTimings = patientTestTimingsRepository.setEndTiming(patientTestTimings, testCategories);
         patientTestTimings = patientTestTimingsRepository.save(patientTestTimings);
         return patientTestTimingsMapper.toDto(patientTestTimings);
     }
@@ -76,8 +76,10 @@ public class PatientTestTimingsServiceImpl implements PatientTestTimingsService 
             .flatMap(userRepository::findOneWithAuthoritiesByLogin)
             .map(AdminUserDTO::new)
             .orElseThrow(() -> new RuntimeException("User could not be found"));
+        Optional<TestCategoriesDTO> testCategories = testCategoriesService.findOne(patientTestTimingsDTO.getTestCategoriesId());
         patientTestTimingsDTO.setLogin(adminUser.getLogin());
         PatientTestTimings patientTestTimings = patientTestTimingsMapper.toEntity(patientTestTimingsDTO);
+        patientTestTimings = patientTestTimingsRepository.setEndTiming(patientTestTimings, testCategories);
         patientTestTimings = patientTestTimingsRepository.save(patientTestTimings);
         return patientTestTimingsMapper.toDto(patientTestTimings);
     }
@@ -91,12 +93,13 @@ public class PatientTestTimingsServiceImpl implements PatientTestTimingsService 
             .map(AdminUserDTO::new)
             .orElseThrow(() -> new RuntimeException("User could not be found"));
         patientTestTimingsDTO.setLogin(adminUser.getLogin());
+        Optional<TestCategoriesDTO> testCategories = testCategoriesService.findOne(patientTestTimingsDTO.getTestCategoriesId());
 
         return patientTestTimingsRepository
             .findById(patientTestTimingsDTO.getId())
             .map(existingPatientTestTimings -> {
                 patientTestTimingsMapper.partialUpdate(existingPatientTestTimings, patientTestTimingsDTO);
-
+                patientTestTimingsRepository.setEndTiming(existingPatientTestTimings, testCategories);
                 return existingPatientTestTimings;
             })
             .map(patientTestTimingsRepository::save)

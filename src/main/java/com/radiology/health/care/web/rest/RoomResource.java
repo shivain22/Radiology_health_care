@@ -155,7 +155,7 @@ public class RoomResource {
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get Rooms by criteria: {}", criteria);
-
+        pageable = Pageable.unpaged();
         Page<RoomDTO> page = roomQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
