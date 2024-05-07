@@ -620,7 +620,7 @@ class RankResourceIT {
         Rank partialUpdatedRank = new Rank();
         partialUpdatedRank.setId(rank.getId());
 
-        partialUpdatedRank.division(UPDATED_DIVISION);
+        partialUpdatedRank.shortName(UPDATED_SHORT_NAME);
 
         restRankMockMvc
             .perform(
@@ -635,8 +635,8 @@ class RankResourceIT {
         assertThat(rankList).hasSize(databaseSizeBeforeUpdate);
         Rank testRank = rankList.get(rankList.size() - 1);
         assertThat(testRank.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testRank.getShortName()).isEqualTo(DEFAULT_SHORT_NAME);
-        assertThat(testRank.getDivision()).isEqualTo(UPDATED_DIVISION);
+        assertThat(testRank.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
+        assertThat(testRank.getDivision()).isEqualTo(DEFAULT_DIVISION);
     }
 
     @Test

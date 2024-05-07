@@ -499,8 +499,6 @@ class UnitResourceIT {
         Unit partialUpdatedUnit = new Unit();
         partialUpdatedUnit.setId(unit.getId());
 
-        partialUpdatedUnit.name(UPDATED_NAME);
-
         restUnitMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedUnit.getId())
@@ -513,7 +511,7 @@ class UnitResourceIT {
         List<Unit> unitList = unitRepository.findAll();
         assertThat(unitList).hasSize(databaseSizeBeforeUpdate);
         Unit testUnit = unitList.get(unitList.size() - 1);
-        assertThat(testUnit.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testUnit.getName()).isEqualTo(DEFAULT_NAME);
     }
 
     @Test

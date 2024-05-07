@@ -902,7 +902,7 @@ class PatientTestTimingsResourceIT {
         PatientTestTimings partialUpdatedPatientTestTimings = new PatientTestTimings();
         partialUpdatedPatientTestTimings.setId(patientTestTimings.getId());
 
-        partialUpdatedPatientTestTimings.status(UPDATED_STATUS).endTime(UPDATED_END_TIME).startTime(UPDATED_START_TIME);
+        partialUpdatedPatientTestTimings.priority(UPDATED_PRIORITY).clinicalNote(UPDATED_CLINICAL_NOTE).status(UPDATED_STATUS);
 
         restPatientTestTimingsMockMvc
             .perform(
@@ -916,12 +916,12 @@ class PatientTestTimingsResourceIT {
         List<PatientTestTimings> patientTestTimingsList = patientTestTimingsRepository.findAll();
         assertThat(patientTestTimingsList).hasSize(databaseSizeBeforeUpdate);
         PatientTestTimings testPatientTestTimings = patientTestTimingsList.get(patientTestTimingsList.size() - 1);
-        assertThat(testPatientTestTimings.getPriority()).isEqualTo(DEFAULT_PRIORITY);
-        assertThat(testPatientTestTimings.getClinicalNote()).isEqualTo(DEFAULT_CLINICAL_NOTE);
+        assertThat(testPatientTestTimings.getPriority()).isEqualTo(UPDATED_PRIORITY);
+        assertThat(testPatientTestTimings.getClinicalNote()).isEqualTo(UPDATED_CLINICAL_NOTE);
         assertThat(testPatientTestTimings.getSpclInstruction()).isEqualTo(DEFAULT_SPCL_INSTRUCTION);
         assertThat(testPatientTestTimings.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testPatientTestTimings.getEndTime()).isEqualTo(UPDATED_END_TIME);
-        assertThat(testPatientTestTimings.getStartTime()).isEqualTo(UPDATED_START_TIME);
+        assertThat(testPatientTestTimings.getEndTime()).isEqualTo(DEFAULT_END_TIME);
+        assertThat(testPatientTestTimings.getStartTime()).isEqualTo(DEFAULT_START_TIME);
     }
 
     @Test

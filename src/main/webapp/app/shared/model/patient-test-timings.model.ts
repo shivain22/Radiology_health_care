@@ -8,8 +8,8 @@ export interface IPatientTestTimings {
   clinicalNote?: string | null;
   spclInstruction?: string | null;
   status?: string | null;
-  startTime?: dayjs.Dayjs | null;
   endTime?: dayjs.Dayjs | null;
+  startTime?: dayjs.Dayjs | null;
   patientInfo?: IPatientInfo;
   testCategories?: ITestCategories | null;
 }

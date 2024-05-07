@@ -519,8 +519,6 @@ class TechnicianEquipmentMappingResourceIT {
         TechnicianEquipmentMapping partialUpdatedTechnicianEquipmentMapping = new TechnicianEquipmentMapping();
         partialUpdatedTechnicianEquipmentMapping.setId(technicianEquipmentMapping.getId());
 
-        partialUpdatedTechnicianEquipmentMapping.dateTime(UPDATED_DATE_TIME);
-
         restTechnicianEquipmentMappingMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedTechnicianEquipmentMapping.getId())
@@ -535,7 +533,7 @@ class TechnicianEquipmentMappingResourceIT {
         TechnicianEquipmentMapping testTechnicianEquipmentMapping = technicianEquipmentMappingList.get(
             technicianEquipmentMappingList.size() - 1
         );
-        assertThat(testTechnicianEquipmentMapping.getDateTime()).isEqualTo(UPDATED_DATE_TIME);
+        assertThat(testTechnicianEquipmentMapping.getDateTime()).isEqualTo(DEFAULT_DATE_TIME);
     }
 
     @Test

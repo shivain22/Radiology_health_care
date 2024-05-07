@@ -2,10 +2,7 @@ package com.radiology.health.care.service.impl;
 
 import com.radiology.health.care.domain.Unit;
 import com.radiology.health.care.repository.UnitRepository;
-import com.radiology.health.care.repository.UserRepository;
-import com.radiology.health.care.security.SecurityUtils;
 import com.radiology.health.care.service.UnitService;
-import com.radiology.health.care.service.dto.AdminUserDTO;
 import com.radiology.health.care.service.dto.UnitDTO;
 import com.radiology.health.care.service.mapper.UnitMapper;
 import java.util.Optional;
@@ -29,24 +26,14 @@ public class UnitServiceImpl implements UnitService {
 
     private final UnitMapper unitMapper;
 
-    private final UserRepository userRepository;
-
-    public UnitServiceImpl(UnitRepository unitRepository, UnitMapper unitMapper, UserRepository userRepository) {
+    public UnitServiceImpl(UnitRepository unitRepository, UnitMapper unitMapper) {
         this.unitRepository = unitRepository;
         this.unitMapper = unitMapper;
-        this.userRepository = userRepository;
     }
 
     @Override
     public UnitDTO save(UnitDTO unitDTO) {
         log.debug("Request to save Unit : {}", unitDTO);
-        AdminUserDTO adminUser = SecurityUtils
-            .getCurrentUserLogin()
-            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new RuntimeException("User could not be found"));
-        unitDTO.setUserId(adminUser.getId());
-        unitDTO.setLogin(adminUser.getLogin());
         Unit unit = unitMapper.toEntity(unitDTO);
         unit = unitRepository.save(unit);
         return unitMapper.toDto(unit);
@@ -55,13 +42,6 @@ public class UnitServiceImpl implements UnitService {
     @Override
     public UnitDTO update(UnitDTO unitDTO) {
         log.debug("Request to update Unit : {}", unitDTO);
-        AdminUserDTO adminUser = SecurityUtils
-            .getCurrentUserLogin()
-            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new RuntimeException("User could not be found"));
-        unitDTO.setUserId(adminUser.getId());
-        unitDTO.setLogin(adminUser.getLogin());
         Unit unit = unitMapper.toEntity(unitDTO);
         unit = unitRepository.save(unit);
         return unitMapper.toDto(unit);
@@ -70,13 +50,7 @@ public class UnitServiceImpl implements UnitService {
     @Override
     public Optional<UnitDTO> partialUpdate(UnitDTO unitDTO) {
         log.debug("Request to partially update Unit : {}", unitDTO);
-        AdminUserDTO adminUser = SecurityUtils
-            .getCurrentUserLogin()
-            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new RuntimeException("User could not be found"));
-        unitDTO.setUserId(adminUser.getId());
-        unitDTO.setLogin(adminUser.getLogin());
+
         return unitRepository
             .findById(unitDTO.getId())
             .map(existingUnit -> {

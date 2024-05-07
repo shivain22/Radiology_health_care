@@ -134,7 +134,9 @@ export const Equipment = () => {
                   <th>
                     Room <FontAwesomeIcon icon="sort" />
                   </th>
-
+                  <th>
+                    User <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -148,7 +150,7 @@ export const Equipment = () => {
                     </td>
                     <td>{equipment.name}</td>
                     <td>{equipment.room ? <Link to={`/room/${equipment.room.id}`}>{equipment.room.id}</Link> : ''}</td>
-
+                    <td>{equipment.user ? equipment.user.id : ''}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/equipment/${equipment.id}`} color="info" size="sm" data-cy="entityDetailsButton">

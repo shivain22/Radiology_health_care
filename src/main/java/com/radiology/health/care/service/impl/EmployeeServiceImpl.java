@@ -2,10 +2,7 @@ package com.radiology.health.care.service.impl;
 
 import com.radiology.health.care.domain.Employee;
 import com.radiology.health.care.repository.EmployeeRepository;
-import com.radiology.health.care.repository.UserRepository;
-import com.radiology.health.care.security.SecurityUtils;
 import com.radiology.health.care.service.EmployeeService;
-import com.radiology.health.care.service.dto.AdminUserDTO;
 import com.radiology.health.care.service.dto.EmployeeDTO;
 import com.radiology.health.care.service.mapper.EmployeeMapper;
 import java.util.Optional;
@@ -29,24 +26,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeMapper employeeMapper;
 
-    private final UserRepository userRepository;
-
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper, UserRepository userRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
-        this.userRepository = userRepository;
     }
 
     @Override
     public EmployeeDTO save(EmployeeDTO employeeDTO) {
         log.debug("Request to save Employee : {}", employeeDTO);
-        AdminUserDTO adminUser = SecurityUtils
-            .getCurrentUserLogin()
-            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new RuntimeException("User could not be found"));
-        employeeDTO.setUserId(adminUser.getId());
-        employeeDTO.setLogin(adminUser.getLogin());
         Employee employee = employeeMapper.toEntity(employeeDTO);
         employee = employeeRepository.save(employee);
         return employeeMapper.toDto(employee);
@@ -55,13 +42,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDTO update(EmployeeDTO employeeDTO) {
         log.debug("Request to update Employee : {}", employeeDTO);
-        AdminUserDTO adminUser = SecurityUtils
-            .getCurrentUserLogin()
-            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new RuntimeException("User could not be found"));
-        employeeDTO.setUserId(adminUser.getId());
-        employeeDTO.setLogin(adminUser.getLogin());
         Employee employee = employeeMapper.toEntity(employeeDTO);
         employee = employeeRepository.save(employee);
         return employeeMapper.toDto(employee);
@@ -70,13 +50,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Optional<EmployeeDTO> partialUpdate(EmployeeDTO employeeDTO) {
         log.debug("Request to partially update Employee : {}", employeeDTO);
-        AdminUserDTO adminUser = SecurityUtils
-            .getCurrentUserLogin()
-            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new RuntimeException("User could not be found"));
-        employeeDTO.setUserId(adminUser.getId());
-        employeeDTO.setLogin(adminUser.getLogin());
 
         return employeeRepository
             .findById(employeeDTO.getId())

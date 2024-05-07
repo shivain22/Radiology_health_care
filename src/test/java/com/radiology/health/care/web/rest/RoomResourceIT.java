@@ -483,8 +483,6 @@ class RoomResourceIT {
         Room partialUpdatedRoom = new Room();
         partialUpdatedRoom.setId(room.getId());
 
-        partialUpdatedRoom.roomNo(UPDATED_ROOM_NO);
-
         restRoomMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedRoom.getId())
@@ -497,7 +495,7 @@ class RoomResourceIT {
         List<Room> roomList = roomRepository.findAll();
         assertThat(roomList).hasSize(databaseSizeBeforeUpdate);
         Room testRoom = roomList.get(roomList.size() - 1);
-        assertThat(testRoom.getRoomNo()).isEqualTo(UPDATED_ROOM_NO);
+        assertThat(testRoom.getRoomNo()).isEqualTo(DEFAULT_ROOM_NO);
     }
 
     @Test

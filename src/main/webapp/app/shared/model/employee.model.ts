@@ -14,7 +14,7 @@ export interface IEmployee {
   rank?: IRank;
   empService?: IEmpService;
   unit?: IUnit;
-
+  user?: IUser;
   technicianEquipmentMappings?: ITechnicianEquipmentMapping[] | null;
   patientInfoEmployeeIds?: IPatientInfo[] | null;
   patientInfoEmployeeHis?: IPatientInfo[] | null;

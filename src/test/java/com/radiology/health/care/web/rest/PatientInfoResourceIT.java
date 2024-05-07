@@ -188,7 +188,7 @@ class PatientInfoResourceIT {
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER)))
             .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH)))
-            .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE)))
+            .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE.intValue())))
             .andExpect(jsonPath("$.[*].relation").value(hasItem(DEFAULT_RELATION)));
     }
 
@@ -225,7 +225,7 @@ class PatientInfoResourceIT {
             .andExpect(jsonPath("$.age").value(DEFAULT_AGE))
             .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER))
             .andExpect(jsonPath("$.dateOfBirth").value(DEFAULT_DATE_OF_BIRTH))
-            .andExpect(jsonPath("$.mobile").value(DEFAULT_MOBILE))
+            .andExpect(jsonPath("$.mobile").value(DEFAULT_MOBILE.intValue()))
             .andExpect(jsonPath("$.relation").value(DEFAULT_RELATION));
     }
 
@@ -790,7 +790,7 @@ class PatientInfoResourceIT {
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER)))
             .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH)))
-            .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE)))
+            .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE.intValue())))
             .andExpect(jsonPath("$.[*].relation").value(hasItem(DEFAULT_RELATION)));
 
         // Check, that the count call also returns 1
@@ -945,7 +945,7 @@ class PatientInfoResourceIT {
         PatientInfo partialUpdatedPatientInfo = new PatientInfo();
         partialUpdatedPatientInfo.setId(patientInfo.getId());
 
-        partialUpdatedPatientInfo.name(UPDATED_NAME).mobile(UPDATED_MOBILE).relation(UPDATED_RELATION);
+        partialUpdatedPatientInfo.gender(UPDATED_GENDER).mobile(UPDATED_MOBILE).relation(UPDATED_RELATION);
 
         restPatientInfoMockMvc
             .perform(
@@ -959,9 +959,9 @@ class PatientInfoResourceIT {
         List<PatientInfo> patientInfoList = patientInfoRepository.findAll();
         assertThat(patientInfoList).hasSize(databaseSizeBeforeUpdate);
         PatientInfo testPatientInfo = patientInfoList.get(patientInfoList.size() - 1);
-        assertThat(testPatientInfo.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testPatientInfo.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testPatientInfo.getAge()).isEqualTo(DEFAULT_AGE);
-        assertThat(testPatientInfo.getGender()).isEqualTo(DEFAULT_GENDER);
+        assertThat(testPatientInfo.getGender()).isEqualTo(UPDATED_GENDER);
         assertThat(testPatientInfo.getDateOfBirth()).isEqualTo(DEFAULT_DATE_OF_BIRTH);
         assertThat(testPatientInfo.getMobile()).isEqualTo(UPDATED_MOBILE);
         assertThat(testPatientInfo.getRelation()).isEqualTo(UPDATED_RELATION);

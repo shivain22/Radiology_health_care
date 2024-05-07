@@ -45,19 +45,19 @@ export const PatientTestTimingsDetail = () => {
           </dt>
           <dd>{patientTestTimingsEntity.status}</dd>
           <dt>
-            <span id="startTime">Start Timing</span>
-          </dt>
-          <dd>
-            {patientTestTimingsEntity.startTime ? (
-              <TextFormat value={patientTestTimingsEntity.startTime} type="date" format={APP_DATE_FORMAT} />
-            ) : null}
-          </dd>
-          <dt>
             <span id="endTime">End Time</span>
           </dt>
           <dd>
             {patientTestTimingsEntity.endTime ? (
               <TextFormat value={patientTestTimingsEntity.endTime} type="date" format={APP_DATE_FORMAT} />
+            ) : null}
+          </dd>
+          <dt>
+            <span id="startTime">Start Time</span>
+          </dt>
+          <dd>
+            {patientTestTimingsEntity.startTime ? (
+              <TextFormat value={patientTestTimingsEntity.startTime} type="date" format={APP_DATE_FORMAT} />
             ) : null}
           </dd>
           <dt>Patient Info</dt>

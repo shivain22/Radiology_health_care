@@ -6,7 +6,7 @@ export interface IUnit {
   id?: number;
   name?: string;
   empService?: IEmpService;
-
+  user?: IUser;
   employees?: IEmployee[] | null;
 }
 

@@ -2,7 +2,6 @@ package com.radiology.health.care.service.dto;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -21,94 +20,13 @@ public class EmployeeDTO implements Serializable {
 
     private String serviceNo;
 
-    private Long rankId;
+    private RankDTO rank;
 
-    private Long empServiceId;
+    private EmpServiceDTO empService;
 
-    private Long unitId;
+    private UnitDTO unit;
 
-    public Long getRankId() {
-        return rankId;
-    }
-
-    public void setRankId(Long rankId) {
-        this.rankId = rankId;
-    }
-
-    public Long getEmpServiceId() {
-        return empServiceId;
-    }
-
-    public void setEmpServiceId(Long empServiceId) {
-        this.empServiceId = empServiceId;
-    }
-
-    public Long getUnitId() {
-        return unitId;
-    }
-
-    public void setUnitId(Long unitId) {
-        this.unitId = unitId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    private Long userId;
-
-    private String login;
-    private String createdBy;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    private Instant createdDate;
-
-    private String lastModifiedBy;
-
-    private Instant lastModifiedDate;
+    private UserDTO user;
 
     public Long getId() {
         return id;
@@ -150,6 +68,38 @@ public class EmployeeDTO implements Serializable {
         this.serviceNo = serviceNo;
     }
 
+    public RankDTO getRank() {
+        return rank;
+    }
+
+    public void setRank(RankDTO rank) {
+        this.rank = rank;
+    }
+
+    public EmpServiceDTO getEmpService() {
+        return empService;
+    }
+
+    public void setEmpService(EmpServiceDTO empService) {
+        this.empService = empService;
+    }
+
+    public UnitDTO getUnit() {
+        return unit;
+    }
+
+    public void setUnit(UnitDTO unit) {
+        this.unit = unit;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -180,10 +130,10 @@ public class EmployeeDTO implements Serializable {
             ", technician='" + getTechnician() + "'" +
             ", his='" + getHis() + "'" +
             ", serviceNo='" + getServiceNo() + "'" +
-            ", rankId=" + getRankId() +
-            ", empServiceId=" + getEmpServiceId() +
-            ", unitId=" + getUnitId() +
-            ", userId=" + getUserId() +
+            ", rank=" + getRank() +
+            ", empService=" + getEmpService() +
+            ", unit=" + getUnit() +
+            ", user=" + getUser() +
             "}";
     }
 }

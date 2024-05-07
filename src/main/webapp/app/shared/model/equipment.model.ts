@@ -7,7 +7,7 @@ export interface IEquipment {
   id?: number;
   name?: string;
   room?: IRoom | null;
-
+  user?: IUser;
   technicianEquipmentMappings?: ITechnicianEquipmentMapping[] | null;
   testCategories?: ITestCategories[] | null;
 }

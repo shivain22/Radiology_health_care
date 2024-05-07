@@ -9,7 +9,7 @@ export interface IRank {
   shortName?: string | null;
   division?: keyof typeof rankDivisions | null;
   empService?: IEmpService;
-
+  user?: IUser;
   employees?: IEmployee[] | null;
 }
 

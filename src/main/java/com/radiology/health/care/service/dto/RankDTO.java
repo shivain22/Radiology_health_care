@@ -3,7 +3,6 @@ package com.radiology.health.care.service.dto;
 import com.radiology.health.care.domain.enumeration.rankDivisions;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -21,58 +20,9 @@ public class RankDTO implements Serializable {
 
     private rankDivisions division;
 
-    private Long empServiceId;
+    private EmpServiceDTO empService;
 
-    private Long userId;
-
-    private String login;
-    private String createdBy;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    private Instant createdDate;
-
-    private String lastModifiedBy;
-
-    private Instant lastModifiedDate;
+    private UserDTO user;
 
     public Long getId() {
         return id;
@@ -106,12 +56,20 @@ public class RankDTO implements Serializable {
         this.division = division;
     }
 
-    public Long getUserId() {
-        return userId;
+    public EmpServiceDTO getEmpService() {
+        return empService;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setEmpService(EmpServiceDTO empService) {
+        this.empService = empService;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     @Override
@@ -135,14 +93,6 @@ public class RankDTO implements Serializable {
         return Objects.hash(this.id);
     }
 
-    public Long getEmpServiceId() {
-        return empServiceId;
-    }
-
-    public void setEmpServiceId(Long empServiceId) {
-        this.empServiceId = empServiceId;
-    }
-
     // prettier-ignore
     @Override
     public String toString() {
@@ -151,8 +101,8 @@ public class RankDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", shortName='" + getShortName() + "'" +
             ", division='" + getDivision() + "'" +
-            ", empServiceId=" + getEmpServiceId() +
-            ", userId=" + getUserId() +
+            ", empService=" + getEmpService() +
+            ", user=" + getUser() +
             "}";
     }
 }

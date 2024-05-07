@@ -1,10 +1,6 @@
 package com.radiology.health.care.service;
 
-import com.radiology.health.care.domain.TestCategories;
 import com.radiology.health.care.service.dto.PatientTestTimingsDTO;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -8,6 +8,7 @@ export interface ITechnicianEquipmentMapping {
   dateTime?: dayjs.Dayjs;
   equipment?: IEquipment;
   employee?: IEmployee;
+  user?: IUser;
 }
 
 export const defaultValue: Readonly<ITechnicianEquipmentMapping> = {};

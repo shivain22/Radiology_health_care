@@ -31,9 +31,9 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     private StringFilter status;
 
-    private ZonedDateTimeFilter startTime;
-
     private ZonedDateTimeFilter endTime;
+
+    private ZonedDateTimeFilter startTime;
 
     private LongFilter patientInfoId;
 
@@ -49,8 +49,8 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         this.clinicalNote = other.clinicalNote == null ? null : other.clinicalNote.copy();
         this.spclInstruction = other.spclInstruction == null ? null : other.spclInstruction.copy();
         this.status = other.status == null ? null : other.status.copy();
-        this.startTime = other.startTime == null ? null : other.startTime.copy();
         this.endTime = other.endTime == null ? null : other.endTime.copy();
+        this.startTime = other.startTime == null ? null : other.startTime.copy();
         this.patientInfoId = other.patientInfoId == null ? null : other.patientInfoId.copy();
         this.testCategoriesId = other.testCategoriesId == null ? null : other.testCategoriesId.copy();
         this.distinct = other.distinct;
@@ -136,21 +136,6 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         this.status = status;
     }
 
-    public ZonedDateTimeFilter getStartTime() {
-        return startTime;
-    }
-
-    public ZonedDateTimeFilter startTime() {
-        if (startTime == null) {
-            startTime = new ZonedDateTimeFilter();
-        }
-        return startTime;
-    }
-
-    public void setStartTime(ZonedDateTimeFilter startTime) {
-        this.startTime = startTime;
-    }
-
     public ZonedDateTimeFilter getEndTime() {
         return endTime;
     }
@@ -164,6 +149,21 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     public void setEndTime(ZonedDateTimeFilter endTime) {
         this.endTime = endTime;
+    }
+
+    public ZonedDateTimeFilter getStartTime() {
+        return startTime;
+    }
+
+    public ZonedDateTimeFilter startTime() {
+        if (startTime == null) {
+            startTime = new ZonedDateTimeFilter();
+        }
+        return startTime;
+    }
+
+    public void setStartTime(ZonedDateTimeFilter startTime) {
+        this.startTime = startTime;
     }
 
     public LongFilter getPatientInfoId() {
@@ -219,8 +219,8 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             Objects.equals(clinicalNote, that.clinicalNote) &&
             Objects.equals(spclInstruction, that.spclInstruction) &&
             Objects.equals(status, that.status) &&
-            Objects.equals(startTime, that.startTime) &&
             Objects.equals(endTime, that.endTime) &&
+            Objects.equals(startTime, that.startTime) &&
             Objects.equals(patientInfoId, that.patientInfoId) &&
             Objects.equals(testCategoriesId, that.testCategoriesId) &&
             Objects.equals(distinct, that.distinct)
@@ -235,8 +235,8 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             clinicalNote,
             spclInstruction,
             status,
-            startTime,
             endTime,
+            startTime,
             patientInfoId,
             testCategoriesId,
             distinct
@@ -252,8 +252,8 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             (clinicalNote != null ? "clinicalNote=" + clinicalNote + ", " : "") +
             (spclInstruction != null ? "spclInstruction=" + spclInstruction + ", " : "") +
             (status != null ? "status=" + status + ", " : "") +
-            (startTime != null ? "startTime=" + startTime + ", " : "") +
             (endTime != null ? "endTime=" + endTime + ", " : "") +
+            (startTime != null ? "startTime=" + startTime + ", " : "") +
             (patientInfoId != null ? "patientInfoId=" + patientInfoId + ", " : "") +
             (testCategoriesId != null ? "testCategoriesId=" + testCategoriesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

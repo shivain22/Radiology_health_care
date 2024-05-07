@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { IEmpService } from 'app/shared/model/emp-service.model';
 import { getEntity, updateEntity, createEntity, reset } from './emp-service.reducer';
 
@@ -19,6 +21,7 @@ export const EmpServiceUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const users = useAppSelector(state => state.userManagement.users);
   const empServiceEntity = useAppSelector(state => state.empService.entity);
   const loading = useAppSelector(state => state.empService.loading);
   const updating = useAppSelector(state => state.empService.updating);
@@ -32,6 +35,8 @@ export const EmpServiceUpdate = () => {
     if (!isNew) {
       dispatch(getEntity(id));
     }
+
+    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -49,6 +54,7 @@ export const EmpServiceUpdate = () => {
     const entity = {
       ...empServiceEntity,
       ...values,
+      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -63,6 +69,7 @@ export const EmpServiceUpdate = () => {
       ? {}
       : {
           ...empServiceEntity,
+          user: empServiceEntity?.user?.id,
         };
 
   return (
@@ -91,6 +98,16 @@ export const EmpServiceUpdate = () => {
                   required: { value: true, message: 'This field is required.' },
                 }}
               />
+              <ValidatedField id="emp-service-user" name="user" data-cy="user" label="User" type="select" required>
+                <option value="" key="0" />
+                {users
+                  ? users.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <FormText>This field is required.</FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/emp-service" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

@@ -6,7 +6,6 @@ import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import org.hibernate.envers.Audited;
 
 /**
  * A TestCategories.
@@ -14,8 +13,7 @@ import org.hibernate.envers.Audited;
 @Entity
 @Table(name = "test_categories")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@Audited
-public class TestCategories extends AbstractAuditingEntity<Long> implements Serializable {
+public class TestCategories implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,16 +44,6 @@ public class TestCategories extends AbstractAuditingEntity<Long> implements Seri
     @ManyToOne(optional = false)
     @NotNull
     private User user;
-
-    private String login;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "testCategories")
     @JsonIgnoreProperties(value = { "patientInfo", "testCategories" }, allowSetters = true)

@@ -2,7 +2,6 @@ package com.radiology.health.care.service.dto;
 
 import com.radiology.health.care.domain.User;
 import java.io.Serializable;
-import java.time.Instant;
 
 /**
  * A DTO representing a user, with only the public attributes.
@@ -14,46 +13,6 @@ public class UserDTO implements Serializable {
     private Long id;
 
     private String login;
-
-    private String createdBy;
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    private Instant createdDate;
-
-    private String lastModifiedBy;
-
-    private Instant lastModifiedDate;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.

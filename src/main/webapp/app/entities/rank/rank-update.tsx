@@ -10,7 +10,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IEmpService } from 'app/shared/model/emp-service.model';
 import { getEntities as getEmpServices } from 'app/entities/emp-service/emp-service.reducer';
-
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { IRank } from 'app/shared/model/rank.model';
 import { rankDivisions } from 'app/shared/model/enumerations/rank-divisions.model';
 import { getEntity, updateEntity, createEntity, reset } from './rank.reducer';
@@ -24,7 +25,7 @@ export const RankUpdate = () => {
   const isNew = id === undefined;
 
   const empServices = useAppSelector(state => state.empService.entities);
-
+  const users = useAppSelector(state => state.userManagement.users);
   const rankEntity = useAppSelector(state => state.rank.entity);
   const loading = useAppSelector(state => state.rank.loading);
   const updating = useAppSelector(state => state.rank.updating);
@@ -41,6 +42,7 @@ export const RankUpdate = () => {
     }
 
     dispatch(getEmpServices({}));
+    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -59,6 +61,7 @@ export const RankUpdate = () => {
       ...rankEntity,
       ...values,
       empService: empServices.find(it => it.id.toString() === values.empService.toString()),
+      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -75,6 +78,7 @@ export const RankUpdate = () => {
           division: 'OTHERS',
           ...rankEntity,
           empService: rankEntity?.empService?.id,
+          user: rankEntity?.user?.id,
         };
 
   return (
@@ -122,6 +126,16 @@ export const RankUpdate = () => {
                   : null}
               </ValidatedField>
               <FormText>This field is required.</FormText>
+              <ValidatedField id="rank-user" name="user" data-cy="user" label="User" type="select" required>
+                <option value="" key="0" />
+                {users
+                  ? users.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <FormText>This field is required.</FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/rank" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

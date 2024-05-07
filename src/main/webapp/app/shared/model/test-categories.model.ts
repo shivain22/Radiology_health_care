@@ -8,6 +8,7 @@ export interface ITestCategories {
   testDuration?: number | null;
   equipment?: IEquipment;
   parentTestCategory?: ITestCategories | null;
+  user?: IUser;
   patientTestTimings?: IPatientTestTimings[] | null;
   testCategoryParents?: ITestCategories[] | null;
 }

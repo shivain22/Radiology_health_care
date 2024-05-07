@@ -4,7 +4,7 @@ import { IEquipment } from 'app/shared/model/equipment.model';
 export interface IRoom {
   id?: number;
   roomNo?: number;
-
+  user?: IUser;
   equipment?: IEquipment[] | null;
 }
 
