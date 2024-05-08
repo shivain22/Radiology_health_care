@@ -35,6 +35,10 @@ export const TestCategoriesDetail = () => {
             <span id="testDuration">Test Duration</span>
           </dt>
           <dd>{testCategoriesEntity.testDuration}</dd>
+          <dt>
+            <span id="patientReport">Patient Report</span>
+          </dt>
+          <dd>{testCategoriesEntity.patientReport}</dd>
           <dt>Equipment</dt>
           <dd>{testCategoriesEntity.equipment ? testCategoriesEntity.equipment.id : ''}</dd>
           <dt>Parent Test Category</dt>

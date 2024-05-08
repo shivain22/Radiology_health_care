@@ -17,6 +17,8 @@ public class TestCategoriesDTO implements Serializable {
 
     private Integer testDuration;
 
+    private String patientReport;
+
     private EquipmentDTO equipment;
 
     private TestCategoriesDTO parentTestCategory;
@@ -45,6 +47,14 @@ public class TestCategoriesDTO implements Serializable {
 
     public void setTestDuration(Integer testDuration) {
         this.testDuration = testDuration;
+    }
+
+    public String getPatientReport() {
+        return patientReport;
+    }
+
+    public void setPatientReport(String patientReport) {
+        this.patientReport = patientReport;
     }
 
     public EquipmentDTO getEquipment() {
@@ -99,6 +109,7 @@ public class TestCategoriesDTO implements Serializable {
             "id=" + getId() +
             ", testName='" + getTestName() + "'" +
             ", testDuration=" + getTestDuration() +
+            ", patientReport='" + getPatientReport() + "'" +
             ", equipment=" + getEquipment() +
             ", parentTestCategory=" + getParentTestCategory() +
             ", user=" + getUser() +

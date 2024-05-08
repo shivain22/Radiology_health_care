@@ -6,6 +6,7 @@ export interface ITestCategories {
   id?: number;
   testName?: string;
   testDuration?: number | null;
+  patientReport?: string | null;
   equipment?: IEquipment;
   parentTestCategory?: ITestCategories | null;
   user?: IUser;

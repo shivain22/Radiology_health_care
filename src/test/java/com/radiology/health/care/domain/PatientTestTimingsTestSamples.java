@@ -15,7 +15,8 @@ public class PatientTestTimingsTestSamples {
             .priority("priority1")
             .clinicalNote("clinicalNote1")
             .spclInstruction("spclInstruction1")
-            .status("status1");
+            .status("status1")
+            .recommendedDoctor("recommendedDoctor1");
     }
 
     public static PatientTestTimings getPatientTestTimingsSample2() {
@@ -24,7 +25,8 @@ public class PatientTestTimingsTestSamples {
             .priority("priority2")
             .clinicalNote("clinicalNote2")
             .spclInstruction("spclInstruction2")
-            .status("status2");
+            .status("status2")
+            .recommendedDoctor("recommendedDoctor2");
     }
 
     public static PatientTestTimings getPatientTestTimingsRandomSampleGenerator() {
@@ -33,6 +35,7 @@ public class PatientTestTimingsTestSamples {
             .priority(UUID.randomUUID().toString())
             .clinicalNote(UUID.randomUUID().toString())
             .spclInstruction(UUID.randomUUID().toString())
-            .status(UUID.randomUUID().toString());
+            .status(UUID.randomUUID().toString())
+            .recommendedDoctor(UUID.randomUUID().toString());
     }
 }

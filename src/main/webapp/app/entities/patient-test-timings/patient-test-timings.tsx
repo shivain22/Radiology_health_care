@@ -152,6 +152,9 @@ export const PatientTestTimings = () => {
                   <th className="hand" onClick={sort('startTime')}>
                     Start Time <FontAwesomeIcon icon={getSortIconByFieldName('startTime')} />
                   </th>
+                  <th className="hand" onClick={sort('recommendedDoctor')}>
+                    Recommended Doctor <FontAwesomeIcon icon={getSortIconByFieldName('recommendedDoctor')} />
+                  </th>
                   <th>
                     Patient Info <FontAwesomeIcon icon="sort" />
                   </th>
@@ -183,6 +186,7 @@ export const PatientTestTimings = () => {
                         <TextFormat type="date" value={patientTestTimings.startTime} format={APP_DATE_FORMAT} />
                       ) : null}
                     </td>
+                    <td>{patientTestTimings.recommendedDoctor}</td>
                     <td>
                       {patientTestTimings.patientInfo ? (
                         <Link to={`/patient-info/${patientTestTimings.patientInfo.id}`}>{patientTestTimings.patientInfo.id}</Link>

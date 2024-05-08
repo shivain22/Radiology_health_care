@@ -27,6 +27,8 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
 
     private IntegerFilter testDuration;
 
+    private StringFilter patientReport;
+
     private LongFilter equipmentId;
 
     private LongFilter parentTestCategoryId;
@@ -45,6 +47,7 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.testName = other.testName == null ? null : other.testName.copy();
         this.testDuration = other.testDuration == null ? null : other.testDuration.copy();
+        this.patientReport = other.patientReport == null ? null : other.patientReport.copy();
         this.equipmentId = other.equipmentId == null ? null : other.equipmentId.copy();
         this.parentTestCategoryId = other.parentTestCategoryId == null ? null : other.parentTestCategoryId.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
@@ -101,6 +104,21 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
 
     public void setTestDuration(IntegerFilter testDuration) {
         this.testDuration = testDuration;
+    }
+
+    public StringFilter getPatientReport() {
+        return patientReport;
+    }
+
+    public StringFilter patientReport() {
+        if (patientReport == null) {
+            patientReport = new StringFilter();
+        }
+        return patientReport;
+    }
+
+    public void setPatientReport(StringFilter patientReport) {
+        this.patientReport = patientReport;
     }
 
     public LongFilter getEquipmentId() {
@@ -199,6 +217,7 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(testName, that.testName) &&
             Objects.equals(testDuration, that.testDuration) &&
+            Objects.equals(patientReport, that.patientReport) &&
             Objects.equals(equipmentId, that.equipmentId) &&
             Objects.equals(parentTestCategoryId, that.parentTestCategoryId) &&
             Objects.equals(userId, that.userId) &&
@@ -214,6 +233,7 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
             id,
             testName,
             testDuration,
+            patientReport,
             equipmentId,
             parentTestCategoryId,
             userId,
@@ -230,6 +250,7 @@ public class TestCategoriesCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (testName != null ? "testName=" + testName + ", " : "") +
             (testDuration != null ? "testDuration=" + testDuration + ", " : "") +
+            (patientReport != null ? "patientReport=" + patientReport + ", " : "") +
             (equipmentId != null ? "equipmentId=" + equipmentId + ", " : "") +
             (parentTestCategoryId != null ? "parentTestCategoryId=" + parentTestCategoryId + ", " : "") +
             (userId != null ? "userId=" + userId + ", " : "") +

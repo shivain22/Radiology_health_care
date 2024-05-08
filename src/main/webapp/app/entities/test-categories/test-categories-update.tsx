@@ -121,6 +121,13 @@ export const TestCategoriesUpdate = () => {
                 data-cy="testDuration"
                 type="text"
               />
+              <ValidatedField
+                label="Patient Report"
+                id="test-categories-patientReport"
+                name="patientReport"
+                data-cy="patientReport"
+                type="text"
+              />
               <ValidatedField id="test-categories-equipment" name="equipment" data-cy="equipment" label="Equipment" type="select" required>
                 <option value="" key="0" />
                 {equipment

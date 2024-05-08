@@ -60,6 +60,10 @@ export const PatientTestTimingsDetail = () => {
               <TextFormat value={patientTestTimingsEntity.startTime} type="date" format={APP_DATE_FORMAT} />
             ) : null}
           </dd>
+          <dt>
+            <span id="recommendedDoctor">Recommended Doctor</span>
+          </dt>
+          <dd>{patientTestTimingsEntity.recommendedDoctor}</dd>
           <dt>Patient Info</dt>
           <dd>{patientTestTimingsEntity.patientInfo ? patientTestTimingsEntity.patientInfo.id : ''}</dd>
           <dt>Test Categories</dt>

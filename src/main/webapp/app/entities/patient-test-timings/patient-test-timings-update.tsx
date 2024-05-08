@@ -136,6 +136,13 @@ export const PatientTestTimingsUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
+                label="Recommended Doctor"
+                id="patient-test-timings-recommendedDoctor"
+                name="recommendedDoctor"
+                data-cy="recommendedDoctor"
+                type="text"
+              />
+              <ValidatedField
                 id="patient-test-timings-patientInfo"
                 name="patientInfo"
                 data-cy="patientInfo"

@@ -39,6 +39,9 @@ public class PatientTestTimings implements Serializable {
     @Column(name = "start_time")
     private ZonedDateTime startTime;
 
+    @Column(name = "recommended_doctor")
+    private String recommendedDoctor;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "employeeId", "employeeHis", "employeeServiceNo", "patientTestTimings" }, allowSetters = true)
@@ -144,6 +147,19 @@ public class PatientTestTimings implements Serializable {
         this.startTime = startTime;
     }
 
+    public String getRecommendedDoctor() {
+        return this.recommendedDoctor;
+    }
+
+    public PatientTestTimings recommendedDoctor(String recommendedDoctor) {
+        this.setRecommendedDoctor(recommendedDoctor);
+        return this;
+    }
+
+    public void setRecommendedDoctor(String recommendedDoctor) {
+        this.recommendedDoctor = recommendedDoctor;
+    }
+
     public PatientInfo getPatientInfo() {
         return this.patientInfo;
     }
@@ -200,6 +216,7 @@ public class PatientTestTimings implements Serializable {
             ", status='" + getStatus() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", startTime='" + getStartTime() + "'" +
+            ", recommendedDoctor='" + getRecommendedDoctor() + "'" +
             "}";
     }
 }

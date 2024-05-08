@@ -12,17 +12,18 @@ public class TestCategoriesTestSamples {
     private static final AtomicInteger intCount = new AtomicInteger(random.nextInt() + (2 * Short.MAX_VALUE));
 
     public static TestCategories getTestCategoriesSample1() {
-        return new TestCategories().id(1L).testName("testName1").testDuration(1);
+        return new TestCategories().id(1L).testName("testName1").testDuration(1).patientReport("patientReport1");
     }
 
     public static TestCategories getTestCategoriesSample2() {
-        return new TestCategories().id(2L).testName("testName2").testDuration(2);
+        return new TestCategories().id(2L).testName("testName2").testDuration(2).patientReport("patientReport2");
     }
 
     public static TestCategories getTestCategoriesRandomSampleGenerator() {
         return new TestCategories()
             .id(longCount.incrementAndGet())
             .testName(UUID.randomUUID().toString())
-            .testDuration(intCount.incrementAndGet());
+            .testDuration(intCount.incrementAndGet())
+            .patientReport(UUID.randomUUID().toString());
     }
 }

@@ -25,6 +25,8 @@ public class PatientTestTimingsDTO implements Serializable {
 
     private ZonedDateTime startTime;
 
+    private String recommendedDoctor;
+
     private PatientInfoDTO patientInfo;
 
     private TestCategoriesDTO testCategories;
@@ -85,6 +87,14 @@ public class PatientTestTimingsDTO implements Serializable {
         this.startTime = startTime;
     }
 
+    public String getRecommendedDoctor() {
+        return recommendedDoctor;
+    }
+
+    public void setRecommendedDoctor(String recommendedDoctor) {
+        this.recommendedDoctor = recommendedDoctor;
+    }
+
     public PatientInfoDTO getPatientInfo() {
         return patientInfo;
     }
@@ -133,6 +143,7 @@ public class PatientTestTimingsDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", startTime='" + getStartTime() + "'" +
+            ", recommendedDoctor='" + getRecommendedDoctor() + "'" +
             ", patientInfo=" + getPatientInfo() +
             ", testCategories=" + getTestCategories() +
             "}";

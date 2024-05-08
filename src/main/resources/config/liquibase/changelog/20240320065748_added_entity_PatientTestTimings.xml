@@ -32,6 +32,9 @@
             <column name="start_time" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
+            <column name="recommended_doctor" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="patient_info_id" type="bigint">
                 <constraints nullable="false" />
             </column>
@@ -67,6 +70,7 @@
             <column name="status" type="string"/>
             <column name="end_time" type="date"/>
             <column name="start_time" type="date"/>
+            <column name="recommended_doctor" type="string"/>
             <column name="patient_info_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

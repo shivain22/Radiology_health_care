@@ -42,6 +42,9 @@ class TestCategoriesResourceIT {
     private static final Integer UPDATED_TEST_DURATION = 2;
     private static final Integer SMALLER_TEST_DURATION = 1 - 1;
 
+    private static final String DEFAULT_PATIENT_REPORT = "AAAAAAAAAA";
+    private static final String UPDATED_PATIENT_REPORT = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/test-categories";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -69,7 +72,10 @@ class TestCategoriesResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static TestCategories createEntity(EntityManager em) {
-        TestCategories testCategories = new TestCategories().testName(DEFAULT_TEST_NAME).testDuration(DEFAULT_TEST_DURATION);
+        TestCategories testCategories = new TestCategories()
+            .testName(DEFAULT_TEST_NAME)
+            .testDuration(DEFAULT_TEST_DURATION)
+            .patientReport(DEFAULT_PATIENT_REPORT);
         // Add required entity
         Equipment equipment;
         if (TestUtil.findAll(em, Equipment.class).isEmpty()) {
@@ -95,7 +101,10 @@ class TestCategoriesResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static TestCategories createUpdatedEntity(EntityManager em) {
-        TestCategories testCategories = new TestCategories().testName(UPDATED_TEST_NAME).testDuration(UPDATED_TEST_DURATION);
+        TestCategories testCategories = new TestCategories()
+            .testName(UPDATED_TEST_NAME)
+            .testDuration(UPDATED_TEST_DURATION)
+            .patientReport(UPDATED_PATIENT_REPORT);
         // Add required entity
         Equipment equipment;
         if (TestUtil.findAll(em, Equipment.class).isEmpty()) {
@@ -137,6 +146,7 @@ class TestCategoriesResourceIT {
         TestCategories testTestCategories = testCategoriesList.get(testCategoriesList.size() - 1);
         assertThat(testTestCategories.getTestName()).isEqualTo(DEFAULT_TEST_NAME);
         assertThat(testTestCategories.getTestDuration()).isEqualTo(DEFAULT_TEST_DURATION);
+        assertThat(testTestCategories.getPatientReport()).isEqualTo(DEFAULT_PATIENT_REPORT);
     }
 
     @Test
@@ -193,7 +203,8 @@ class TestCategoriesResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(testCategories.getId().intValue())))
             .andExpect(jsonPath("$.[*].testName").value(hasItem(DEFAULT_TEST_NAME)))
-            .andExpect(jsonPath("$.[*].testDuration").value(hasItem(DEFAULT_TEST_DURATION)));
+            .andExpect(jsonPath("$.[*].testDuration").value(hasItem(DEFAULT_TEST_DURATION)))
+            .andExpect(jsonPath("$.[*].patientReport").value(hasItem(DEFAULT_PATIENT_REPORT)));
     }
 
     @Test
@@ -209,7 +220,8 @@ class TestCategoriesResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(testCategories.getId().intValue()))
             .andExpect(jsonPath("$.testName").value(DEFAULT_TEST_NAME))
-            .andExpect(jsonPath("$.testDuration").value(DEFAULT_TEST_DURATION));
+            .andExpect(jsonPath("$.testDuration").value(DEFAULT_TEST_DURATION))
+            .andExpect(jsonPath("$.patientReport").value(DEFAULT_PATIENT_REPORT));
     }
 
     @Test
@@ -388,6 +400,71 @@ class TestCategoriesResourceIT {
 
     @Test
     @Transactional
+    void getAllTestCategoriesByPatientReportIsEqualToSomething() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where patientReport equals to DEFAULT_PATIENT_REPORT
+        defaultTestCategoriesShouldBeFound("patientReport.equals=" + DEFAULT_PATIENT_REPORT);
+
+        // Get all the testCategoriesList where patientReport equals to UPDATED_PATIENT_REPORT
+        defaultTestCategoriesShouldNotBeFound("patientReport.equals=" + UPDATED_PATIENT_REPORT);
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByPatientReportIsInShouldWork() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where patientReport in DEFAULT_PATIENT_REPORT or UPDATED_PATIENT_REPORT
+        defaultTestCategoriesShouldBeFound("patientReport.in=" + DEFAULT_PATIENT_REPORT + "," + UPDATED_PATIENT_REPORT);
+
+        // Get all the testCategoriesList where patientReport equals to UPDATED_PATIENT_REPORT
+        defaultTestCategoriesShouldNotBeFound("patientReport.in=" + UPDATED_PATIENT_REPORT);
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByPatientReportIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where patientReport is not null
+        defaultTestCategoriesShouldBeFound("patientReport.specified=true");
+
+        // Get all the testCategoriesList where patientReport is null
+        defaultTestCategoriesShouldNotBeFound("patientReport.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByPatientReportContainsSomething() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where patientReport contains DEFAULT_PATIENT_REPORT
+        defaultTestCategoriesShouldBeFound("patientReport.contains=" + DEFAULT_PATIENT_REPORT);
+
+        // Get all the testCategoriesList where patientReport contains UPDATED_PATIENT_REPORT
+        defaultTestCategoriesShouldNotBeFound("patientReport.contains=" + UPDATED_PATIENT_REPORT);
+    }
+
+    @Test
+    @Transactional
+    void getAllTestCategoriesByPatientReportNotContainsSomething() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        // Get all the testCategoriesList where patientReport does not contain DEFAULT_PATIENT_REPORT
+        defaultTestCategoriesShouldNotBeFound("patientReport.doesNotContain=" + DEFAULT_PATIENT_REPORT);
+
+        // Get all the testCategoriesList where patientReport does not contain UPDATED_PATIENT_REPORT
+        defaultTestCategoriesShouldBeFound("patientReport.doesNotContain=" + UPDATED_PATIENT_REPORT);
+    }
+
+    @Test
+    @Transactional
     void getAllTestCategoriesByEquipmentIsEqualToSomething() throws Exception {
         Equipment equipment;
         if (TestUtil.findAll(em, Equipment.class).isEmpty()) {
@@ -506,7 +583,8 @@ class TestCategoriesResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(testCategories.getId().intValue())))
             .andExpect(jsonPath("$.[*].testName").value(hasItem(DEFAULT_TEST_NAME)))
-            .andExpect(jsonPath("$.[*].testDuration").value(hasItem(DEFAULT_TEST_DURATION)));
+            .andExpect(jsonPath("$.[*].testDuration").value(hasItem(DEFAULT_TEST_DURATION)))
+            .andExpect(jsonPath("$.[*].patientReport").value(hasItem(DEFAULT_PATIENT_REPORT)));
 
         // Check, that the count call also returns 1
         restTestCategoriesMockMvc
@@ -554,7 +632,7 @@ class TestCategoriesResourceIT {
         TestCategories updatedTestCategories = testCategoriesRepository.findById(testCategories.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedTestCategories are not directly saved in db
         em.detach(updatedTestCategories);
-        updatedTestCategories.testName(UPDATED_TEST_NAME).testDuration(UPDATED_TEST_DURATION);
+        updatedTestCategories.testName(UPDATED_TEST_NAME).testDuration(UPDATED_TEST_DURATION).patientReport(UPDATED_PATIENT_REPORT);
         TestCategoriesDTO testCategoriesDTO = testCategoriesMapper.toDto(updatedTestCategories);
 
         restTestCategoriesMockMvc
@@ -571,6 +649,7 @@ class TestCategoriesResourceIT {
         TestCategories testTestCategories = testCategoriesList.get(testCategoriesList.size() - 1);
         assertThat(testTestCategories.getTestName()).isEqualTo(UPDATED_TEST_NAME);
         assertThat(testTestCategories.getTestDuration()).isEqualTo(UPDATED_TEST_DURATION);
+        assertThat(testTestCategories.getPatientReport()).isEqualTo(UPDATED_PATIENT_REPORT);
     }
 
     @Test
@@ -652,36 +731,6 @@ class TestCategoriesResourceIT {
         TestCategories partialUpdatedTestCategories = new TestCategories();
         partialUpdatedTestCategories.setId(testCategories.getId());
 
-        partialUpdatedTestCategories.testDuration(UPDATED_TEST_DURATION);
-
-        restTestCategoriesMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedTestCategories.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedTestCategories))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the TestCategories in the database
-        List<TestCategories> testCategoriesList = testCategoriesRepository.findAll();
-        assertThat(testCategoriesList).hasSize(databaseSizeBeforeUpdate);
-        TestCategories testTestCategories = testCategoriesList.get(testCategoriesList.size() - 1);
-        assertThat(testTestCategories.getTestName()).isEqualTo(DEFAULT_TEST_NAME);
-        assertThat(testTestCategories.getTestDuration()).isEqualTo(UPDATED_TEST_DURATION);
-    }
-
-    @Test
-    @Transactional
-    void fullUpdateTestCategoriesWithPatch() throws Exception {
-        // Initialize the database
-        testCategoriesRepository.saveAndFlush(testCategories);
-
-        int databaseSizeBeforeUpdate = testCategoriesRepository.findAll().size();
-
-        // Update the testCategories using partial update
-        TestCategories partialUpdatedTestCategories = new TestCategories();
-        partialUpdatedTestCategories.setId(testCategories.getId());
-
         partialUpdatedTestCategories.testName(UPDATED_TEST_NAME).testDuration(UPDATED_TEST_DURATION);
 
         restTestCategoriesMockMvc
@@ -698,6 +747,38 @@ class TestCategoriesResourceIT {
         TestCategories testTestCategories = testCategoriesList.get(testCategoriesList.size() - 1);
         assertThat(testTestCategories.getTestName()).isEqualTo(UPDATED_TEST_NAME);
         assertThat(testTestCategories.getTestDuration()).isEqualTo(UPDATED_TEST_DURATION);
+        assertThat(testTestCategories.getPatientReport()).isEqualTo(DEFAULT_PATIENT_REPORT);
+    }
+
+    @Test
+    @Transactional
+    void fullUpdateTestCategoriesWithPatch() throws Exception {
+        // Initialize the database
+        testCategoriesRepository.saveAndFlush(testCategories);
+
+        int databaseSizeBeforeUpdate = testCategoriesRepository.findAll().size();
+
+        // Update the testCategories using partial update
+        TestCategories partialUpdatedTestCategories = new TestCategories();
+        partialUpdatedTestCategories.setId(testCategories.getId());
+
+        partialUpdatedTestCategories.testName(UPDATED_TEST_NAME).testDuration(UPDATED_TEST_DURATION).patientReport(UPDATED_PATIENT_REPORT);
+
+        restTestCategoriesMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedTestCategories.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedTestCategories))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the TestCategories in the database
+        List<TestCategories> testCategoriesList = testCategoriesRepository.findAll();
+        assertThat(testCategoriesList).hasSize(databaseSizeBeforeUpdate);
+        TestCategories testTestCategories = testCategoriesList.get(testCategoriesList.size() - 1);
+        assertThat(testTestCategories.getTestName()).isEqualTo(UPDATED_TEST_NAME);
+        assertThat(testTestCategories.getTestDuration()).isEqualTo(UPDATED_TEST_DURATION);
+        assertThat(testTestCategories.getPatientReport()).isEqualTo(UPDATED_PATIENT_REPORT);
     }
 
     @Test

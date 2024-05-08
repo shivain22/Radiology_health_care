@@ -29,6 +29,9 @@ public class TestCategories implements Serializable {
     @Column(name = "test_duration")
     private Integer testDuration;
 
+    @Column(name = "patient_report")
+    private String patientReport;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "room", "user", "technicianEquipmentMappings", "testCategories" }, allowSetters = true)
@@ -95,6 +98,19 @@ public class TestCategories implements Serializable {
 
     public void setTestDuration(Integer testDuration) {
         this.testDuration = testDuration;
+    }
+
+    public String getPatientReport() {
+        return this.patientReport;
+    }
+
+    public TestCategories patientReport(String patientReport) {
+        this.setPatientReport(patientReport);
+        return this;
+    }
+
+    public void setPatientReport(String patientReport) {
+        this.patientReport = patientReport;
     }
 
     public Equipment getEquipment() {
@@ -224,6 +240,7 @@ public class TestCategories implements Serializable {
             "id=" + getId() +
             ", testName='" + getTestName() + "'" +
             ", testDuration=" + getTestDuration() +
+            ", patientReport='" + getPatientReport() + "'" +
             "}";
     }
 }

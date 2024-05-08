@@ -134,6 +134,9 @@ export const TestCategories = () => {
                   <th className="hand" onClick={sort('testDuration')}>
                     Test Duration <FontAwesomeIcon icon={getSortIconByFieldName('testDuration')} />
                   </th>
+                  <th className="hand" onClick={sort('patientReport')}>
+                    Patient Report <FontAwesomeIcon icon={getSortIconByFieldName('patientReport')} />
+                  </th>
                   <th>
                     Equipment <FontAwesomeIcon icon="sort" />
                   </th>
@@ -156,6 +159,7 @@ export const TestCategories = () => {
                     </td>
                     <td>{testCategories.testName}</td>
                     <td>{testCategories.testDuration}</td>
+                    <td>{testCategories.patientReport}</td>
                     <td>
                       {testCategories.equipment ? (
                         <Link to={`/equipment/${testCategories.equipment.id}`}>{testCategories.equipment.id}</Link>

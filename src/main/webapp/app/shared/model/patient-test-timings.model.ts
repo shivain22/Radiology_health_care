@@ -10,6 +10,7 @@ export interface IPatientTestTimings {
   status?: string | null;
   endTime?: dayjs.Dayjs | null;
   startTime?: dayjs.Dayjs | null;
+  recommendedDoctor?: string | null;
   patientInfo?: IPatientInfo;
   testCategories?: ITestCategories | null;
 }

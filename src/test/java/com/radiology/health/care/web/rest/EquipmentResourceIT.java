@@ -502,8 +502,6 @@ class EquipmentResourceIT {
         Equipment partialUpdatedEquipment = new Equipment();
         partialUpdatedEquipment.setId(equipment.getId());
 
-        partialUpdatedEquipment.name(UPDATED_NAME);
-
         restEquipmentMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedEquipment.getId())
@@ -516,7 +514,7 @@ class EquipmentResourceIT {
         List<Equipment> equipmentList = equipmentRepository.findAll();
         assertThat(equipmentList).hasSize(databaseSizeBeforeUpdate);
         Equipment testEquipment = equipmentList.get(equipmentList.size() - 1);
-        assertThat(testEquipment.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testEquipment.getName()).isEqualTo(DEFAULT_NAME);
     }
 
     @Test
