@@ -26,6 +26,16 @@ public class PatientTestTimingsDTO implements Serializable {
 
     private ZonedDateTime endTime;
 
+    public String getRecommendedDoctor() {
+        return recommendedDoctor;
+    }
+
+    public void setRecommendedDoctor(String recommendedDoctor) {
+        this.recommendedDoctor = recommendedDoctor;
+    }
+
+    private String recommendedDoctor;
+
     private Long patientInfoId;
 
     private Long testCategoriesId;
@@ -173,18 +183,25 @@ public class PatientTestTimingsDTO implements Serializable {
     }
 
     // prettier-ignore
+
     @Override
     public String toString() {
         return "PatientTestTimingsDTO{" +
-            "id=" + getId() +
-            ", priority='" + getPriority() + "'" +
-            ", clinicalNote='" + getClinicalNote() + "'" +
-            ", spclInstruction='" + getSpclInstruction() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", startTime='" + getStartTime() + "'" +
-            ", endTime='" + getEndTime() + "'" +
-            ", patientInfoId=" + getPatientInfoId() +
-            ", testCategoriesId=" + getTestCategoriesId() +
-            "}";
+            "id=" + id +
+            ", priority='" + priority + '\'' +
+            ", clinicalNote='" + clinicalNote + '\'' +
+            ", spclInstruction='" + spclInstruction + '\'' +
+            ", status='" + status + '\'' +
+            ", startTime=" + startTime +
+            ", endTime=" + endTime +
+            ", recommendedDoctor='" + recommendedDoctor + '\'' +
+            ", patientInfoId=" + patientInfoId +
+            ", testCategoriesId=" + testCategoriesId +
+            ", login='" + login + '\'' +
+            ", createdBy='" + createdBy + '\'' +
+            ", createdDate=" + createdDate +
+            ", lastModifiedBy='" + lastModifiedBy + '\'' +
+            ", lastModifiedDate=" + lastModifiedDate +
+            '}';
     }
 }

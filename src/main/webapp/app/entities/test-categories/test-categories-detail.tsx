@@ -35,10 +35,16 @@ export const TestCategoriesDetail = () => {
             <span id="testDuration">Test Duration</span>
           </dt>
           <dd>{testCategoriesEntity.testDuration}</dd>
+          <dt>
+            <span id="patientReport">Patient Report</span>
+          </dt>
+          <dd>{testCategoriesEntity.patientReport}</dd>
           <dt>Equipment</dt>
           <dd>{testCategoriesEntity.equipment ? testCategoriesEntity.equipment.id : ''}</dd>
           <dt>Parent Test Category</dt>
           <dd>{testCategoriesEntity.parentTestCategory ? testCategoriesEntity.parentTestCategory.id : ''}</dd>
+          <dt>User</dt>
+          <dd>{testCategoriesEntity.user ? testCategoriesEntity.user.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/test-categories" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

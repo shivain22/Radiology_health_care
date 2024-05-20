@@ -18,6 +18,8 @@ public class TestCategoriesDTO implements Serializable {
 
     private Integer testDuration;
 
+    private String patientReport;
+
     private Long equipmentId;
 
     public Long getEquipmentId() {
@@ -117,6 +119,14 @@ public class TestCategoriesDTO implements Serializable {
         return userId;
     }
 
+    public String getPatientReport() {
+        return patientReport;
+    }
+
+    public void setPatientReport(String patientReport) {
+        this.patientReport = patientReport;
+    }
+
     public void setUserId(Long userId) {
         this.userId = userId;
     }
@@ -143,15 +153,22 @@ public class TestCategoriesDTO implements Serializable {
     }
 
     // prettier-ignore
+
     @Override
     public String toString() {
         return "TestCategoriesDTO{" +
-            "id=" + getId() +
-            ", testName='" + getTestName() + "'" +
-            ", testDuration=" + getTestDuration() +
-            ", equipmentId=" + getEquipmentId() +
-            ", parentTestCategoryId=" + getParentTestCategoryId() +
-            ", userId=" + getUserId() +
-            "}";
+            "id=" + id +
+            ", testName='" + testName + '\'' +
+            ", testDuration=" + testDuration +
+            ", patientReport='" + patientReport + '\'' +
+            ", equipmentId=" + equipmentId +
+            ", parentTestCategoryId=" + parentTestCategoryId +
+            ", userId=" + userId +
+            ", login='" + login + '\'' +
+            ", createdBy='" + createdBy + '\'' +
+            ", createdDate=" + createdDate +
+            ", lastModifiedBy='" + lastModifiedBy + '\'' +
+            ", lastModifiedDate=" + lastModifiedDate +
+            '}';
     }
 }

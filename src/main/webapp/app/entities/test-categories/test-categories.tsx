@@ -134,13 +134,18 @@ export const TestCategories = () => {
                   <th className="hand" onClick={sort('testDuration')}>
                     Test Duration <FontAwesomeIcon icon={getSortIconByFieldName('testDuration')} />
                   </th>
+                  <th className="hand" onClick={sort('patientReport')}>
+                    Patient Report <FontAwesomeIcon icon={getSortIconByFieldName('patientReport')} />
+                  </th>
                   <th>
                     Equipment <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
                     Parent Test Category <FontAwesomeIcon icon="sort" />
                   </th>
-
+                  <th>
+                    User <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -154,6 +159,7 @@ export const TestCategories = () => {
                     </td>
                     <td>{testCategories.testName}</td>
                     <td>{testCategories.testDuration}</td>
+                    <td>{testCategories.patientReport}</td>
                     <td>
                       {testCategories.equipment ? (
                         <Link to={`/equipment/${testCategories.equipment.id}`}>{testCategories.equipment.id}</Link>
@@ -168,7 +174,7 @@ export const TestCategories = () => {
                         ''
                       )}
                     </td>
-
+                    <td>{testCategories.user ? testCategories.user.id : ''}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button

@@ -54,8 +54,8 @@ export const PatientTestTimingsUpdate = () => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
     }
-    values.startTime = convertDateTimeToServer(values.startTime);
     values.endTime = convertDateTimeToServer(values.endTime);
+    values.startTime = convertDateTimeToServer(values.startTime);
 
     const entity = {
       ...patientTestTimingsEntity,
@@ -74,13 +74,13 @@ export const PatientTestTimingsUpdate = () => {
   const defaultValues = () =>
     isNew
       ? {
-          startTime: displayDefaultDateTime(),
           endTime: displayDefaultDateTime(),
+          startTime: displayDefaultDateTime(),
         }
       : {
           ...patientTestTimingsEntity,
-          startTime: convertDateTimeFromServer(patientTestTimingsEntity.startTime),
           endTime: convertDateTimeFromServer(patientTestTimingsEntity.endTime),
+          startTime: convertDateTimeFromServer(patientTestTimingsEntity.startTime),
           patientInfo: patientTestTimingsEntity?.patientInfo?.id,
           testCategories: patientTestTimingsEntity?.testCategories?.id,
         };
@@ -120,7 +120,15 @@ export const PatientTestTimingsUpdate = () => {
               />
               <ValidatedField label="Status" id="patient-test-timings-status" name="status" data-cy="status" type="text" />
               <ValidatedField
-                label="Start Timing"
+                label="End Time"
+                id="patient-test-timings-endTime"
+                name="endTime"
+                data-cy="endTime"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+              <ValidatedField
+                label="Start Time"
                 id="patient-test-timings-startTime"
                 name="startTime"
                 data-cy="startTime"
@@ -128,12 +136,11 @@ export const PatientTestTimingsUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                label="End Time"
-                id="patient-test-timings-endTime"
-                name="endTime"
-                data-cy="endTime"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
+                label="Recommended Doctor"
+                id="patient-test-timings-recommendedDoctor"
+                name="recommendedDoctor"
+                data-cy="recommendedDoctor"
+                type="text"
               />
               <ValidatedField
                 id="patient-test-timings-patientInfo"

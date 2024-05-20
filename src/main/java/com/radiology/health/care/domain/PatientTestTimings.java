@@ -41,10 +41,26 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
     @Column(name = "start_time")
     private ZonedDateTime startTime;
 
+    @Column(name = "recommended_doctor")
+    private String recommendedDoctor;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "employeeId", "employeeHis", "employeeServiceNo", "patientTestTimings" }, allowSetters = true)
     private PatientInfo patientInfo;
+
+    public PatientTestTimings recommendedDoctor(String recommendedDoctor) {
+        this.recommendedDoctor = recommendedDoctor;
+        return this;
+    }
+
+    public String getRecommendedDoctor() {
+        return recommendedDoctor;
+    }
+
+    public void setRecommendedDoctor(String recommendedDoctor) {
+        this.recommendedDoctor = recommendedDoctor;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
@@ -202,16 +218,21 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
     }
 
     // prettier-ignore
+
     @Override
     public String toString() {
         return "PatientTestTimings{" +
-            "id=" + getId() +
-            ", priority='" + getPriority() + "'" +
-            ", clinicalNote='" + getClinicalNote() + "'" +
-            ", spclInstruction='" + getSpclInstruction() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", endTime='" + getEndTime() + "'" +
-            ", startTime='" + getStartTime() + "'" +
-            "}";
+            "id=" + id +
+            ", priority='" + priority + '\'' +
+            ", clinicalNote='" + clinicalNote + '\'' +
+            ", spclInstruction='" + spclInstruction + '\'' +
+            ", status='" + status + '\'' +
+            ", endTime=" + endTime +
+            ", startTime=" + startTime +
+            ", recommendedDoctor='" + recommendedDoctor + '\'' +
+            ", patientInfo=" + patientInfo +
+            ", testCategories=" + testCategories +
+            ", login='" + login + '\'' +
+            '}';
     }
 }

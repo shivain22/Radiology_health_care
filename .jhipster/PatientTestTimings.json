@@ -28,6 +28,10 @@
     {
       "fieldName": "startTime",
       "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "recommendedDoctor",
+      "fieldType": "String"
     }
   ],
   "jpaMetamodelFiltering": true,

@@ -35,6 +35,8 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     private ZonedDateTimeFilter endTime;
 
+    private StringFilter recommendedDoctor;
+
     private LongFilter patientInfoId;
 
     private LongFilter testCategoriesId;
@@ -51,6 +53,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         this.status = other.status == null ? null : other.status.copy();
         this.startTime = other.startTime == null ? null : other.startTime.copy();
         this.endTime = other.endTime == null ? null : other.endTime.copy();
+        this.recommendedDoctor = other.recommendedDoctor == null ? null : other.recommendedDoctor.copy();
         this.patientInfoId = other.patientInfoId == null ? null : other.patientInfoId.copy();
         this.testCategoriesId = other.testCategoriesId == null ? null : other.testCategoriesId.copy();
         this.distinct = other.distinct;
@@ -166,6 +169,21 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         this.endTime = endTime;
     }
 
+    public StringFilter getRecommendedDoctor() {
+        return recommendedDoctor;
+    }
+
+    public StringFilter recommendedDoctor() {
+        if (recommendedDoctor == null) {
+            recommendedDoctor = new StringFilter();
+        }
+        return recommendedDoctor;
+    }
+
+    public void setRecommendedDoctor(StringFilter recommendedDoctor) {
+        this.recommendedDoctor = recommendedDoctor;
+    }
+
     public LongFilter getPatientInfoId() {
         return patientInfoId;
     }
@@ -221,6 +239,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             Objects.equals(status, that.status) &&
             Objects.equals(startTime, that.startTime) &&
             Objects.equals(endTime, that.endTime) &&
+            Objects.equals(recommendedDoctor, that.recommendedDoctor) &&
             Objects.equals(patientInfoId, that.patientInfoId) &&
             Objects.equals(testCategoriesId, that.testCategoriesId) &&
             Objects.equals(distinct, that.distinct)
@@ -237,6 +256,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             status,
             startTime,
             endTime,
+            recommendedDoctor,
             patientInfoId,
             testCategoriesId,
             distinct
@@ -254,6 +274,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             (status != null ? "status=" + status + ", " : "") +
             (startTime != null ? "startTime=" + startTime + ", " : "") +
             (endTime != null ? "endTime=" + endTime + ", " : "") +
+            (recommendedDoctor != null ? "recommendedDoctor=" + recommendedDoctor + ", " : "") +
             (patientInfoId != null ? "patientInfoId=" + patientInfoId + ", " : "") +
             (testCategoriesId != null ? "testCategoriesId=" + testCategoriesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

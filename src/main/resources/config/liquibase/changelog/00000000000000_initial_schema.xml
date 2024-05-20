@@ -397,6 +397,7 @@
             <column name="status" type="VARCHAR(255)"/>
             <column name="start_time" type="datetime"/>
             <column name="end_time" type="datetime"/>
+            <column name="recommended_doctor" type="text"/>
             <column name="patient_info_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -423,6 +424,7 @@
             <column name="clinical_note" type="VARCHAR(255)"/>
             <column name="start_time" type="datetime"/>
             <column name="end_time" type="datetime"/>
+            <column name="recommended_doctor" type="text"/>
             <column name="login" type="VARCHAR(255)"/>
             <column name="priority" type="VARCHAR(255)"/>
             <column name="spcl_instruction" type="VARCHAR(255)"/>
@@ -525,6 +527,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="test_duration" type="INT"/>
+            <column name="patient_report" type="longblob"/>
             <column name="equipment_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -552,6 +555,7 @@
             <column name="revtype" type="TINYINT(3)"/>
             <column name="login" type="VARCHAR(255)"/>
             <column name="test_duration" type="INT"/>
+            <column name="patient_report" type="longblob"/>
             <column name="test_name" type="VARCHAR(255)"/>
             <column name="equipment_id" type="BIGINT"/>
             <column name="parent_test_category_id" type="BIGINT"/>

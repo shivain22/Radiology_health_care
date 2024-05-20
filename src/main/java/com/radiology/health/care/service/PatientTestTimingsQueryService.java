@@ -112,6 +112,10 @@ public class PatientTestTimingsQueryService extends QueryService<PatientTestTimi
             if (criteria.getStartTime() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getStartTime(), PatientTestTimings_.startTime));
             }
+            if (criteria.getRecommendedDoctor() != null) {
+                specification =
+                    specification.and(buildStringSpecification(criteria.getRecommendedDoctor(), PatientTestTimings_.recommendedDoctor));
+            }
             if (criteria.getPatientInfoId() != null) {
                 specification =
                     specification.and(

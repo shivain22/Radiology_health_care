@@ -31,6 +31,22 @@ public class TestCategories extends AbstractAuditingEntity<Long> implements Seri
     @Column(name = "test_duration")
     private Integer testDuration;
 
+    public String getPatientReport() {
+        return patientReport;
+    }
+
+    public void setPatientReport(String patientReport) {
+        this.patientReport = patientReport;
+    }
+
+    @Column(name = "patient_report")
+    private String patientReport;
+
+    public TestCategories patientReport(String patientReport) {
+        this.patientReport = patientReport;
+        return this;
+    }
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "room", "user", "technicianEquipmentMappings", "testCategories" }, allowSetters = true)
@@ -230,12 +246,20 @@ public class TestCategories extends AbstractAuditingEntity<Long> implements Seri
     }
 
     // prettier-ignore
+
     @Override
     public String toString() {
         return "TestCategories{" +
-            "id=" + getId() +
-            ", testName='" + getTestName() + "'" +
-            ", testDuration=" + getTestDuration() +
-            "}";
+            "id=" + id +
+            ", testName='" + testName + '\'' +
+            ", testDuration=" + testDuration +
+            ", patientReport='" + patientReport + '\'' +
+            ", equipment=" + equipment +
+            ", parentTestCategory=" + parentTestCategory +
+            ", user=" + user +
+            ", login='" + login + '\'' +
+            ", patientTestTimings=" + patientTestTimings +
+            ", testCategoryParents=" + testCategoryParents +
+            '}';
     }
 }
