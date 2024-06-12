@@ -43,6 +43,16 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
 
     private Boolean distinct;
 
+    public StringFilter getPatientReport() {
+        return patientReport;
+    }
+
+    public void setPatientReport(StringFilter patientReport) {
+        this.patientReport = patientReport;
+    }
+
+    private StringFilter patientReport;
+
     public PatientTestTimingsCriteria() {}
 
     public PatientTestTimingsCriteria(PatientTestTimingsCriteria other) {
@@ -56,6 +66,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
         this.recommendedDoctor = other.recommendedDoctor == null ? null : other.recommendedDoctor.copy();
         this.patientInfoId = other.patientInfoId == null ? null : other.patientInfoId.copy();
         this.testCategoriesId = other.testCategoriesId == null ? null : other.testCategoriesId.copy();
+        this.patientReport = other.patientReport == null ? null : other.patientReport.copy();
         this.distinct = other.distinct;
     }
 
@@ -242,7 +253,8 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             Objects.equals(recommendedDoctor, that.recommendedDoctor) &&
             Objects.equals(patientInfoId, that.patientInfoId) &&
             Objects.equals(testCategoriesId, that.testCategoriesId) &&
-            Objects.equals(distinct, that.distinct)
+            Objects.equals(distinct, that.distinct) &&
+            Objects.equals(patientReport, that.patientReport)
         );
     }
 
@@ -259,7 +271,8 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             recommendedDoctor,
             patientInfoId,
             testCategoriesId,
-            distinct
+            distinct,
+            patientReport
         );
     }
 
@@ -278,6 +291,7 @@ public class PatientTestTimingsCriteria implements Serializable, Criteria {
             (patientInfoId != null ? "patientInfoId=" + patientInfoId + ", " : "") +
             (testCategoriesId != null ? "testCategoriesId=" + testCategoriesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
+            (patientReport != null ? "patientReport=" + patientReport + ", " : "") +
             "}";
     }
 }

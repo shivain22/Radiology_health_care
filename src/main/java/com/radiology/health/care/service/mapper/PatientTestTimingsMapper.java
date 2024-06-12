@@ -45,6 +45,7 @@ public interface PatientTestTimingsMapper extends EntityMapper<PatientTestTiming
         patientTestTimings.setClinicalNote(dto.getClinicalNote());
         patientTestTimings.setSpclInstruction(dto.getSpclInstruction());
         patientTestTimings.setStatus(dto.getStatus());
+        patientTestTimings.setRecommendedDoctor(dto.getRecommendedDoctor());
         patientTestTimings.setStartTime(startTime);
         patientTestTimings.setEndTime(endTime);
         patientTestTimings.setLogin(dto.getLogin());
@@ -52,7 +53,9 @@ public interface PatientTestTimingsMapper extends EntityMapper<PatientTestTiming
         patientTestTimings.setCreatedDate(dto.getCreatedDate());
         patientTestTimings.setLastModifiedBy(dto.getLastModifiedBy());
         patientTestTimings.setLastModifiedDate(dto.getLastModifiedDate());
-
+        if (dto.getPatientReport() != null) {
+            patientTestTimings.setPatientReport(dto.getPatientReport());
+        }
         patientTestTimings.patientInfo(patientInfo);
         patientTestTimings.testCategories(testCategories);
 
@@ -88,11 +91,17 @@ public interface PatientTestTimingsMapper extends EntityMapper<PatientTestTiming
         if (dto.getClinicalNote() != null) {
             entity.setClinicalNote(dto.getClinicalNote());
         }
+        if (dto.getRecommendedDoctor() != null) {
+            entity.setRecommendedDoctor(dto.getRecommendedDoctor());
+        }
         if (dto.getSpclInstruction() != null) {
             entity.setSpclInstruction(dto.getSpclInstruction());
         }
         if (dto.getStatus() != null) {
             entity.setStatus(dto.getStatus());
+        }
+        if (dto.getPatientReport() != null) {
+            entity.setPatientReport(dto.getPatientReport());
         }
 
         if (dto.getStartTime() != null) {

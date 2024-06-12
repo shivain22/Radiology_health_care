@@ -393,7 +393,7 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>shivain22/radiology_health_care:backend15</image>
+                            <image>shivain22/radiology_health_care:backend17</image>
                         </to>
                         <container>
                             <entrypoint>

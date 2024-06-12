@@ -44,6 +44,17 @@ public class PatientTestTimings extends AbstractAuditingEntity<Long> implements 
     @Column(name = "recommended_doctor")
     private String recommendedDoctor;
 
+    @Column(name = "patient_report")
+    private String patientReport = "";
+
+    public String getPatientReport() {
+        return patientReport;
+    }
+
+    public void setPatientReport(String patientReport) {
+        this.patientReport = patientReport;
+    }
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "employeeId", "employeeHis", "employeeServiceNo", "patientTestTimings" }, allowSetters = true)

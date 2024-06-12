@@ -40,7 +40,7 @@ public class TestCategories extends AbstractAuditingEntity<Long> implements Seri
     }
 
     @Column(name = "patient_report")
-    private String patientReport;
+    private String patientReport = "";
 
     public TestCategories patientReport(String patientReport) {
         this.patientReport = patientReport;

@@ -42,6 +42,9 @@ public interface TestCategoriesMapper extends EntityMapper<TestCategoriesDTO, Te
         testCategories.setId(dto.getId());
         testCategories.setTestName(dto.getTestName());
         testCategories.setTestDuration(dto.getTestDuration());
+        if (dto.getPatientReport() != null) {
+            testCategories.setPatientReport(dto.getPatientReport());
+        }
         testCategories.setLogin(dto.getLogin());
         testCategories.setCreatedBy(dto.getCreatedBy());
         testCategories.setCreatedDate(dto.getCreatedDate());

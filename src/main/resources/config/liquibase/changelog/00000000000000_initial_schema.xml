@@ -527,7 +527,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="test_duration" type="INT"/>
-            <column name="patient_report" type="longblob"/>
+            <column name="patient_report" type="longtext"/>
             <column name="equipment_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -555,7 +555,7 @@
             <column name="revtype" type="TINYINT(3)"/>
             <column name="login" type="VARCHAR(255)"/>
             <column name="test_duration" type="INT"/>
-            <column name="patient_report" type="longblob"/>
+            <column name="patient_report" type="longtext"/>
             <column name="test_name" type="VARCHAR(255)"/>
             <column name="equipment_id" type="BIGINT"/>
             <column name="parent_test_category_id" type="BIGINT"/>

@@ -2,7 +2,7 @@
 name: radiologyhealthcare
 services:
   app:
-    image: shivain22/radiology_health_care:backend15
+    image: shivain22/radiology_health_care:backend17
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=dev,api-docs
@@ -28,6 +28,20 @@ services:
       mysql:
         condition: service_healthy
   mysql:
-    extends:
-      file: ./mysql.yml
-      service: mysql
+    image: mysql:8.2.0
+    volumes:
+      - ./config/mysql:/etc/mysql/conf.d
+    #      - ./mysqlData/:/var/lib/mysql/
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=radiologyhealthcare
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    ports:
+      - 3306:3306
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test: ['CMD', 'mysql', '-e', 'SHOW DATABASES;']
+      interval: 5s
+      timeout: 5s
+      retries: 10

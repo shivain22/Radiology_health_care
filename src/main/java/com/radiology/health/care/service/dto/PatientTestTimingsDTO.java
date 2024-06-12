@@ -1,5 +1,6 @@
 package com.radiology.health.care.service.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -42,6 +43,16 @@ public class PatientTestTimingsDTO implements Serializable {
 
     private String login;
     private String createdBy;
+
+    private String patientReport;
+
+    public String getPatientReport() {
+        return patientReport;
+    }
+
+    public void setPatientReport(String patientReport) {
+        this.patientReport = patientReport;
+    }
 
     public String getLogin() {
         return login;
